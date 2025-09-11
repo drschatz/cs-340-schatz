@@ -1,0 +1,32 @@
+[
+  {
+    "idx": 1,
+    "topic": "MP 1: Word Guess",
+    "date": "2024-09-06",
+    "part1_due_date": "2024-09-12",
+    "part2_due_date": "2024-09-19",
+    "part3_due_date": "NA",
+    "due_date": "2024-09-19",
+    "link": "https://www.cs128live.org/course-book/mps/WordGuess"
+  },
+  {
+    "idx": 2,
+    "topic": "MP 2: Seam Carver",
+    "date": "2024-10-04",
+    "part1_due_date": "2024-10-10",
+    "part2_due_date": "2024-10-17",
+    "part3_due_date": "2024-10-24",
+    "due_date": "2024-10-24",
+    "link": "https://www.cs128live.org/course-book/mps/SeamCarver"
+  },
+  {
+    "idx": 3,
+    "topic": "MP 3: Musical Trees",
+    "date": "2024-11-01",
+    "part1_due_date": "2024-11-14",
+    "part2_due_date": "2024-11-21",
+    "part3_due_date": "NA",
+    "due_date": "2024-11-21",
+    "link": "https://www.cs128live.org/course-book/mps/MusicalTrees"
+  }
+]

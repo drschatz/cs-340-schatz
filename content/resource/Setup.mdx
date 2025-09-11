@@ -1,0 +1,78 @@
+﻿---
+title: "Setup"
+description: "This article explains how to setup your personal enviornment."
+author:
+  - "Prof. Schatz"
+publishedAt: "2024-05-28"
+updatedAt: "2024-05-28"
+isPublished: true
+tags:
+  - "C++"
+chapterTitle: "Resource"
+chapterIdx: 4
+sectionIdx: 3
+---
+
+## Step 1 - Install and configure VS Code
+### Install VS Code
+
+We will use Microsoft Visual Studio Code (aka VS Code) as our integrated development environment (IDE) this semester. VS Code is a powerful, free code editor that runs in the macOS, Windows, and Linux operating systems. To install VS Code, please follow the directions for your machine:
+
+- [Directions to install VS Code on macOS](https://code.visualstudio.com/docs/setup/mac)
+- [Directions to install VS Code on Windows](https://code.visualstudio.com/docs/setup/windows)
+- [Directions to install VS Code on Linux](https://code.visualstudio.com/docs/setup/linux)
+
+Should you require assistance installing VS Code, please visit us during office hours before our first MP is released.
+
+### Install the required VS Code extensions
+There are various extensions that we need you to install in VS Code. Please install the following extensions by navigating to their respective page(s) in the VS Code Marketplace, and clicking the green "Install" button located near the top of the page.
+
+[Dev Containers extension from Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+[Trouble installing an extension? Click here!](https://code.visualstudio.com/docs/editor/extension-marketplace)
+
+## Step 2 - Install Docker Desktop
+We will use [Docker Desktop](https://www.docker.com/products/docker-desktop/) this semester to run the CS 128 containerized development environment. To install Docker Desktop, please follow the directions for your machine:
+
+- [Directions to install Docker Desktop on macOS](https://docs.docker.com/desktop/install/mac-install/)
+- [Directions to install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
+- [Directions to install Docker Desktop on Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+Should you require assistance installing Docker Desktop, please visit us during office hours so we can help get you up and running before our first MP is released.
+
+## Step 3 - Login to Docker Hub via Docker Desktop
+To pull our the image for our development environment, you will need to:
+
+First, register for a Docker Hub account at [hub.docker.com/signup](https://app.docker.com/signup?), and
+Open the Docker Desktop application, authenticate using the Sign in option in the top-right corner of the Docker Dashboard.
+
+## Step 4 - Connecting to, and working inside of, the development environment
+
+Now that we've set things up, it's time to introduce how to connect to the CS 128 development environment and author your solutions to programming problems. 
+Please carefully watch the video that follows provided by Prof. Nowak. 
+
+Note in this section of CS 128 we will not connect to github and we will distribute starter code in other ways.
+
+[Video](https://www.youtube.com/watch?time_continue=583&v=zlVu5zkcbvE&embeds_referring_euri=https%3A%2F%2Fcs128.org%2F&embeds_referring_origin=https%3A%2F%2Fcs128.org&source_ve_path=MzY4NDIsMjg2NjY)
+
+### What if I don't see the open in dev container popup?
+If the popup asking whether you want to open the folder in the dev container does not show up, you should:
+
+- Open the "Command Palette" (Ctrl Shift P for Windows/Linux or Command Shift P for Mac),
+- type "Dev Containers: Reopen in Container", and
+- select to execute that command (click it!).
+
+## Step 5 - Test it out!
+
+Download the test files onto your computer by visiting this link,
+
+[Test Code](https://github.com/CS-128-Live/student-env-test/archive/refs/heads/main.zip)
+
+Create a CS128 folder and unzip the downloaded zip file into the CS128 folder. Open up a new window of VS Code. Click "Open..." and navigate to the folder called "student-env-test-main". Click "open".
+Make sure to open the project in the docker container.
+
+To compile and run the code type the following into the terminal window (more exact instructions will be with MP 1 and lab 2),
+
+```c
+make exec
+./bin/exec
+```

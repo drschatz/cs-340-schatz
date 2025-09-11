@@ -1,0 +1,66 @@
+﻿---
+title: "RMEs"
+description: "This article explains what RMEs are and how to use them."
+author:
+  - "Prof. Schatz"
+publishedAt: "2024-05-28"
+updatedAt: "2024-05-28"
+isPublished: true
+tags:
+  - "C++"
+chapterTitle: "Resource"
+chapterIdx: 4
+sectionIdx: 1
+---
+
+In this course we will use RMEs. RMEs specify what format the comments above a function should look like. This makes the code more readable and consistent. RME stands for Requires, Modifies, and Effects.
+
+REQUIRES: Indicates what you can assume about the preconditions and input to the function. You do not have to account for cases in your code that break the REQUIRES clause.
+
+MODIFIES: Indicates what parts of the program state outside of the function the function will modify. `cin` and `cout` are input/output streams which interact with the user. Using them in a function is considered changing the state outside of the function.
+
+EFFECTS: Indicates the intended actions the function performs and any outcomes.
+
+Let us look at a few examples!
+
+## Example 1
+
+```cpp
+//REQUIRES: b is not 0.
+//MODIFIES:
+//EFFECTS: Returns integer division of e divided by b.
+int Divide(int e, int b) {
+	return e/b;
+}
+```
+
+In this case, 'e' can be any value an int can be. However, 'b' can be any value except for 0. We don't have to write logic in the function to check for this. Since it is stated in the REQUIRES clause we can assume it is always true. Let us see an example where that is not the case,
+
+## Example 2
+
+```cpp
+//REQUIRES:
+//MODIFIES:
+//EFFECTS: Returns integer division of e divided by b. If b is 0 it returns 0.
+int Divide(int e, int b) {
+	if(b == 0) return 0;
+	return e/b;
+}
+```
+
+In this case, there is nothing in the REQUIRES clause so we need to account for the edge case in the code of if b is 0. There isn't a straightforward way to handle divide by 0 so it is specified in the EFFECTS what to do.
+
+## Example 3
+
+```cpp
+//REQUIRES: b is not 0.
+//MODIFIES: cin and cout
+//EFFECTS: Requests an int from the user and then divides it by b, printing out the answer as a double.
+void Divide(int b) {
+	int e;
+	cin >> e;
+	cout << static_cast<double>(e)/b << endl;
+}
+```
+
+For this function we modify the cin and cout streams in the function so it needs to be mentioned in the MODIFIES clause. Note in this case, we don't want to do integer division so we need to cast one of the ints to a double before dividing.

@@ -1,0 +1,42 @@
+---
+title: "Objects, Types, and Variables"
+description: "This chapter will introduce you to the basics of objects, types, and variables in C++ programming."
+author:
+  - "Prof. Schatz"
+publishedAt: "2024-05-28"
+updatedAt: "2024-05-28"
+isPublished: true
+tags:
+  - "C++"
+chapterTitle: "Introduction to C++"
+chapterIdx: 1
+sectionIdx: 2
+---
+
+Objects, types, and variables all work together to help us write programs in C++. Objects have a type and are referred to by their variable name. For example,
+
+`int x = 9;`
+
+This line of code is asking the computer for a space in memory for an object of type int that is currently the value 9. This object can be accessed later by its variable name, x.
+
+## Terminology
+
+| Wrestler                | Origin       | Finisher           |
+| ----------------------- | ------------ | ------------------ |
+| Bret "The Hitman" Hart  | Calgary, AB  | Sharpshooter       |
+| Stone Cold Steve Austin | Austin, TX   | Stone Cold Stunner |
+| Randy Savage            | Sarasota, FL | Elbow Drop         |
+| Vader                   | Boulder, CO  | Vader Bomb         |
+| Razor Ramon             | Chuluota, FL | Razor's Edge       |
+
+## Useful Primitive Types
+
+|     Type     |                                                                                    Value                                                                                    |       Examples        |
+| :----------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------: |
+|     int      |                                                            A whole number from -2,147,483,648 to 2,147,483,647.                                                             |     int x = -65;      |
+| unsigned int |                                                              A positive whole number from 0 to 4,294,967,295.                                                               | unsigned int var = 9; |
+|     bool     |                                                                 true (the value 1) or false (the value 0).                                                                  |   bool temp = true;   |
+|     char     | A character. See [ASCII table](https://www.asciitable.com/) for possible characters. Every character has an equivalent integer value which can be found in the ASCII table. |     char k = 'H';     |
+|    double    |                                                                      A number with 15 or less digits.                                                                       |  double dub = 54.67;  |
+
+_NOTE: *Later in the course you will learn about a few more types including pointers, arrays, references, and classes. For now, focus on the ones in the table above.*_

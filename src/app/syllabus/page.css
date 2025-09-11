@@ -1,0 +1,7 @@
+.active {
+  font-weight: bold;
+  color: #ff0000; /* Example color */
+}
+.scroll-offset {
+  scroll-margin-top: 2rem; /* Adjust as needed */
+}

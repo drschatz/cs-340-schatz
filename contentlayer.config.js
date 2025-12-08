@@ -92,13 +92,56 @@ const Doc = defineDocumentType(() => ({
   },
 }));
 
+// New Syllabus document type for standalone pages like syllabus
+const Syllabus = defineDocumentType(() => ({
+  name: "Syllabus",
+  filePathPattern: "syllabus.mdx",
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    updatedAt: {
+      type: "date",
+      required: true,
+    },
+  },
+  computedFields: {
+    toc: {
+      type: "json",
+      resolve: async (doc) => {
+        const regulrExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
+        const slugger = new GithubSlugger();
+        const headings = Array.from(doc.body.raw.matchAll(regulrExp)).map(
+          ({ groups }) => {
+            const flag = groups?.flag;
+            const content = groups?.content;
+
+            return {
+              level:
+                flag?.length == 1 ? "one" : flag?.length == 2 ? "two" : "three",
+              text: content,
+              slug: content ? slugger.slug(content) : undefined,
+            };
+          }
+        );
+
+        return headings;
+      },
+    },
+  },
+}));
+
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Doc],
+  documentTypes: [Syllabus, Doc], // Put Syllabus FIRST so it matches before Doc
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      [rehypeAutolinkHeadings],
+      [rehypeAutolinkHeadings, {
+        behavior: 'wrap'
+      }],
       [
         rehypePrettyCode,
         {

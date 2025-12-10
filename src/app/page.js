@@ -1,5 +1,8 @@
 'use client';
 
+import { colors } from '../styles/colors.js';
+
+
 import React, { useState, useEffect } from 'react';
 
 export default function CoursePortal() {
@@ -112,19 +115,18 @@ export default function CoursePortal() {
   };
 
   const navItems = [
-    { label: 'Home', color: '#fff8e5', group: 1, href: '/' },
-    { label: 'Syllabus', color: '#fff8e5', group: 1, href: '/syllabus' },
-    { label: 'Staff', color: '#fff8e5', group: 1, href: '/staff' },
-    { label: 'Content', color: '#fff8e5', group: 1, href: '/content' },
-    { label: 'MPs', color: '#fff8e5', group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: '#fce8d0', group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: '#dbeafe', group: 3, href: '/campuswire' }
+    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
+    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
+    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
+    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
+    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
+    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
+    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
   ];
-
   const styles = {
     container: {
       minHeight: '100vh',
-      backgroundColor: '#fff',
+      backgroundColor: colors.white,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     },
     nav: {
@@ -158,7 +160,7 @@ export default function CoursePortal() {
       fontSize: '15px'
     }),
     header: {
-      backgroundColor: '#fff',
+      backgroundColor: colors.white,
       borderBottom: 'none',
       padding: '24px 32px',
       textAlign: 'center'
@@ -170,7 +172,7 @@ export default function CoursePortal() {
     },
     subtitle: {
       fontSize: '18px',
-      color: '#374151',
+      color: colors.darkGray,
       marginBottom: '4px'
     },
     season: {
@@ -209,10 +211,10 @@ export default function CoursePortal() {
       textDecoration: 'underline',
       fontWeight: '600',
       marginBottom: '8px',
-      color: '#000'
+      color: colors.black
     },
     announcementText: {
-      color: '#000',
+      color: colors.black,
       lineHeight: '1.6'
     },
     upcomingItem: {
@@ -225,13 +227,13 @@ export default function CoursePortal() {
     upcomingDate: {
       fontWeight: '600',
       minWidth: '50px',
-      color: '#000'
+      color: colors.black
     },
     upcomingEvent: {
-      color: '#000'
+      color: colors.black
     },
     emptyState: {
-      color: '#6b7280',
+      color: colors.mediumGray,
       fontStyle: 'italic',
       textAlign: 'center',
       padding: '20px 0'
@@ -240,12 +242,13 @@ export default function CoursePortal() {
       marginTop: '32px',
       marginBottom: '32px'
     },
-    calendarHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '16px',
-      marginBottom: '16px'
-    },
+  calendarHeader: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '16px',
+    marginBottom: '16px'
+  },
     calendarTitle: {
       fontSize: '24px',
       fontWeight: 'bold'
@@ -253,12 +256,13 @@ export default function CoursePortal() {
     toggleGroup: {
       display: 'flex',
       gap: '0px',
-      marginLeft: 'auto'
+      margin: '0 auto'
     },
     toggleButton: (isActive, isFirst, isLast) => ({
-      padding: '12px 20px',
+        padding: '12px 24px',  // Change from '10px 20px'
+  fontSize: '17px',      // Change from '16px'
       border: 'none',
-      backgroundColor: isActive ? '#fce8d0' : '#f3f4f6',
+      backgroundColor: isActive ? colors.navBlue : colors.hoverGray,
       cursor: 'pointer',
       fontWeight: isActive ? '600' : '500',
       fontSize: '16px',
@@ -289,7 +293,7 @@ export default function CoursePortal() {
         /* Focus indicators for keyboard navigation */
         a:focus-visible,
         button:focus-visible {
-          outline: 3px solid #2563eb;
+          outline: 3px solid colors.focusBlue;
           outline-offset: 2px;
         }
         
@@ -376,7 +380,7 @@ export default function CoursePortal() {
         <div style={styles.grid} className="grid-responsive">
           <section style={styles.cardSection} aria-labelledby="announcements-heading">
             <h2 id="announcements-heading" style={styles.cardTitle}>Announcements</h2>
-            <div style={styles.card('#fff8e5')} aria-live="polite">
+            <div style={styles.card(colors.cream)} aria-live="polite">
               {announcements.length > 0 ? (
                 announcements.map((ann, i) => (
                   <article key={i} style={styles.announcementItem}>
@@ -392,7 +396,7 @@ export default function CoursePortal() {
           
           <section style={styles.cardSection} aria-labelledby="upcoming-heading">
             <h2 id="upcoming-heading" style={styles.cardTitle}>Upcoming</h2>
-            <div style={styles.card('#f3f4f6')} aria-live="polite">
+            <div style={styles.card(colors.hoverGray)} aria-live="polite">
               {upcomingEvents.length > 0 ? (
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                   {upcomingEvents.map((item, i) => (
@@ -412,7 +416,6 @@ export default function CoursePortal() {
         {/* Calendar with Toggle */}
         <section style={styles.calendarSection} aria-labelledby="calendar-heading">
           <div style={styles.calendarHeader} className="calendar-header-responsive">
-            <h2 id="calendar-heading" style={styles.calendarTitle}>Course Calendars</h2>
             <div style={styles.toggleGroup} className="toggle-group-responsive" role="group" aria-label="Calendar view selection">
               <button
                 onClick={() => setSelectedCalendar('schedule')}

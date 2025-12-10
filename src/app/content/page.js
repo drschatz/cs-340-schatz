@@ -1,4 +1,5 @@
 'use client';
+import { colors } from '../../styles/colors';
 
 import React, { useState, useEffect } from 'react';
 import { allReadings } from '.contentlayer/generated';
@@ -97,14 +98,15 @@ const normalizeDate = (dateStr) => {
 
 
   const navItems = [
-    { label: 'Home', color: '#fff8e5', group: 1, href: '/' },
-    { label: 'Syllabus', color: '#fff8e5', group: 1, href: '/syllabus' },
-    { label: 'Staff', color: '#fff8e5', group: 1, href: '/staff' },
-    { label: 'Content', color: '#fff8e5', group: 1, href: '/content' },
-    { label: 'MPs', color: '#fff8e5', group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: '#fce8d0', group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: '#dbeafe', group: 3, href: '/campuswire' }
+    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
+    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
+    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
+    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
+    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
+    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
+    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
   ];
+
 
   const styles = {
     container: {
@@ -149,7 +151,6 @@ const normalizeDate = (dateStr) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: '24px',
       position: 'relative'
     },
     searchContainer: {
@@ -179,7 +180,7 @@ const normalizeDate = (dateStr) => {
       overflow: 'hidden'
     },
     tableHeader: {
-      backgroundColor: '#dbeafe',
+      backgroundColor: colors.navBlue,
       textAlign: 'left'
     },
     th: {
@@ -188,7 +189,7 @@ const normalizeDate = (dateStr) => {
       fontSize: '14px',
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
-      color: '#374151',
+      color: colors.black,
       borderBottom: '2px solid #e5e7eb'
     },
     tr: {

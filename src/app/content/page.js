@@ -1,9 +1,100 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { allReadings } from '.contentlayer/generated';
 
 export default function ContentPage() {
-  const [sortBy, setSortBy] = useState('week');
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [lectures, setLectures] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Load sort order from localStorage on mount
+  useEffect(() => {
+    const savedSortOrder = localStorage.getItem('contentSortOrder');
+    if (savedSortOrder) {
+      setSortOrder(savedSortOrder);
+    }
+  }, []);
+
+  // Save sort order to localStorage when it changes
+  const handleSortToggle = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newSortOrder);
+    localStorage.setItem('contentSortOrder', newSortOrder);
+  };
+
+  useEffect(() => {
+    // Load lectures from JSON
+    fetch('/data/content.json')
+      .then(response => response.json())
+      .then(data => {
+        // Enrich lectures with reading data from Contentlayer
+        const enrichedLectures = data.lectures.map(lecture => ({
+          ...lecture,
+          textObjects: lecture.texts.map(slug => {
+            const reading = allReadings.find(r => r.slug === slug);
+            return reading ? {
+              name: reading.title,
+              url: reading.url
+            } : {
+              name: slug,
+              url: `/readings/${slug}`
+            };
+          })
+        }));
+        setLectures(enrichedLectures);
+      })
+      .catch(error => console.error('Error loading content:', error));
+  }, []);
+
+  // Format date from M/D to "Month D"
+
+  const monthNamesShort = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
+                         'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+const monthNamesLong = ['january', 'february', 'march', 'april', 'may', 'june',
+                        'july', 'august', 'september', 'october', 'november', 'december'];
+
+const normalizeDate = (dateStr) => {
+  // dateStr expected as "M/D"
+  const [month, day] = dateStr.split('/');
+  const m = parseInt(month) - 1;
+  const d = parseInt(day);
+
+  const short = `${monthNamesShort[m]} ${d}`;   // "feb 14"
+  const long  = `${monthNamesLong[m]} ${d}`;    // "february 14"
+
+  return [short, long, dateStr]; // return all matchable forms
+};
+
+  const formatDate = (dateStr) => {
+    const [month, day] = dateStr.split('/');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${monthNames[parseInt(month) - 1]} ${parseInt(day)}`;
+  };
+
+  // Sort lectures by date
+  const sortedLectures = sortOrder === 'desc' 
+    ? [...lectures].reverse()
+    : [...lectures];
+
+  const filteredLectures = sortedLectures.filter(lecture => {
+  if (!searchQuery) return true;
+
+  const query = searchQuery.toLowerCase();
+  const matchesTopic = lecture.topic.toLowerCase().includes(query);
+  const matchesReadings = lecture.textObjects?.some(text =>
+    text.name.toLowerCase().includes(query)
+  );
+
+  const dateMatches = normalizeDate(lecture.date).some(
+    d => d.toLowerCase().includes(query)
+  );
+
+  return matchesTopic || dateMatches || matchesReadings;
+});
+
 
   const navItems = [
     { label: 'Home', color: '#fff8e5', group: 1, href: '/' },
@@ -14,128 +105,6 @@ export default function ContentPage() {
     { label: 'PraireLearn', color: '#fce8d0', group: 2, href: '/prairielearn' },
     { label: 'Campuswire', color: '#dbeafe', group: 3, href: '/campuswire' }
   ];
-
-  const weekData = [
-    {
-      week: 6,
-      topic: 'Topic 6',
-      tags: [
-        { label: 'Exam 3', color: '#e0e7ff' },
-        { label: 'Python', color: '#fef3c7' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      week: 5,
-      topic: 'Topic 5',
-      tags: [
-        { label: 'Exam 2', color: '#dcfce7' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      week: 4,
-      topic: 'Topic 4',
-      tags: [
-        { label: 'Exam 2', color: '#dcfce7' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      week: 3,
-      topic: 'Topic 3',
-      tags: [
-        { label: 'Exam 1', color: '#e0e7ff' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    },
-    {
-      week: 2,
-      topic: 'Topic 2',
-      tags: [
-        { label: 'Exam 1', color: '#e0e7ff' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    },
-    {
-      week: 1,
-      topic: 'Topic 1',
-      tags: [
-        { label: 'Exam 1', color: '#e0e7ff' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    }
-  ];
-
-  const topicData = [
-    {
-      topic: 'Learning C',
-      tags: [
-        { label: 'Exam 1', color: '#e0e7ff' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      topic: 'Hardware',
-      tags: [
-        { label: 'Exam 1', color: '#e0e7ff' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      topic: 'Binary Data',
-      tags: [
-        { label: 'Exam 2', color: '#dcfce7' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1', 'Text 2']
-    },
-    {
-      topic: 'Caching',
-      tags: [
-        { label: 'Exam 2', color: '#dcfce7' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    },
-    {
-      topic: 'Memory',
-      tags: [
-        { label: 'Exam 2', color: '#dcfce7' },
-        { label: 'C', color: '#e0e7ff' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    },
-    {
-      topic: 'Learning Python',
-      tags: [
-        { label: 'Exam 3', color: '#e0e7ff' },
-        { label: 'Python', color: '#fef3c7' }
-      ],
-      lectures: ['Lecture 1', 'Lecture 2'],
-      texts: ['Text 1']
-    }
-  ];
-
-  const displayData = sortBy === 'week' ? weekData : topicData;
 
   const styles = {
     container: {
@@ -166,90 +135,165 @@ export default function ContentPage() {
       backgroundColor: color || 'transparent',
       cursor: 'pointer',
       fontWeight: '500',
-      fontSize: '14px',
+      fontSize: '15px',
       textDecoration: 'none',
       color: 'inherit',
       display: 'inline-block'
     }),
     mainContent: {
-      maxWidth: '1280px',
+      maxWidth: '1400px',
       margin: '0 auto',
       padding: '32px'
     },
     header: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: '32px'
+      justifyContent: 'center',
+      marginBottom: '24px',
+      position: 'relative'
     },
-    sortContainer: {
+    searchContainer: {
+      marginBottom: '24px',
       display: 'flex',
-      alignItems: 'center',
-      gap: '8px'
+      justifyContent: 'center'
     },
-    sortLabel: {
+    searchInput: {
+      width: '100%',
+      maxWidth: '500px',
+      padding: '12px 16px',
       fontSize: '16px',
-      fontWeight: '500'
+      border: '2px solid #e5e7eb',
+      borderRadius: '8px',
+      outline: 'none',
+      transition: 'border-color 0.2s'
     },
-    sortButton: (active) => ({
-      padding: '6px 16px',
-      borderRadius: '6px',
-      border: 'none',
-      backgroundColor: active ? '#fef3c7' : 'transparent',
-      cursor: 'pointer',
-      fontWeight: '500',
-      fontSize: '14px'
-    }),
     title: {
       fontSize: '48px',
       fontWeight: 'bold',
       textAlign: 'center'
     },
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: '24px'
+    table: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      borderRadius: '12px',
+      overflow: 'hidden'
     },
-    card: {
-      backgroundColor: '#fff8e5',
-      borderRadius: '16px',
-      padding: '24px'
+    tableHeader: {
+      backgroundColor: '#dbeafe',
+      textAlign: 'left'
     },
-    cardTitle: {
-      fontSize: '20px',
-      fontWeight: 'bold',
-      marginBottom: '12px'
+    th: {
+      padding: '16px',
+      fontWeight: '700',
+      fontSize: '14px',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px',
+      color: '#374151',
+      borderBottom: '2px solid #e5e7eb'
     },
-    tagsContainer: {
+    tr: {
+      borderBottom: '2px solid rgba(0,0,0,0.18)',
+      backgroundColor: '#fff'
+    },
+    trAlt: {
+      borderBottom: '2px solid rgba(0,0,0,0.18)',
+      backgroundColor: '#f9fafb'
+    },
+    trLast: {
+      borderBottom: 'none',
+      backgroundColor: '#fff'
+    },
+    trLastAlt: {
+      borderBottom: 'none',
+      backgroundColor: '#f9fafb'
+    },
+    td: {
+      padding: '20px 16px',
+      verticalAlign: 'top'
+    },
+    dateCell: {
+      width: '120px'
+    },
+    dateText: {
+      fontWeight: '600',
+      fontSize: '16px',
+      color: '#000'
+    },
+    topicCell: {
+      width: '300px'
+    },
+    topicText: {
+      fontWeight: '400',
+      fontSize: '16px',
+      color: '#000'
+    },
+    linksCell: {
+      width: 'auto'
+    },
+    lectureLinks: {
       display: 'flex',
       gap: '8px',
-      marginBottom: '16px',
       flexWrap: 'wrap'
     },
-    tag: (color) => ({
-      padding: '4px 12px',
-      borderRadius: '12px',
-      backgroundColor: color,
-      fontSize: '13px',
-      fontWeight: '500'
-    }),
-    section: {
-      marginBottom: '12px'
+    lectureLink: {
+      padding: '6px 12px',
+      backgroundColor: '#fff',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: '#000',
+      fontSize: '15px',
+      fontWeight: '500',
+      border: '1px solid rgba(0,0,0,0.1)',
+      transition: 'all 0.2s',
+      display: 'inline-block'
     },
-    sectionTitle: {
-      fontWeight: 'bold',
-      marginBottom: '4px'
+    lectureLinkDisabled: {
+      padding: '6px 12px',
+      backgroundColor: '#f3f4f6',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      color: '#9ca3af',
+      fontSize: '15px',
+      fontWeight: '500',
+      border: '1px solid rgba(0,0,0,0.05)',
+      cursor: 'not-allowed',
+      display: 'inline-block',
+      pointerEvents: 'none'
     },
-    list: {
-      marginLeft: '20px',
-      marginTop: '4px'
+    textsCell: {
+      width: '250px'
+    },
+    textLink: {
+      display: 'block',
+      color: '#000',
+      textDecoration: 'underline',
+      marginBottom: '6px',
+      fontSize: '16px',
+      textUnderlineOffset: '2px'
     }
   };
 
   return (
     <div style={styles.container}>
+      <style jsx>{`
+        a:focus-visible,
+        button:focus-visible {
+          outline: 3px solid #2563eb;
+          outline-offset: 2px;
+        }
+        
+        .lecture-link:hover {
+          background-color: #f3f4f6;
+          border-color: rgba(0,0,0,0.2);
+        }
+        
+        tbody tr:hover {
+          background-color: rgba(0,0,0,0.02);
+        }
+      `}</style>
+      
       {/* Navigation */}
-      <nav style={styles.nav}>
+      <nav style={styles.nav} role="navigation" aria-label="Main navigation">
         <div style={styles.navGroup}>
           {navItems.filter(item => item.group === 1).map((item, i) => {
             const groupItems = navItems.filter(it => it.group === 1);
@@ -260,6 +304,7 @@ export default function ContentPage() {
                 key={item.label}
                 href={item.href}
                 style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
+                aria-current={item.label === 'Content' ? 'page' : undefined}
               >
                 {item.label}
               </a>
@@ -303,61 +348,104 @@ export default function ContentPage() {
       </nav>
 
       {/* Main Content */}
-      <div style={styles.mainContent}>
+      <main style={styles.mainContent}>
         <div style={styles.header}>
-          <div style={styles.sortContainer}>
-            <span style={styles.sortLabel}>Sort By</span>
-            <button
-              style={styles.sortButton(sortBy === 'week')}
-              onClick={() => setSortBy('week')}
-            >
-              Week
-            </button>
-            <button
-              style={styles.sortButton(sortBy === 'topic')}
-              onClick={() => setSortBy('topic')}
-            >
-              Topic
-            </button>
-          </div>
           <h1 style={styles.title}>Content</h1>
-          <div style={{ width: '150px' }} /> {/* Spacer for centering */}
         </div>
 
-        {/* Topic Cards */}
-        <div style={styles.grid}>
-          {displayData.map((item, i) => (
-            <div key={i} style={styles.card}>
-              <h2 style={styles.cardTitle}>
-                {sortBy === 'week' ? `Week ${item.week}: ${item.topic}` : item.topic}
-              </h2>
-              <div style={styles.tagsContainer}>
-                {item.tags.map((tag, j) => (
-                  <span key={j} style={styles.tag(tag.color)}>
-                    {tag.label}
-                  </span>
-                ))}
-              </div>
-              <div style={styles.section}>
-                <div style={styles.sectionTitle}>Lectures</div>
-                <ul style={styles.list}>
-                  {item.lectures.map((lecture, j) => (
-                    <li key={j}>{lecture}</li>
-                  ))}
-                </ul>
-              </div>
-              <div style={styles.section}>
-                <div style={styles.sectionTitle}>Texts</div>
-                <ul style={styles.list}>
-                  {item.texts.map((text, j) => (
-                    <li key={j}>{text}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+        {/* Search Box */}
+        <div style={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search by topic, date, or reading..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={styles.searchInput}
+            onFocus={(e) => e.target.style.borderColor = '#2563eb'}
+            onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+          />
         </div>
-      </div>
+
+        {/* Table */}
+        <table style={styles.table}>
+          <thead style={styles.tableHeader}>
+            <tr>
+              <th 
+                style={{...styles.th, cursor: 'pointer', userSelect: 'none'}} 
+                onClick={handleSortToggle}
+              >
+                Date {sortOrder === 'desc' ? '↓' : '↑'}
+              </th>
+              <th style={styles.th}>Topic</th>
+              <th style={styles.th}>Lecture Materials</th>
+              <th style={styles.th}>Related Readings</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredLectures.map((lecture, i) => (
+              <tr 
+                key={i}
+                style={
+                  i === filteredLectures.length - 1 
+                    ? (i % 2 === 0 ? styles.trLast : styles.trLastAlt)
+                    : (i % 2 === 0 ? styles.tr : styles.trAlt)
+                }
+              >
+                <td style={{...styles.td, ...styles.dateCell}}>
+                  <div style={styles.dateText}>
+                    {formatDate(lecture.date)}
+                  </div>
+                </td>
+                <td style={{...styles.td, ...styles.topicCell}}>
+                  <div style={styles.topicText}>
+                    {lecture.topic}
+                  </div>
+                </td>
+                <td style={{...styles.td, ...styles.linksCell}}>
+                  <div style={styles.lectureLinks}>
+                    <a 
+                      href={lecture.slides_google || '#'} 
+                      style={lecture.slides_google ? styles.lectureLink : styles.lectureLinkDisabled}
+                      className={lecture.slides_google ? 'lecture-link' : ''}
+                      target={lecture.slides_google ? '_blank' : undefined}
+                      rel={lecture.slides_google ? 'noopener noreferrer' : undefined}
+                    >
+                      Slides
+                    </a>
+                    <a 
+                      href={lecture.slides_pdf || '#'} 
+                      style={lecture.slides_pdf ? styles.lectureLink : styles.lectureLinkDisabled}
+                      className={lecture.slides_pdf ? 'lecture-link' : ''}
+                    >
+                      Annotated
+                    </a>
+                    <a 
+                      href={lecture.recording || '#'} 
+                      style={lecture.recording ? styles.lectureLink : styles.lectureLinkDisabled}
+                      className={lecture.recording ? 'lecture-link' : ''}
+                      target={lecture.recording ? '_blank' : undefined}
+                      rel={lecture.recording ? 'noopener noreferrer' : undefined}
+                    >
+                      Recording
+                    </a>
+                  </div>
+                </td>
+                <td style={{...styles.td, ...styles.textsCell}}>
+                  {lecture.textObjects && lecture.textObjects.map((text, k) => (
+                    <a 
+                      key={k} 
+                      href={text.url} 
+                      style={styles.textLink}
+                    >
+                      {text.name}
+                    </a>
+                  ))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </main>
     </div>
   );
 }

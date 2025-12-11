@@ -5,7 +5,7 @@ export const colors = {
   // Navigation button backgrounds
   navCream: '#fff8e5',
   navOrange: '#fce8d0',
-  navBlue: '#bbd9fc',
+  navBlue: '#dbeafe',
   
   // Backgrounds
   white: '#fff',
@@ -26,7 +26,7 @@ export const colors = {
   tableBorder: '#e5e7eb',
   
   // Interactive states
-  focusBlue: '#bbd9fc',
+  focusBlue: '#2563eb',
   hoverGray: '#f3f4f6',
   buttonBorder: 'rgba(0,0,0,0.1)',
   
@@ -38,5 +38,10 @@ export const colors = {
   
   // Hover backgrounds
   tableRowHover: 'rgba(0,0,0,0.02)',
-  announcementHover: 'rgba(251, 191, 36, 0.1)'
+  announcementHover: 'rgba(251, 191, 36, 0.1)',
+  
+  // MP status colors
+  statusActive: '#b2ebc6',      // Light green - between release and due
+  statusGrace: '#e9d5ff',        // Light purple - 24 hours after due
+  statusInactive: '#f3f4f6'      // Light gray - not released or past grace
 };

@@ -26,13 +26,8 @@ export default function MPsPage() {
 
   const fetchCalendarDates = async () => {
     try {
-      // First get the calendar URL from config
-      const configResponse = await fetch('/data/calendar-config.json');
-      const config = await configResponse.json();
-      const calendarUrl = config.icsUrl;
-      
-      // Then fetch the calendar data
-      const response = await fetch(`/api/calendar?url=${encodeURIComponent(calendarUrl)}`);
+      // Just fetch from API - it handles the config internally
+      const response = await fetch('/api/calendar');
       const icsData = await response.text();
       const events = parseICSForDates(icsData);
       setCalendarEvents(events);
@@ -53,21 +48,34 @@ export default function MPsPage() {
         currentEvent = {};
       } else if (line === 'END:VEVENT' && currentEvent) {
         if (currentEvent.date && currentEvent.summary) {
-          const summary = currentEvent.summary.toLowerCase();
-          const isRelease = summary.includes('release');
-          
           events[currentEvent.summary] = {
-            date: formatDate(new Date(currentEvent.date)),
-            rawDate: new Date(currentEvent.date),
-            isRelease
+            date: formatDate(currentEvent.date),
+            rawDate: currentEvent.date
           };
         }
         currentEvent = null;
       } else if (currentEvent) {
         if (line.startsWith('DTSTART')) {
-          const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
-          if (dateMatch) {
-            currentEvent.date = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`;
+          // Match date AND time: 20251211T160000 (local time after API conversion)
+          const dateTimeMatch = line.match(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/);
+          if (dateTimeMatch) {
+            const [_, year, month, day, hour, minute, second] = dateTimeMatch;
+            // Create local date object
+            currentEvent.date = new Date(
+              parseInt(year),
+              parseInt(month) - 1,
+              parseInt(day),
+              parseInt(hour),
+              parseInt(minute),
+              parseInt(second)
+            );
+          } else {
+            // Fallback for date-only format
+            const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
+            if (dateMatch) {
+              const [_, year, month, day] = dateMatch;
+              currentEvent.date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+            }
           }
         } else if (line.startsWith('SUMMARY:')) {
           currentEvent.summary = line.substring(8).trim();
@@ -76,6 +84,67 @@ export default function MPsPage() {
     }
 
     return events;
+  };
+
+  // Helper function to find calendar event with flexible naming
+  const findCalendarEvent = (mpNumber, eventType) => {
+    // Try different variations of event names
+    const variations = [
+      `MP${mpNumber} ${eventType}`,
+      `MP ${mpNumber} ${eventType}`,
+      `mp${mpNumber} ${eventType}`,
+      `mp ${mpNumber} ${eventType}`,
+      `MP${mpNumber}${eventType}`,
+      `MP ${mpNumber}${eventType}`,
+    ];
+
+    // Also try different capitalizations of the event type
+    const typeVariations = [
+      eventType.toLowerCase(),
+      eventType.charAt(0).toUpperCase() + eventType.slice(1).toLowerCase(),
+      eventType.toUpperCase()
+    ];
+
+    for (const baseVar of variations) {
+      for (const typeVar of typeVariations) {
+        const testName = baseVar.replace(eventType, typeVar);
+        // Check exact match
+        if (calendarEvents[testName]) {
+          return calendarEvents[testName];
+        }
+        // Check case-insensitive match
+        const match = Object.keys(calendarEvents).find(
+          key => key.toLowerCase().trim() === testName.toLowerCase().trim()
+        );
+        if (match && calendarEvents[match]) {
+          return calendarEvents[match];
+        }
+      }
+    }
+
+    // For "Due" events, also try just "MP0", "MP 0", etc. without "Due"
+    if (eventType.toLowerCase() === 'due') {
+      const simpleVariations = [
+        `MP${mpNumber}`,
+        `MP ${mpNumber}`,
+        `mp${mpNumber}`,
+        `mp ${mpNumber}`
+      ];
+      
+      for (const variant of simpleVariations) {
+        if (calendarEvents[variant]) {
+          return calendarEvents[variant];
+        }
+        const match = Object.keys(calendarEvents).find(
+          key => key.toLowerCase().trim() === variant.toLowerCase().trim()
+        );
+        if (match && calendarEvents[match]) {
+          return calendarEvents[match];
+        }
+      }
+    }
+
+    return null;
   };
 
   const formatDate = (date) => {
@@ -97,15 +166,22 @@ export default function MPsPage() {
       return 'active'; // Released but no due date
     }
     
+    // Grace period ends 24 hours after 11:59pm of the due date
+    // So if due date is Dec 10, grace period ends at 11:59pm Dec 11
     const gracePeriodEnd = new Date(dueDate);
-    gracePeriodEnd.setHours(gracePeriodEnd.getHours() + 24);
+    gracePeriodEnd.setHours(23, 59, 59, 999); // Set to 11:59:59.999pm of due date
+    gracePeriodEnd.setDate(gracePeriodEnd.getDate() + 1); // Add 1 day (so 11:59pm next day)
     
     if (now > gracePeriodEnd) {
       return 'inactive'; // Past grace period
     }
     
-    if (now > dueDate) {
-      return 'grace period'; // In grace period
+    // Check if we're past the due date (need to handle if due date has a time)
+    const dueDateEnd = new Date(dueDate);
+    dueDateEnd.setHours(23, 59, 59, 999); // End of due date
+    
+    if (now > dueDateEnd) {
+      return 'grace'; // In grace period
     }
     
     return 'active'; // Between release and due
@@ -116,12 +192,9 @@ export default function MPsPage() {
     const mpData = mps.find(mp => mp.number === i);
     const mpContent = allMPs.find(mp => mp.number === i);
     
-    // Auto-generate calendar event names
-    const releaseEventName = `MP${i} Release`;
-    const dueEventName = `MP${i} Due`;
-    
-    const releaseEvent = calendarEvents[releaseEventName];
-    const dueEvent = calendarEvents[dueEventName];
+    // Use flexible lookup for calendar events
+    const releaseEvent = findCalendarEvent(i, 'Release');
+    const dueEvent = findCalendarEvent(i, 'Due');
     
     const now = new Date();
     const isReleased = !releaseEvent || (releaseEvent.rawDate <= now);
@@ -150,10 +223,10 @@ export default function MPsPage() {
 
   const getStatusColor = (status) => {
     switch(status) {
-      case 'active': return '#86efac'; // Light green
-      case 'grace': return '#fcd34d'; // Light yellow
-      case 'inactive': return colors.lightGray; // Gray
-      default: return colors.lightGray;
+      case 'active': return colors.statusActive;
+      case 'grace': return colors.statusGrace;
+      case 'inactive': return colors.statusInactive;
+      default: return colors.statusInactive;
     }
   };
 
@@ -356,12 +429,12 @@ export default function MPsPage() {
               >
                 <div style={styles.mpNumber}>MP{mp.number}</div>
                 <div style={styles.mpTitle}>{mp.title}</div>
-                <div style={styles.statusTag(mp.status)}>
-                  {getStatusText(mp.status)}
-                </div>
-                {mp.dueDate && (
-                  <div style={styles.mpDue}>Due: {mp.dueDate}</div>
+                {(mp.status === 'active' || mp.status === 'grace') && (
+                  <div style={styles.statusTag(mp.status)}>
+                    {getStatusText(mp.status)}
+                  </div>
                 )}
+                <div style={styles.mpDue}>Due: {mp.dueDate || 'N/A'}</div>
               </a>
             ) : (
               <div
@@ -370,12 +443,12 @@ export default function MPsPage() {
               >
                 <div style={styles.mpNumber}>MP{mp.number}</div>
                 <div style={styles.mpTitle}>{mp.title}</div>
-                <div style={styles.statusTag(mp.status)}>
-                  {getStatusText(mp.status)}
-                </div>
-                {mp.dueDate && (
-                  <div style={styles.mpDue}>Due: {mp.dueDate}</div>
+                {(mp.status === 'active' || mp.status === 'grace') && (
+                  <div style={styles.statusTag(mp.status)}>
+                    {getStatusText(mp.status)}
+                  </div>
                 )}
+                <div style={styles.mpDue}>Due: {mp.dueDate || 'N/A'}</div>
               </div>
             )
           ))}

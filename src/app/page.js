@@ -70,7 +70,7 @@ export default function CoursePortal() {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
-      console.log(line)
+          console.log(line)
 
 
       if (line === 'BEGIN:VEVENT') {
@@ -83,7 +83,7 @@ export default function CoursePortal() {
           const now = new Date();
           
            console.log(
-          '[VEVENT]',
+          'LOGGING',
           'summary:', currentEvent.summary,
           'raw date:', currentEvent.date,
           'eventDate:', formatDate(eventDate),
@@ -102,11 +102,28 @@ export default function CoursePortal() {
         }
         currentEvent = null;
       } else if (currentEvent) {
-        if (line.startsWith('DTSTART')) {
-          const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
-          if (dateMatch) {
-            currentEvent.date = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`;
-          }
+       if (line.startsWith('DTSTART')) {
+  // Match date AND time: 20251211T160000 (now without Z since it's local)
+  const dateTimeMatch = line.match(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/);
+  if (dateTimeMatch) {
+    const [_, year, month, day, hour, minute, second] = dateTimeMatch;
+    // Create local date object
+    currentEvent.date = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(hour),
+      parseInt(minute),
+      parseInt(second)
+    );
+  } else {
+    // Fallback for date-only format
+    const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
+    if (dateMatch) {
+      const [_, year, month, day] = dateMatch;
+      currentEvent.date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    }
+  }
         } else if (line.startsWith('SUMMARY:')) {
           currentEvent.summary = line.substring(8);
         }
@@ -122,7 +139,7 @@ export default function CoursePortal() {
 
   const formatDate = (date) => {
     const month = date.getMonth() + 1;
-    const day = date.getDate() + 1;
+    const day = date.getDate();
     return `${month}/${day}`;
   };
 

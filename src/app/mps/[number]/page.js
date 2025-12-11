@@ -44,13 +44,8 @@ export default function MPPage({ params }) {
 
   const fetchMPDates = async () => {
     try {
-      // First get the calendar URL from config
-      const configResponse = await fetch('/data/calendar-config.json')
-      const config = await configResponse.json()
-      const calendarUrl = config.scheduleCalendar
-      
-      // Then fetch the calendar data
-      const response = await fetch(`/api/calendar?url=${encodeURIComponent(calendarUrl)}`)
+      // Just fetch from API - it handles the config internally
+      const response = await fetch('/api/calendar')
       const icsData = await response.text()
       const { release, due } = parseICSForMPDates(icsData, params.number)
       setDates({ release, due })
@@ -77,11 +72,11 @@ export default function MPPage({ params }) {
           const mpPattern = new RegExp(`\\bmp\\s*${mpNumber}\\b`, 'i')
           
           if (mpPattern.test(summary)) {
-            if (summary.includes('released') ) {
+            if (summary.includes('release')) {
               release = formatDateWithTime(currentEvent.date, currentEvent.time)
             } else if (summary.includes('due')) {
               due = formatDateWithTime(currentEvent.date, null, true) // true = add 11:59pm
-            } else if (!summary.includes('released') && !due) {
+            } else if (!summary.includes('release') && !due) {
               // If it's just "MP1" with no qualifier, assume it's the due date
               due = formatDateWithTime(currentEvent.date, null, true)
             }

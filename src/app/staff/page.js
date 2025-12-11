@@ -1,98 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
-
-const colors = {
-  white: '#FFFFFF',
-  black: '#000000',
-  cream: '#F5F1E8',
-  navCream: '#F5F1E8',
-  navOrange: '#FFD4A3',
-  navBlue: '#C5E3F6',
-  lightGray: '#F5F5F5',
-  mediumGray: '#666666',
-  darkGray: '#333333',
-  focusBlue: '#0066CC'
-};
-
-// Sample staff data - replace with your actual data
-const professors = [
-  { 
-    id: 1, 
-    name: 'Luther Tychonievich', 
-    bio: 'This is a short biography about the professor. You can add more details about their research, teaching interests, and background here.'
-  },
-  { 
-    id: 2, 
-    name: 'Jule Schatz', 
-    bio: 'This is a short biography about the professor. You can add more details about their research, teaching interests, and background here.'
-  }
-];
-
-const graduateTAs = [
-  { 
-    id: 3, 
-    name: 'Daixuan Li', 
-    bio: 'This is a short biography about the graduate TA. You can add details about their research area and teaching experience.'
-  },
-  { 
-    id: 4, 
-    name: 'Otto Piramuthu', 
-    bio: 'This is a short biography about the graduate TA. You can add details about their research area and teaching experience.'
-  },
-  { 
-    id: 5, 
-    name: 'Andrea Watkins', 
-    bio: 'This is a short biography about the graduate TA. You can add details about their research area and teaching experience.'
-  }
-];
-
-const undergraduateCAs = [
-  { 
-    id: 6, 
-    name: 'Roma Chandra', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 7, 
-    name: 'Janice Mei', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 8, 
-    name: 'Michelle Ru',
-    image: '/profile_img/michelle_ru.jpeg', 
-    bio: 'Michelle is a senior studying CS + Chemistry with a minor in statistics. She took CS 340 in Fall of 2024 and has been a CA since Spring of 2025. Her favorite MP is UTF-8. Outside of school she likes to bake, watch movies, and hang out with her friends.'
-  },
-  { 
-    id: 9, 
-    name: 'Nick Tetreault', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 10, 
-    name: 'Kavya Sachdeva', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 11, 
-    name: 'Frank Schmidt', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 12, 
-    name: 'Arunima Suri', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  },
-  { 
-    id: 13, 
-    name: 'Sarah Xu', 
-    bio: 'This is a short biography about the undergraduate CA. You can add details about their interests and experience.'
-  }
-];
+import React, { useState, useEffect } from 'react';
+import { colors } from '../../styles/colors';
 
 const StaffCard = ({ person }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  
+  // Auto-prepend /profile_img/ if image is provided
+  const imagePath = person.image ? `/profile_img/${person.image}` : null;
 
   return (
     <div
@@ -123,20 +38,21 @@ const StaffCard = ({ person }) => {
             width: '220px',
             height: '280px',
             backfaceVisibility: 'hidden',
-            backgroundColor: colors.cream,
+            backgroundColor: colors.lightGray,
+            border: `2px solid ${colors.tableBorder}`,
             borderRadius: '16px',
             padding: '24px 20px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '24px',
+            gap: '16px',
             boxSizing: 'border-box'
           }}
         >
           <h3 style={{
             fontSize: '18px',
-            fontWeight: '700',
+            fontWeight: '600',
             color: colors.black,
             margin: 0,
             textAlign: 'center'
@@ -144,46 +60,58 @@ const StaffCard = ({ person }) => {
             {person.name}
           </h3>
           
-  {/* Avatar */}
-  <div
-    style={{
-      width: '120px',
-      height: '120px',
-      backgroundColor: '#B8C9D9',
-      borderRadius: '20px',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}
-  >
-    {person.image ? (
-        <img 
-          src={person.image} 
-          alt={person.name}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover'
-          }}
-        />
-      ) : (
-        <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="28" r="16" fill={colors.black} />
-          <path d="M12 72C12 55 24 48 40 48C56 48 68 55 68 72" fill={colors.black} />
-        </svg>
-      )}
-      </div>
-            
+          {person.pronunciation && (
             <p style={{
-              fontSize: '12px',
+              fontSize: '14px',
               color: colors.mediumGray,
               margin: 0,
+              fontStyle: 'italic',
               textAlign: 'center'
             }}>
-              Short Bio
+              ({person.pronunciation})
             </p>
+          )}
+          
+          {/* Avatar */}
+          <div
+            style={{
+              width: '120px',
+              height: '120px',
+              backgroundColor: colors.navBlue,
+              borderRadius: '20px',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            {imagePath ? (
+              <img 
+                src={imagePath} 
+                alt={person.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            ) : (
+              <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
+                <circle cx="40" cy="28" r="16" fill={colors.black} />
+                <path d="M12 72C12 55 24 48 40 48C56 48 68 55 68 72" fill={colors.black} />
+              </svg>
+            )}
           </div>
+            
+          <p style={{
+            fontSize: '13px',
+            color: colors.mediumGray,
+            margin: 0,
+            textAlign: 'center'
+          }}>
+            Click to see bio
+          </p>
+        </div>
 
         {/* Back of card */}
         <div
@@ -193,7 +121,8 @@ const StaffCard = ({ person }) => {
             width: '220px',
             height: '280px',
             backfaceVisibility: 'hidden',
-            backgroundColor: colors.cream,
+            backgroundColor: colors.lightGray,
+            border: `2px solid ${colors.tableBorder}`,
             borderRadius: '16px',
             padding: '24px 20px',
             display: 'flex',
@@ -207,7 +136,7 @@ const StaffCard = ({ person }) => {
         >
           <h3 style={{
             fontSize: '16px',
-            fontWeight: '700',
+            fontWeight: '600',
             color: colors.black,
             margin: '0 0 16px 0',
             textAlign: 'center'
@@ -230,6 +159,19 @@ const StaffCard = ({ person }) => {
 };
 
 export default function StaffPage() {
+  const [staffData, setStaffData] = useState([]);
+
+  useEffect(() => {
+    // Load staff data from JSON
+    fetch('/data/staff.json')
+      .then(response => response.json())
+      .then(data => setStaffData(data.staff))
+      .catch(error => console.error('Error loading staff:', error));
+  }, []);
+
+  const professors = staffData.filter(person => person.role === 'professor');
+  const courseStaff = staffData.filter(person => person.role === 'staff');
+
   const navItems = [
     { label: 'Home', color: colors.navCream, group: 1, href: '/' },
     { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
@@ -277,22 +219,21 @@ export default function StaffPage() {
     mainContent: {
       maxWidth: '1200px',
       margin: '0 auto',
-      padding: '24px 32px'
+      padding: '48px 32px'
     },
     pageTitle: {
-      fontSize: '36px',
-      fontWeight: '800',
+      fontSize: '48px',
+      fontWeight: 'bold',
       textAlign: 'center',
-      marginBottom: '32px',
-      color: colors.black,
-      letterSpacing: '-0.02em'
+      marginBottom: '48px',
+      color: colors.black
     },
     sectionTitle: {
-      fontSize: '28px',
-      fontWeight: '700',
-      marginBottom: '24px',
+      fontSize: '32px',
+      fontWeight: '600',
+      marginBottom: '32px',
+      marginTop: '64px',
       color: colors.black,
-      letterSpacing: '-0.01em',
       textAlign: 'center'
     },
     cardsContainer: {
@@ -304,7 +245,7 @@ export default function StaffPage() {
     },
     cardsContainerCAs: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(4, 220px)',
+      gridTemplateColumns: 'repeat(auto-fit, 220px)',
       gap: '24px',
       justifyContent: 'center',
       marginBottom: '48px'
@@ -370,34 +311,12 @@ export default function StaffPage() {
 
       {/* Main Content */}
       <main style={styles.mainContent}>
-        <h1 style={styles.pageTitle}>Staff</h1>
-        
-        {/* Professors Section */}
+        <h1 style={styles.pageTitle}>Course Staff</h1>
+        {/* Course Staff Section */}
         <section>
-          <h2 style={styles.sectionTitle}>Professors</h2>
-          <div style={styles.cardsContainer}>
-            {professors.map(professor => (
-              <StaffCard key={professor.id} person={professor} />
-            ))}
-          </div>
-        </section>
-
-        {/* Graduate TAs Section */}
-        <section>
-          <h2 style={styles.sectionTitle}>Graduate TAs</h2>
-          <div style={styles.cardsContainer}>
-            {graduateTAs.map(ta => (
-              <StaffCard key={ta.id} person={ta} />
-            ))}
-          </div>
-        </section>
-
-        {/* Undergraduate CAs Section */}
-        <section>
-          <h2 style={styles.sectionTitle}>Undergraduate CAs</h2>
           <div style={styles.cardsContainerCAs}>
-            {undergraduateCAs.map(ca => (
-              <StaffCard key={ca.id} person={ca} />
+            {courseStaff.map((staff, idx) => (
+              <StaffCard key={idx} person={staff} />
             ))}
           </div>
         </section>

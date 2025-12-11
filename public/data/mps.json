@@ -1,0 +1,19 @@
+{
+  "mps": [
+    {
+      "number": 0,
+      "title": "Enviornment Setup",
+      "prairielearn": ""
+    },
+    {
+      "number": 1,
+      "title": "Debugging",
+      "prairielearn": "https://us.prairielearn.com/pl/course_instance/YOUR_INSTANCE/assessment/YOUR_ID"
+    },
+    {
+      "number": 2,
+      "title": "C++ to C",
+      "prairielearn": "https://us.prairielearn.com/pl/course_instance/YOUR_INSTANCE/assessment/YOUR_ID"
+    }
+  ]
+}

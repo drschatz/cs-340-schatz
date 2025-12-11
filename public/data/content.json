@@ -1,0 +1,52 @@
+{
+  "lectures": [
+    {
+      "date": "2/18",
+      "topic": "Introduction to Python",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["python-basics", "python-setup"]
+    },
+    {
+      "date": "2/20",
+      "topic": "Python Data Structures",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "/slides/lec2.pdf",
+      "recording": "https://mediaspace.illinois.edu/YOUR_VIDEO_ID",
+      "texts": ["data-structures"]
+    },
+    {
+      "date": "2/25",
+      "topic": "Memory Management",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "/slides/lec3.pdf",
+      "recording": "https://mediaspace.illinois.edu/YOUR_VIDEO_ID",
+      "texts": ["memory-basics", "pointers-guide"]
+    },
+    {
+      "date": "2/27",
+      "topic": "Pointers and Arrays",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "/slides/lec4.pdf",
+      "recording": "https://mediaspace.illinois.edu/YOUR_VIDEO_ID",
+      "texts": ["arrays-in-c"]
+    },
+    {
+      "date": "3/3",
+      "topic": "Binary Data Representation",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "/slides/lec5.pdf",
+      "recording": "https://mediaspace.illinois.edu/YOUR_VIDEO_ID",
+      "texts": ["binary-systems"]
+    },
+    {
+      "date": "3/5",
+      "topic": "Caching Basics",
+      "slides_google": "https://docs.google.com/presentation/d/YOUR_SLIDE_ID_HERE",
+      "slides_pdf": "/slides/lec6.pdf",
+      "recording": "https://mediaspace.illinois.edu/YOUR_VIDEO_ID",
+      "texts": ["cache-memory"]
+    }
+  ]
+}

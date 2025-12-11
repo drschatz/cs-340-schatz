@@ -1,110 +1,116 @@
-import { makeSource, defineDocumentType } from "@contentlayer/source-files";
+import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
-import GithubSlugger from "github-slugger";
-import readingTime from "reading-time";
-
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-
-const Doc = defineDocumentType(() => ({
-  name: "Doc",
-  filePathPattern: "**/**/*.mdx",
-  contentType: "mdx",
+export const Syllabus = defineDocumentType(() => ({
+  name: 'Syllabus',
+  filePathPattern: `syllabus.mdx`,
+  contentType: 'mdx',
   fields: {
-    title: {
-      type: "string",
-      required: true,
-    },
-    publishedAt: {
-      type: "date",
-      required: true,
-    },
-    updatedAt: {
-      type: "date",
-      required: true,
-    },
-    description: {
-      type: "string",
-      required: true,
-    },
-    isPublished: {
-      type: "boolean",
-      required: true,
-    },
-    author: {
-      type: "list",
-      of: {
-        type: "string",
-      },
-      required: true,
-    },
-    tags: {
-      type: "list",
-      of: {
-        type: "string",
-      },
-    },
-    chapterTitle: {
-      type: "string",
-      required: true,
-    },
-    chapterIdx: {
-      type: "number",
-      required: true,
-    },
-    sectionIdx: {
-      type: "number",
-      required: true,
-    },
+    title: { type: 'string', required: false },
   },
   computedFields: {
-    url: {
-      type: "string",
-      resolve: (doc) => `/course-book/${doc._raw.flattenedPath}`,
-    },
-    readingTime: {
-      type: "json",
-      resolve: (doc) => readingTime(doc.body.raw),
-    },
+    url: { type: 'string', resolve: (doc) => `/syllabus` },
     toc: {
-      type: "json",
+      type: 'json',
       resolve: async (doc) => {
-        const regulrExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
-        const slugger = new GithubSlugger();
-        const headings = Array.from(doc.body.raw.matchAll(regulrExp)).map(
-          ({ groups }) => {
-            const flag = groups?.flag;
-            const content = groups?.content;
-
-            return {
-              level:
-                flag?.length == 1 ? "one" : flag?.length == 2 ? "two" : "three",
-              text: content,
-              slug: content ? slugger.slug(content) : undefined,
-            };
-          }
-        );
-
+        // Extract headings for TOC from markdown
+        const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+        const headings = [];
+        let match;
+        while ((match = headingRegex.exec(doc.body.raw)) !== null) {
+          const level = match[1].length === 2 ? 'two' : 'three';
+          const text = match[2].trim();
+          // Create slug from text (same as rehype-slug does)
+          const slug = text
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '');
+          headings.push({ level, text, slug });
+        }
         return headings;
-      },
-    },
+      }
+    }
   },
-}));
+}))
+
+export const Reading = defineDocumentType(() => ({
+  name: 'Reading',
+  filePathPattern: `readings/*.md`,
+  contentType: 'markdown',
+  fields: {
+    title: { type: 'string', required: true },
+    description: { type: 'string', required: false },
+  },
+  computedFields: {
+    url: { 
+      type: 'string', 
+      resolve: (doc) => `/readings/${doc._raw.flattenedPath.replace('readings/', '')}` 
+    },
+    slug: {
+      type: 'string',
+      resolve: (doc) => doc._raw.flattenedPath.replace('readings/', '')
+    }
+  },
+}))
+
+export const MP = defineDocumentType(() => ({
+  name: 'MP',
+  filePathPattern: `mps/*.md`,
+  contentType: 'markdown',
+  fields: {
+    title: { type: 'string', required: true },
+    subtitle: { type: 'string', required: false },
+    author: { type: 'string', required: false },
+    summary: { type: 'string', required: false },
+  },
+  computedFields: {
+    url: { 
+      type: 'string', 
+      resolve: (doc) => `/mps/${doc._raw.flattenedPath.replace('mps/', '')}` 
+    },
+    slug: {
+      type: 'string',
+      resolve: (doc) => doc._raw.flattenedPath.replace('mps/', '')
+    },
+    number: {
+      type: 'number',
+      resolve: (doc) => {
+        const match = doc._raw.flattenedPath.match(/mp(\d+)/i);
+        return match ? parseInt(match[1]) : null;
+      }
+    }
+  },
+}))
+
+export const Doc = defineDocumentType(() => ({
+  name: 'Doc',
+  filePathPattern: `**/*.{md,mdx}`,
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    description: { type: 'string', required: false },
+  },
+  computedFields: {
+    url: { type: 'string', resolve: (doc) => `/${doc._raw.flattenedPath}` },
+  },
+}))
 
 export default makeSource({
-  contentDirPath: "content",
-  documentTypes: [Doc],
+  contentDirPath: 'content',
+  documentTypes: [Syllabus, Reading, MP, Doc],
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      [rehypeAutolinkHeadings],
       [
-        rehypePrettyCode,
+        rehypeAutolinkHeadings,
         {
-          theme: "github-dark",
+          behavior: 'wrap',
+          properties: {
+            className: ['anchor'],
+          },
         },
       ],
     ],
   },
-});
+})

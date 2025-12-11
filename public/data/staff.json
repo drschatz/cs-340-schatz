@@ -1,0 +1,88 @@
+{
+  "staff": [
+    {
+      "name": "Jule Schatz",
+      "pronunciation": "",
+      "bio": "This is a short biography about the professor. You can add more details about their research, teaching interests, and background here.",
+      "role": "professor",
+      "image": ""
+    },
+    {
+      "name": "Daixuan Li",
+      "pronunciation": "",
+      "bio": "This is a short biography about the graduate TA. You can add details about their research area and teaching experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Otto Piramuthu",
+      "pronunciation": "",
+      "bio": "This is a short biography about the graduate TA. You can add details about their research area and teaching experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Andrea Watkins",
+      "pronunciation": "",
+      "bio": "This is a short biography about the graduate TA. You can add details about their research area and teaching experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Roma Chandra",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Janice Mei",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Michelle Ru",
+      "pronunciation": "",
+      "bio": "Michelle is a senior studying CS + Chemistry with a minor in statistics. She took CS 340 in Fall of 2024 and has been a CA since Spring of 2025. Her favorite MP is UTF-8. Outside of school she likes to bake, watch movies, and hang out with her friends.",
+      "role": "staff",
+      "image": "michelle_ru.jpeg"
+    },
+    {
+      "name": "Nick Tetreault",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Kavya Sachdeva",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Frank Schmidt",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Arunima Suri",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Sarah Xu",
+      "pronunciation": "",
+      "bio": "This is a short biography about the undergraduate CA. You can add details about their interests and experience.",
+      "role": "staff",
+      "image": ""
+    }
+  ]
+}

@@ -4,9 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { colors } from '../../styles/colors';
 import { allMPs } from '.contentlayer/generated';
 
-console.log("PAGE COMPONENT LOADED");
-
-
 export default function MPsPage() {
   const [mps, setMps] = useState([]);
   const [calendarEvents, setCalendarEvents] = useState({});
@@ -29,7 +26,7 @@ export default function MPsPage() {
       // First get the calendar URL from config
       const configResponse = await fetch('/data/calendar-config.json');
       const config = await configResponse.json();
-      const calendarUrl = config.icsUrl;
+      const calendarUrl = config.scheduleEmbedUrl;
       
       // Then fetch the calendar data
       const response = await fetch(`/api/calendar?url=${encodeURIComponent(calendarUrl)}`);
@@ -54,8 +51,7 @@ export default function MPsPage() {
       } else if (line === 'END:VEVENT' && currentEvent) {
         if (currentEvent.date && currentEvent.summary) {
           const summary = currentEvent.summary.toLowerCase();
-          const isRelease = summary.includes('release');
-          
+          const isRelease = summary.includes('released');
           events[currentEvent.summary] = {
             date: formatDate(new Date(currentEvent.date)),
             rawDate: new Date(currentEvent.date),
@@ -105,7 +101,7 @@ export default function MPsPage() {
     }
     
     if (now > dueDate) {
-      return 'grace period'; // In grace period
+      return 'grace'; // In grace period
     }
     
     return 'active'; // Between release and due
@@ -118,7 +114,7 @@ export default function MPsPage() {
     
     // Auto-generate calendar event names
     const releaseEventName = `MP${i} Release`;
-    const dueEventName = `MP${i} Due`;
+    const dueEventName = `MP${i}`;
     
     const releaseEvent = calendarEvents[releaseEventName];
     const dueEvent = calendarEvents[dueEventName];

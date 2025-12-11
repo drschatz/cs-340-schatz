@@ -4,9 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { colors } from '../../styles/colors';
 import { allMPs } from '.contentlayer/generated';
 
-console.log("PAGE COMPONENT LOADED");
-
-
 export default function MPsPage() {
   const [mps, setMps] = useState([]);
   const [calendarEvents, setCalendarEvents] = useState({});
@@ -24,15 +21,9 @@ export default function MPsPage() {
     fetchCalendarDates();
   }, []);
 
-  const fetchCalendarDates = async () => {
+const fetchCalendarDates = async () => {
     try {
-      // First get the calendar URL from config
-      const configResponse = await fetch('/data/calendar-config.json');
-      const config = await configResponse.json();
-      const calendarUrl = config.icsUrl;
-      
-      // Then fetch the calendar data
-      const response = await fetch(`/api/calendar?url=${encodeURIComponent(calendarUrl)}`);
+      const response = await fetch('/api/calendar');
       const icsData = await response.text();
       const events = parseICSForDates(icsData);
       setCalendarEvents(events);
@@ -90,22 +81,22 @@ export default function MPsPage() {
     const now = new Date();
     
     if (!releaseDate || releaseDate > now) {
-      return 'inactive'; // Not released yet
+      return 'not released'; // Not released yet
     }
     
     if (!dueDate) {
-      return 'active'; // Released but no due date
+      return 'no due date'; // Released but no due date
     }
     
     const gracePeriodEnd = new Date(dueDate);
     gracePeriodEnd.setHours(gracePeriodEnd.getHours() + 24);
     
     if (now > gracePeriodEnd) {
-      return 'inactive'; // Past grace period
+      return 'past due date and grace'; // Past grace period
     }
     
     if (now > dueDate) {
-      return 'grace period'; // In grace period
+      return 'during grace'; // In grace period
     }
     
     return 'active'; // Between release and due
@@ -118,7 +109,7 @@ export default function MPsPage() {
     
     // Auto-generate calendar event names
     const releaseEventName = `MP${i} Release`;
-    const dueEventName = `MP${i} Due`;
+    const dueEventName = `MP${i}`;
     
     const releaseEvent = calendarEvents[releaseEventName];
     const dueEvent = calendarEvents[dueEventName];
@@ -357,7 +348,7 @@ export default function MPsPage() {
                 <div style={styles.mpNumber}>MP{mp.number}</div>
                 <div style={styles.mpTitle}>{mp.title}</div>
                 <div style={styles.statusTag(mp.status)}>
-                  {getStatusText(mp.status)}
+                  {mp.status}
                 </div>
                 {mp.dueDate && (
                   <div style={styles.mpDue}>Due: {mp.dueDate}</div>
@@ -371,7 +362,7 @@ export default function MPsPage() {
                 <div style={styles.mpNumber}>MP{mp.number}</div>
                 <div style={styles.mpTitle}>{mp.title}</div>
                 <div style={styles.statusTag(mp.status)}>
-                  {getStatusText(mp.status)}
+                  {mp.status}
                 </div>
                 {mp.dueDate && (
                   <div style={styles.mpDue}>Due: {mp.dueDate}</div>

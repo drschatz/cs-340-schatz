@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { allSyllabuses } from '@/.contentlayer/generated';
+import { allSyllabuses } from '.contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import { colors } from '../../styles/colors';
 
 export default function SyllabusPage() {
   const syllabus = allSyllabuses[0];
@@ -14,17 +15,17 @@ export default function SyllabusPage() {
   const MDXContent = useMDXComponent(syllabus.body.code);
 
   const navItems = [
-    { label: 'Home', color: '#fff8e5', group: 1, href: '/' },
-    { label: 'Syllabus', color: '#fff8e5', group: 1, href: '/syllabus' },
-    { label: 'Staff', color: '#fff8e5', group: 1, href: '/staff' },
-    { label: 'Content', color: '#fff8e5', group: 1, href: '/content' },
-    { label: 'MPs', color: '#fff8e5', group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: '#fce8d0', group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: '#dbeafe', group: 3, href: '/campuswire' }
+    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
+    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
+    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
+    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
+    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
+    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
+    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
   ];
 
-  // Process ToC without requiring numbers
-  const processedToc = syllabus.toc.reduce((acc, item) => {
+  // Process ToC without requiring numbers (only if toc exists)
+  const processedToc = syllabus.toc ? syllabus.toc.reduce((acc, item) => {
     if (item.level === 'two') {
       // Main section (##)
       acc.push({
@@ -40,12 +41,12 @@ export default function SyllabusPage() {
       });
     }
     return acc;
-  }, []);
+  }, []) : [];
 
   const styles = {
     container: {
       minHeight: '100vh',
-      backgroundColor: '#fff',
+      backgroundColor: colors.white,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     },
     nav: {
@@ -71,7 +72,7 @@ export default function SyllabusPage() {
       backgroundColor: color || 'transparent',
       cursor: 'pointer',
       fontWeight: '500',
-      fontSize: '14px',
+      fontSize: '15px',
       textDecoration: 'none',
       color: 'inherit',
       display: 'inline-block'
@@ -86,7 +87,7 @@ export default function SyllabusPage() {
     },
     sidebar: {
       flex: '0 0 260px',
-      backgroundColor: '#fff8e5',
+      backgroundColor: colors.cream,
       borderRadius: '16px',
       padding: '28px',
       height: 'fit-content',
@@ -101,7 +102,7 @@ export default function SyllabusPage() {
       fontSize: '20px',
       fontWeight: '700',
       marginBottom: '24px',
-      color: '#000',
+      color: colors.black,
       letterSpacing: '-0.01em'
     },
     tocSection: {
@@ -111,18 +112,18 @@ export default function SyllabusPage() {
       fontWeight: '600',
       marginBottom: '10px',
       fontSize: '15px',
-      color: '#000'
+      color: colors.black
     },
     tocLink: {
       textDecoration: 'none',
-      color: '#000',
+      color: colors.black,
       display: 'block'
     },
     tocSubsection: {
       fontSize: '14px',
       marginLeft: '16px',
       marginTop: '8px',
-      color: '#555'
+      color: colors.mediumGray
     }
   };
 
@@ -186,35 +187,37 @@ export default function SyllabusPage() {
       {/* Main Content */}
       <div style={styles.mainContent}>
         {/* Sidebar with Table of Contents */}
-        <aside style={styles.sidebar} role="navigation" aria-label="Table of contents">
-          <h2 style={styles.sidebarTitle}>Contents</h2>
-          <nav>
-            {processedToc.map((section, idx) => (
-              <div key={idx} style={styles.tocSection}>
-                <div style={styles.tocSectionTitle}>
-                  <a 
-                    href={`#${section.slug}`} 
-                    style={styles.tocLink}
-                    className="toc-link"
-                  >
-                    {section.title}
-                  </a>
-                </div>
-                {section.subsections.map((subsection, subIdx) => (
-                  <div key={subIdx} style={styles.tocSubsection}>
+        {processedToc.length > 0 && (
+          <aside style={styles.sidebar} role="navigation" aria-label="Table of contents">
+            <h2 style={styles.sidebarTitle}>Contents</h2>
+            <nav>
+              {processedToc.map((section, idx) => (
+                <div key={idx} style={styles.tocSection}>
+                  <div style={styles.tocSectionTitle}>
                     <a 
-                      href={`#${subsection.slug}`} 
+                      href={`#${section.slug}`} 
                       style={styles.tocLink}
-                      className="toc-link-sub"
+                      className="toc-link"
                     >
-                      {subsection.label}
+                      {section.title}
                     </a>
                   </div>
-                ))}
-              </div>
-            ))}
-          </nav>
-        </aside>
+                  {section.subsections.map((subsection, subIdx) => (
+                    <div key={subIdx} style={styles.tocSubsection}>
+                      <a 
+                        href={`#${subsection.slug}`} 
+                        style={styles.tocLink}
+                        className="toc-link-sub"
+                      >
+                        {subsection.label}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </nav>
+          </aside>
+        )}
 
         {/* Main Content */}
         <main style={styles.content} className="syllabus-content" id="main-content" role="main">
@@ -229,7 +232,7 @@ export default function SyllabusPage() {
           font-size: 42px;
           font-weight: 800;
           margin-bottom: 40px;
-          color: #000;
+          color: ${colors.black};
           line-height: 1.15;
           letter-spacing: -0.02em;
         }
@@ -239,9 +242,9 @@ export default function SyllabusPage() {
           font-weight: 700;
           margin-bottom: 24px;
           padding-bottom: 16px;
-          border-bottom: 2px solid #e5e7eb;
+          border-bottom: 2px solid ${colors.tableBorder};
           margin-top: 56px;
-          color: #000;
+          color: ${colors.black};
           line-height: 1.25;
           letter-spacing: -0.01em;
         }
@@ -251,7 +254,7 @@ export default function SyllabusPage() {
           font-weight: 600;
           margin-bottom: 16px;
           margin-top: 36px;
-          color: #000;
+          color: ${colors.black};
           line-height: 1.4;
         }
         
@@ -268,7 +271,7 @@ export default function SyllabusPage() {
         .syllabus-content p {
           margin-bottom: 20px;
           line-height: 1.75;
-          color: #374151;
+          color: ${colors.darkGray};
           font-size: 16px;
         }
         
@@ -281,19 +284,19 @@ export default function SyllabusPage() {
         
         .syllabus-content li {
           margin-bottom: 14px;
-          color: #374151;
+          color: ${colors.darkGray};
           font-size: 16px;
         }
         
         /* Strong text */
         .syllabus-content strong {
           font-weight: 600;
-          color: #000;
+          color: ${colors.black};
         }
         
         /* Links in body text - simple black underline */
         .syllabus-content a {
-          color: #000;
+          color: ${colors.black};
           text-decoration: underline;
           text-decoration-thickness: 1px;
           text-underline-offset: 3px;
@@ -305,14 +308,14 @@ export default function SyllabusPage() {
         }
         
         .syllabus-content a:focus {
-          outline: 3px solid #000;
+          outline: 3px solid ${colors.focusBlue};
           outline-offset: 3px;
           border-radius: 3px;
         }
         
         /* Table of contents */
         .toc-link {
-          color: #000 !important;
+          color: ${colors.black} !important;
           font-weight: 600;
           transition: opacity 0.2s ease;
         }
@@ -322,12 +325,12 @@ export default function SyllabusPage() {
         }
         
         .toc-link:focus {
-          outline: 3px solid #000;
+          outline: 3px solid ${colors.focusBlue};
           outline-offset: 2px;
         }
         
         .toc-link-sub {
-          color: #555 !important;
+          color: ${colors.mediumGray} !important;
           transition: opacity 0.2s ease;
         }
         
@@ -336,30 +339,30 @@ export default function SyllabusPage() {
         }
         
         .toc-link-sub:focus {
-          outline: 3px solid #000;
+          outline: 3px solid ${colors.focusBlue};
           outline-offset: 2px;
         }
         
         /* Focus visible */
         *:focus-visible {
-          outline: 3px solid #000;
+          outline: 3px solid ${colors.focusBlue};
           outline-offset: 2px;
         }
         
         /* Code styling */
         .syllabus-content code {
-          background: #f3f4f6;
+          background: ${colors.lightGray};
           padding: 3px 7px;
           border-radius: 4px;
           font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
           font-size: 14px;
-          color: #000;
+          color: ${colors.black};
           font-weight: 500;
         }
         
         .syllabus-content pre {
-          background: #1f2937;
-          color: #f3f4f6;
+          background: ${colors.darkGray};
+          color: ${colors.lightGray};
           padding: 20px;
           border-radius: 12px;
           overflow-x: auto;

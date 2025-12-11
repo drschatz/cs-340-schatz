@@ -65,23 +65,34 @@ export default function CoursePortal() {
   const parseICS = (icsText) => {
     const events = [];
     const lines = icsText.split('\n');
+    console.log(lines.length)
     let currentEvent = null;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
+      console.log(line)
+
 
       if (line === 'BEGIN:VEVENT') {
         currentEvent = {};
-      } else if (line === 'END:VEVENT' && currentEvent) {
-        // Only include future HW, MP, Final Project, or Check-off events
+        console.log("event started");
+
+      } else if (line === 'END:VEVENT') {
         if (currentEvent.date && currentEvent.summary) {
           const eventDate = new Date(currentEvent.date);
           const now = new Date();
           
-          // Check if event is HW, MP, Final Project, or Check-off
-          const isRelevant = /\b(HW|MP|Homework|Machine Problem|Final Project|Check-?off)[:|\s]/i.test(currentEvent.summary);
+           console.log(
+          '[VEVENT]',
+          'summary:', currentEvent.summary,
+          'raw date:', currentEvent.date,
+          'eventDate:', formatDate(eventDate),
+          'now:', now.toISOString(),
+          'keep?', eventDate >= now
+        );
+
           
-          if (eventDate >= now && isRelevant) {
+          if (eventDate >= now) {
             events.push({
               date: formatDate(eventDate),
               event: currentEvent.summary,
@@ -102,6 +113,7 @@ export default function CoursePortal() {
       }
     }
 
+    console.log("DONE")
     // Sort by date and take next 4
     return events
       .sort((a, b) => a.fullDate - b.fullDate)
@@ -110,7 +122,7 @@ export default function CoursePortal() {
 
   const formatDate = (date) => {
     const month = date.getMonth() + 1;
-    const day = date.getDate();
+    const day = date.getDate() + 1;
     return `${month}/${day}`;
   };
 

@@ -14,19 +14,50 @@ export type Doc = {
   _raw: Local.RawDocumentData
   type: 'Doc'
   title: string
-  publishedAt: IsoDateTimeString
-  updatedAt: IsoDateTimeString
-  description: string
-  isPublished: boolean
-  author: string[]
-  tags?: string[] | undefined
-  chapterTitle: string
-  chapterIdx: number
-  sectionIdx: number
+  description?: string | undefined
   /** MDX file body */
   body: MDX
   url: string
-  readingTime: json
+}
+
+export type MP = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'MP'
+  title: string
+  subtitle?: string | undefined
+  author?: string | undefined
+  summary?: string | undefined
+  /** Markdown file body */
+  body: Markdown
+  url: string
+  slug: string
+  number: number
+}
+
+export type Reading = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Reading'
+  title: string
+  description?: string | undefined
+  /** Markdown file body */
+  body: Markdown
+  url: string
+  slug: string
+}
+
+export type Syllabus = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Syllabus'
+  title?: string | undefined
+  /** MDX file body */
+  body: MDX
+  url: string
   toc: json
 }  
 
@@ -38,14 +69,17 @@ export type Doc = {
 export type AllTypes = DocumentTypes | NestedTypes
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames
 
-export type DocumentTypes = Doc
-export type DocumentTypeNames = 'Doc'
+export type DocumentTypes = Doc | MP | Reading | Syllabus
+export type DocumentTypeNames = 'Doc' | 'MP' | 'Reading' | 'Syllabus'
 
 export type NestedTypes = never
 export type NestedTypeNames = never
 
 export type DataExports = {
   allDocuments: DocumentTypes[]
+  allSyllabuses: Syllabus[]
+  allReadings: Reading[]
+  allMPs: MP[]
   allDocs: Doc[]
 }
 
@@ -67,6 +101,9 @@ declare global {
 
 export type DocumentTypeMap = {
   Doc: Doc
+  MP: MP
+  Reading: Reading
+  Syllabus: Syllabus
 }
 
 export type NestedTypeMap = {

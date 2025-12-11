@@ -1,0 +1,19 @@
+{
+  "title": "Python Basics",
+  "description": "Introduction to Python programming fundamentals",
+  "body": {
+    "raw": "\n# Python Basics\n\nThis reading covers the fundamental concepts of Python programming.\n\n## Variables and Data Types\n\nPython supports several built-in data types:\n- Integers: `x = 5`\n- Floats: `y = 3.14`\n- Strings: `name = \"Alice\"`\n- Booleans: `is_valid = True`\n\n## Functions\n\nDefine functions using the `def` keyword:\n\n```python\ndef greet(name):\n    return f\"Hello, {name}!\"\n\nprint(greet(\"World\"))\n```\n\n## Control Flow\n\nUse `if`, `elif`, and `else` for conditional logic:\n\n```python\nage = 18\nif age >= 18:\n    print(\"Adult\")\nelse:\n    print(\"Minor\")\n```\n\n## Loops\n\nPython supports `for` and `while` loops:\n\n```python\nfor i in range(5):\n    print(i)\n\nwhile x < 10:\n    x += 1\n```\n",
+    "html": "<h1>Python Basics</h1>\n<p>This reading covers the fundamental concepts of Python programming.</p>\n<h2>Variables and Data Types</h2>\n<p>Python supports several built-in data types:</p>\n<ul>\n<li>Integers: <code>x = 5</code></li>\n<li>Floats: <code>y = 3.14</code></li>\n<li>Strings: <code>name = \"Alice\"</code></li>\n<li>Booleans: <code>is_valid = True</code></li>\n</ul>\n<h2>Functions</h2>\n<p>Define functions using the <code>def</code> keyword:</p>\n<pre><code class=\"language-python\">def greet(name):\n    return f\"Hello, {name}!\"\n\nprint(greet(\"World\"))\n</code></pre>\n<h2>Control Flow</h2>\n<p>Use <code>if</code>, <code>elif</code>, and <code>else</code> for conditional logic:</p>\n<pre><code class=\"language-python\">age = 18\nif age >= 18:\n    print(\"Adult\")\nelse:\n    print(\"Minor\")\n</code></pre>\n<h2>Loops</h2>\n<p>Python supports <code>for</code> and <code>while</code> loops:</p>\n<pre><code class=\"language-python\">for i in range(5):\n    print(i)\n\nwhile x &#x3C; 10:\n    x += 1\n</code></pre>"
+  },
+  "_id": "readings/python-basics.md",
+  "_raw": {
+    "sourceFilePath": "readings/python-basics.md",
+    "sourceFileName": "python-basics.md",
+    "sourceFileDir": "readings",
+    "contentType": "markdown",
+    "flattenedPath": "readings/python-basics"
+  },
+  "type": "Reading",
+  "url": "/readings/python-basics",
+  "slug": "python-basics"
+}

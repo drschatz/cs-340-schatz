@@ -1,0 +1,19 @@
+{
+  "title": "Data Structures in Python",
+  "description": "Common data structures and their usage",
+  "body": {
+    "raw": "\n# Data Structures in Python\n\nLearn about Python's built-in data structures.\n\n## Lists\n\nLists are ordered, mutable sequences:\n\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfruits.append(\"date\")\nprint(fruits[0])  # \"apple\"\n```\n\n## Dictionaries\n\nDictionaries store key-value pairs:\n\n```python\nstudent = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"major\": \"CS\"\n}\nprint(student[\"name\"])\n```\n\n## Tuples\n\nTuples are immutable sequences:\n\n```python\ncoordinates = (10, 20)\nx, y = coordinates\n```\n\n## Sets\n\nSets contain unique elements:\n\n```python\nnumbers = {1, 2, 3, 3, 4}\nprint(numbers)  # {1, 2, 3, 4}\n```\n",
+    "html": "<h1>Data Structures in Python</h1>\n<p>Learn about Python's built-in data structures.</p>\n<h2>Lists</h2>\n<p>Lists are ordered, mutable sequences:</p>\n<pre><code class=\"language-python\">fruits = [\"apple\", \"banana\", \"cherry\"]\nfruits.append(\"date\")\nprint(fruits[0])  # \"apple\"\n</code></pre>\n<h2>Dictionaries</h2>\n<p>Dictionaries store key-value pairs:</p>\n<pre><code class=\"language-python\">student = {\n    \"name\": \"Alice\",\n    \"age\": 20,\n    \"major\": \"CS\"\n}\nprint(student[\"name\"])\n</code></pre>\n<h2>Tuples</h2>\n<p>Tuples are immutable sequences:</p>\n<pre><code class=\"language-python\">coordinates = (10, 20)\nx, y = coordinates\n</code></pre>\n<h2>Sets</h2>\n<p>Sets contain unique elements:</p>\n<pre><code class=\"language-python\">numbers = {1, 2, 3, 3, 4}\nprint(numbers)  # {1, 2, 3, 4}\n</code></pre>"
+  },
+  "_id": "readings/data-structures.md",
+  "_raw": {
+    "sourceFilePath": "readings/data-structures.md",
+    "sourceFileName": "data-structures.md",
+    "sourceFileDir": "readings",
+    "contentType": "markdown",
+    "flattenedPath": "readings/data-structures"
+  },
+  "type": "Reading",
+  "url": "/readings/data-structures",
+  "slug": "data-structures"
+}

@@ -1,135 +1,218 @@
 ---
 title: MP0
-subtitle: IDE and Debugger
-author: Wade Fagen-Ulmschneider
+subtitle: Environment Setup
+number: 0
 ---
 
-This is not a full MP; it is primarily testing your setup and ensuring you are ready for subsequent MPs.
-It is **dramatically easier** than other MPs.
-Don't plan your time on other MPs based on this one.
+This Machine Problem (MP) is NOT turned in on Prairie Learn, instead, to get the points, you will need to get it checked-off at office hours before the deadline or during the grace period (24 hours after the deadline). See the [home page](/) for the office hours schedule and the [syllabus](/syllabus) for course policies.
 
-The purposes of this MP are:
+For this MP only, we will help you during office hours even after the original deadline.
 
-1. Ensure you are set up to do other C-language MPs in this course.
-2. Have you see some of the tools the VS Code debugger can do.
+In this class, we will develop code through two different toolchains. The first, Docker, is used for MPs 1-9. The second, a VM, is only required for MP10 and the final project but can be used for other MPs if docker isn't working. For MP0, you are required to get both toolchains working to avoid future issues. 
 
-Is it possible to create the required `gif.c` without doing these two things? Yes. Should you do that? No.
+You are encouraged to look back at this MP through the course to help with working with the toolchains. 
 
-# Set up your environment
 
-Follow the directions on the MP environment setup page. We'll only use the local toolchain in this MP.
+# Local toolchain with Docker
 
-# Fetch starter code
+## Installation
 
-We have some initial code for your `mp0` for you to get started. Download it from `mp0.zip` and unzip it on your computer into the `cs340` directory you created during the environment setup.
+Install the following tools:
 
-# Use Visual Studio Code
+- [VS Code](https://code.visualstudio.com/download)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-Visual Studio Code (more often called VS Code) is an Integrated Development Environment (IDE) with many features shared with other IDEs. Learning to use it well will help you feel comfortable in other IDEs you may use in the future.
+## Setup
 
-## Projects
+1. Download [cs340.zip](cs340.zip) which contains some basic VS Code and Docker setup and unzip it in a place that you can easily access (you'll need to upload from and download to this folder). We'll call the folder this creates your `cs340` folder for the rest of the semester.
 
-IDEs have the notion of projects, which contain a set of files related to a single task or program. Typically, these reside in a folder and all of its subfolders. In this class, each MP will be its own project, meaning you need to open VS Code in `mp0` or `mp1` or the like, not in some parent folder that contains them all.
+*NOTE: the unzipped folder contains "hidden" folders as well as visible ones; you need to keep the entire unzipped folder intact, not copy its visible contents to another location. If in VS Code you don't see something named `.devcontainer` then you didn't keep all parts of the unzipped folder.*
 
-A folder that is set up to be a VS Code project will have inside of it a folder named `.vscode`. In many systems files and folders with names that start with a `.` are hidden from view.
+There is a file named `Dockerfile` (that exact capitalization, no file extension) with the following text inside of it:
 
-To open the `mp0` folder in VS Code, do one of the following:
+```dockerfile
+FROM docker.io/gcc
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends \
+        make \
+        clang lld gdb lldb valgrind \
+        curl wget git \
+        less nano jq xxd \
+        python3-pytest-aiohttp python3-pip \
+        man manpages manpages-dev \
+    && rm -rf /var/lib/apt/lists/*
+CMD bash
+```
 
-- From a terminal, `cd` into the `mp0` folder and run `code .`
-- Inside of VS Code, use File → Open Folder to open a new folder.
+Docker is a tool for creating an isolated environment called a "container" on your computer. We use it to get the power of a modern Linux development environment on non-Linux computers.
 
-## Integrated Terminal
+2. Run Docker Desktop -- it will do some first-time setup to finish installing itself.
 
-IDEs give access to the terminal, but often add configuration so that it's got everything needed to build the project ready to use. To open VS Code's integrated terminal, use the keyboard shortcut Ctrl+~.
+3. Run VS Code:
+    
+    a. Either open a terminal, `cd` into your `cs340` folder, and type `code .` or open VS Code in another way and then use Open Folder from the File menu and open your `cs340` folder.
+    
+    NOTE: If `code` is not recognized as a command... If you are running MacOS, the [official setup guide](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) explains how to fix this. If you are running a different OS contact course staff.
+        
+    b. Click the Extensions icon in the left bar. Inside this, install the following extensions, all from Microsoft:
+    
+    - `Dev Containers`
+    - `Remote - SSH`
+    - `C/C++`
+    - `Python` (which should automatically also install `Python Debugger`)
+    
+    c. Click the remote icon in the bottom-left corner of VS Code:
+    
+    d. Select "Reopen in Container".
+    
+    *NOTE: If you are asked where to add a configuration... that means VS Code and Docker aren't talking to one another correctly. You either are not in the correct folder or you need to close VS Code, uninstall and re-install Docker, then re-open VS Code and try again. If that doesn't fix it, let us know on Campuswire or office hours and we'll look for another solution.*
+    
+    *NOTE: If you get an error message... Try opening a terminal and running `docker login` or try clearing your docker cache (or uninstalling and reinstalling docker)*
+        
+    e. Wait for the container to build.
+    
+    *NOTE: If you get an error message... Talk to a member of course staff; they can often resolve this. If not, there is an **alternative path**, though it will require some small setup effort **for each MP**:*
+    
+    ### Alternative Path for Docker
 
-Using the integrated terminal, let's verify you are all set up for running C programs by doing the following:
+    1. Build a Docker image manually: from a terminal in the directory containing `Dockerfile`, run
+        
+        ```sh
+        docker build -t cs340_image .
+        ```
+        
+        If it has errors, post them on CampusWire and we'll suggest changes to the Dockerfile to fix them.
+    
+    2. In the `.devcontainer/devcontainer.json` of every MP, replace `"build: {`...`},` with `"image": "cs340_image",`
+    
 
-- On your terminal, run `make` to compile the provided code.
-- If you receive any errors, read the error messages. They will often be helpful to describe what's going wrong. If you're stuck here, reach out to get help!
+## Verify Docker
 
-## Visual Debugger
+When running VS Code, you should see the bottom-left button says "Dev Container: Existing Dockerfile." If it does not say this, redo the "Reopen in Container" step from Setup.
 
-IDEs provide a user interface over the normal debugger tools for your language. In VS Code, the debugger tool to use and how to attach it to the visual debugger is defined in `.vscode/launch.json`. Designing these configuration files is not a goal of this course, so we provide them for each MP.
+In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 
-Our `launch.json` files for `C` programs use `Makefile`s, one of the oldest and best-established command-line build management tools. You can compile your code from the command line by typing `make` and run any tests we provided by typing `make test`. The `launch.json` will do these two commands but attach a debugger to the running code, and may also have other commands for handling specific cases in some MPs.
+- See the prompt line is `root@`hash`:/workspaces/cs340#` where "hash" is some random-looking string of letters and numbers.
+- Run `gcc --version` to see a version number (`13.3.0` or later).
+- Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
+- Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
 
-You can run VS Code's debugger in two ways:
+# Remote toolchain with a Virtual Machine
 
-- On the left side of Visual Studio Code, find the "Run and Debug" Interface
-- Once on the "Run and Debug" interface, find the green "Debug" arrow to start your program with a visual debugger
+All parts of the VM process require that you are either on the campus network or [using the university's VPN](https://answers.uillinois.edu/illinois/98773).
 
-Depending on the project, it may ask you to pick a launch configuration to run and may ask for per-run configuration.
+## Identify and Turn On your VM
 
-For MP0, start by accepting the defaults when you run the debugger. After a moment the debugger will pause execution because of a segmentation fault.
+You will be given a single VM. It's name will have the form `fa25-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
 
-# Debug the Code
+The VM will be turned off after a few hours of idleness. To turn it back on, follow these directions: <https://answers.uillinois.edu/illinois.engineering/page.php?id=108475>. Your VM needs to be on to interact with it in any way.
 
-To help you learn how to use the debugger, we provide a version of `gif.c` that has multiple bugs inserted. Each bug is designed to help you see the value of a different aspect of the debugger.
+*NOTE: vsphere, the web portal for turning on VMs, can sometimes have intermittent trouble. "Other Ways" #2 below does not depend on vsphere.*
 
-Each bug can be fixed by editing a single line of code in `gif.c`: all but one by commenting out a line and the last by making one change to a line. That's obviously not true of most real bugs: they tend to span many lines and even many files. Our goal in this MP is not to show you what real bugs look like, it's to show you what the debugger can do.
+### Other Ways
 
-## Segmentation fault
+All ways of powering on your VM require you to either (a) be on campus or (b) be connected to [the VPN](https://answers.uillinois.edu/illinois/98773).
 
-A segmentation fault occurs when code tries to dereference a pointer to memory that is not in use. Memory references occur with the `*address`, `address->`, and `address[offset]` operators. Debuggers are very good at locating segmentation faults, but the bug that caused the fault is often in an earlier line that computed the address (or failed to do so).
+1. If <https://vc.cs.illinois.edu/> is rejecting your credentials, try opening it in a private or incognito browser window. The page has an error in its handling of cookies that can sometimes make a normal window reject your authentication.
 
-MP0 has several segmentation faults.
+2. The Engineering Workstations have a script for turning on your VM. To use it:
+    
+    a. From a command line, type `ssh `netid`@linux.ews.illinois.edu`
+    
+    b. Log in with your NetID and its password. Note that the password might not appear on screen as you type it, but it is still being accepted.
+    
+    c. You'll see a few dozen lines of text about EWS, and then a prompt where you can type
+    
+    d. Type `cs-vmfarm-poweron`
+    
+    e. Enter the information that it requests, including the full VM name (`fa25-cs340-`num`.cs.illinois.edu`)
+    
+    f. Type `exit` to close your connection to EWS
 
-## Stack Smashing
+*NOTE: Your VM's password is your NetID password. If you change your NetID password it may take a couple of days for the VM to catch up.*
 
-Stack smashing occurs when code tries to change memory that belongs to a different function's activation record.
+### Connecting without typing your password
 
-Recall that each function is given a region of memory on the call stack, called an activation record, in which to store its arguments and local variables. The function that called the current function's activation record is right after the current activation record in memory. In between these two the compiler inserts special guards to make sure memory accesses don't cross the boundary: if they do, that's stack smashing.
+VS Code connects to the virtual machine using a protocol and tool called SSH. SSH has several ways to authenticate users: it defaults to checking passwords, but can be set up to compare files on your machine and the virtual machine instead. Because there are several implementations of SSH, the details of how that works vary, but the following should work for most students.
 
-Stack smashing is one of several bugs that will have information printed to the terminal, not just alerted in the debugger.
+**Windows:**
 
-MP0 has only one stack smashing error.
+1. Open the powershell application; the following steps are run from that window.
+2. If `ls $env:USERPROFILE/.ssh/` does **not** show a file named `id_`*something*`.pub`:
+    
+    a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 
-## Call Stack Inspection
+3. Run `ls $env:USERPROFILE/.ssh/` to see what file named `id_`*something*`.pub` you have. Common files are `id_rsa.pub` and `id_ed25519.pub`, but others are possible. The next step assumes `id_rsa.pub` but you can change that part of the command if it was something different.
 
-When the debugger pauses, either on an error or because you added a breakpoint, the "Run and Debug" window shows a wealth of useful debugging information.
+4. Run `ssh` *your VM* `"mkdir .ssh"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
-One panel is labeled "Call Stack". It will list the function calls that were called leading to where your program is currently paused. You can click on them to jump to their location in code.
+5. Run `type $env:USERPROFILE\.ssh\id_rsa.pub | ssh` *your VM* `"cat >> .ssh/authorized_keys"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
-In a call stack, the top is the most recent function called. The call stack is very useful for finding infinite recursion if you see the same function name again and again and again. You will want to reference the call stack for several bugs in `mp0`.
+**MacOS or Linux:**
 
-## Pause-and-step
+1. Open the terminal application; the following steps are run from that window.
+2. If `ls $HOME/.ssh/` does **not** show a file named `id_`*something*`.pub`:
+    
+    a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 
-If there's an infinite loop, the program will appear to make no progress. In that case, you can pause the debugger and step through the code to see what is happening.
+3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
-Pressing the left-most "Pause" button will pause the execution of the program and provide you information about the current point of execution. When the program is paused:
+If this is successful, you should then be able to run `ssh` *your VM* and connect without requiring a password. If it is not successful, you'll need to use the password-based authentication instead, and may also share how it failed on CampusWire; we might be able to find a workaround, but no promises.
 
-- You can hover over variables to see the values their hold
-- You can view the call stack and other debugging information
-- You can use the control window to step through your code line-by-line
+## Setup VS Code VM integration
 
-## Breakpoints
+1. Open VS Code.
 
-When a program is doing the wrong thing, the most common approach to debug is to set a breakpoint. This means picking a line of code and telling the debugger to pause when it reaches that line (before it runs it).
+2. Click the remote icon in the bottom-left corner of VS Code:
+    
+    a. Select "Connect to Host…"
+    
+    b. Select "Add New SSH Host…"
+    
+    c. Type `ssh `netid`@fa25-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
+    
+    d. Pick a config file from the available options; the first displayed option should work fine.
+    
+    e. In the new VS Code window that opens up, open up a terminal. It should have your VM name on the prompt line.
 
-To set a breakpoint, click on the space immediately to the left of the line number. A bright red dot will appear to indicate that an active breakpoint is set.
+## Verify VM
 
-In the example above, execution will pause after running Line 834 but before running Line 835. Since it's paused, you can inspect all of the variables at the exact moment before running Line 835. If you resume the program and the breakpoint is encountered again, it will pause again.
+When running VS Code, you should see the bottom-left button says the name of your VM. If it does not say this, redo step 2 of Setup VS Code VM integration.
 
-If you've done print-based debugging before, that's a sloppy way of trying to approximate a breakpoint + hovering over variables without using a debugger.
+In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 
-## Watches and Beyond
+- See the prompt line is netid`@fa25-cs340-`num`:~$` with your NetID and VM number.
+- Run `gcc --version` to see a version number (`13.3.0` or later).
+- Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
+- Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
 
-Sometimes a variable changes many times, with the information you need to debug it appearing and then disappearing later. There are multiple debugging tools for these situations, which can get quite involved; two of the simpler such tools are watches and conditional breakpoints.
+## File transfer
 
-In MP0 we have one bug that could benefit from these tools, though it could also be debugged with a breakpoint and stepping if you are patient. After you've fixed all the obvious bugs the code will run but it won't do very much.
+Your virtual machine has a separate disk from your personal computer. To move files back and forth, use `scp`.
 
-There's still another bug: logic error in the resulting behavior, one of the hardest kinds of bugs to find because nothing crashes. To help you find it, there's a secret message explaining how to fix it inside the global `message` variable, but that message is only there part-way through a run of the program. Find the message and make the final fix to complete the MP.
+1. In a VS Code terminal running the virtual machine:
+    
+    a. `cd` into the directory where the files are or where you want them to be
+    
+    b. `pwd` to see the full directory path; for example, `/home/netid/cs340/mp18`
 
-# Submission and Grading
+2. In a VS Code terminal running the docker container:
+    
+    a. `cd` into the directory where the files are or where you want them to be
+    
+    b. use `scp currentLocation desiredLocation`, where:
+        
+    - One of the locations has the form netid`@fa25-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
 
-Only edit `gif.c`, none of the other files we provide. `gif.c` is the only file you can upload so if you change anything else your code won't work the same for you as it does for us.
+    - The other location is a local filename
 
-When you think you are done, `make test` will run all our tests and report what grade we think you've earned.
+    - The `desiredLocation` may be a directory, meaning "keep the same filename". If so, the `currentLocation` can be a wildcard like `*` or repeated to transfer several files at once.
 
-Once you've passed all the tests, submit your code on the upload site.
+For files located online, you can download them to the VM directly by using `wget https://example.com/file/to/download.zip`
 
-This MP has very low weight, all-or-nothing grading, and accepts late submissions at no grade penalty.
 
-The final line of output from `make test` will be `SCORE: 0 / 1` or `SCORE: 1 / 1`: this tells you how much credit you'll get if you submit this code.
+# Check-Off Requirements
 
-You may submit as often as you like, including replacing old submissions. This is true of all MPs. Only your last submission (prior to the end of the late submission window) will be included in your grade.
+To get points for this MP, you must show a staff member at office hours the "Verify Docker" and "Verify VM" steps from above.
+

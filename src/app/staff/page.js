@@ -60,7 +60,7 @@ const StaffCard = ({ person }) => {
             {person.name}
           </h3>
           
-          {person.pronunciation && (
+          {person.callMe && (
             <p style={{
               fontSize: '14px',
               color: colors.mediumGray,
@@ -68,7 +68,7 @@ const StaffCard = ({ person }) => {
               fontStyle: 'italic',
               textAlign: 'center'
             }}>
-              ({person.pronunciation})
+              ({person.callMe})
             </p>
           )}
           

@@ -73,12 +73,10 @@ export default function MPPage({ params }) {
           
           if (mpPattern.test(summary)) {
             if (summary.includes('release')) {
+              console.log(currentEvent.date)
               release = formatDateWithTime(currentEvent.date, currentEvent.time)
             } else if (summary.includes('due')) {
               due = formatDateWithTime(currentEvent.date, null, true) // true = add 11:59pm
-            } else if (!summary.includes('release') && !due) {
-              // If it's just "MP1" with no qualifier, assume it's the due date
-              due = formatDateWithTime(currentEvent.date, null, true)
             }
           }
         }
@@ -103,11 +101,14 @@ export default function MPPage({ params }) {
   }
 
   const formatDateWithTime = (dateStr, timeStr = null, isDue = false) => {
-    const date = new Date(dateStr)
-    const month = date.getMonth() + 1
-    const day = date.getDate()
+    // Parse date in local timezone (not UTC)
+    const [year, month, day] = dateStr.split('-');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    
+    const monthValue = date.getMonth();
+    const dayValue = date.getDate();
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     let timeDisplay = ''
     if (isDue) {
@@ -121,7 +122,7 @@ export default function MPPage({ params }) {
       timeDisplay = ` at ${hour12}:${minutes}${ampm}`
     }
     
-    return `${monthNames[month - 1]} ${day}${timeDisplay}`
+    return `${monthNames[monthValue]} ${dayValue}${timeDisplay}`
   }
 
   if (!mp) {
@@ -194,10 +195,10 @@ export default function MPPage({ params }) {
         </div>
       </nav>
       
-      <div style={styles.mainContent}>
+      <div style={styles.mainContent} className="mainContent">
         {/* TOC Sidebar */}
         {toc.length > 0 && (
-          <aside style={styles.sidebar}>
+          <aside style={styles.sidebar} className="sidebar">
             <h2 style={styles.sidebarTitle}>Contents</h2>
             <nav>
               {toc.map((item, idx) => (
@@ -244,8 +245,22 @@ export default function MPPage({ params }) {
           opacity: 0.6;
         }
         
+        /* Responsive layout */
+        @media (max-width: 1024px) {
+          .mainContent {
+            flex-direction: column !important;
+            gap: 32px !important;
+          }
+          
+          .sidebar {
+            flex: 1 !important;
+            max-width: 100% !important;
+            position: static !important;
+          }
+        }
+        
         .mp-content h1 {
-          font-size: 32px;
+          font-size: 36px;
           font-weight: 700;
           margin-top: 48px;
           margin-bottom: 24px;
@@ -255,7 +270,7 @@ export default function MPPage({ params }) {
         }
         
         .mp-content h2 {
-          font-size: 24px;
+          font-size: 28px;
           font-weight: 600;
           margin-top: 36px;
           margin-bottom: 16px;
@@ -263,7 +278,7 @@ export default function MPPage({ params }) {
         }
         
         .mp-content h3 {
-          font-size: 20px;
+          font-size: 22px;
           font-weight: 600;
           margin-top: 28px;
           margin-bottom: 12px;
@@ -274,7 +289,7 @@ export default function MPPage({ params }) {
           margin-bottom: 20px;
           line-height: 1.75;
           color: ${colors.darkGray};
-          font-size: 17px;
+          font-size: 18px;
         }
         
         .mp-content ul, .mp-content ol {
@@ -286,7 +301,7 @@ export default function MPPage({ params }) {
         .mp-content li {
           margin-bottom: 12px;
           color: ${colors.darkGray};
-          font-size: 16px;
+          font-size: 18px;
         }
         
         .mp-content strong {
@@ -385,15 +400,15 @@ const styles = {
     display: 'inline-block'
   }),
   mainContent: {
-    maxWidth: '1600px',
+maxWidth: '1200px',
     margin: '0 auto',
     padding: '48px 32px',
     display: 'flex',
-    gap: '80px',
+gap: '48px',
     alignItems: 'flex-start'
   },
   sidebar: {
-    flex: '0 0 260px',
+flex: '0 0 220px',
     backgroundColor: colors.cream,
     borderRadius: '16px',
     padding: '28px',
@@ -426,7 +441,8 @@ const styles = {
   },
   article: {
     flex: '1',
-    maxWidth: '900px'
+    maxWidth: '750px',
+    width: '100%'
   },
   header: {
     marginBottom: '48px'

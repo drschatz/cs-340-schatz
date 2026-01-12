@@ -4,7 +4,7 @@ subtitle: Debugging
 author: Wade Fagen-Ulmschneider
 ---
 
-This is not a full MP.
+This is not a full Machine Project (MP).
 It is **dramatically easier** than other MPs.
 Don't plan your time on other MPs based on this one.
 
@@ -18,7 +18,7 @@ No.
 # Fetch starter code
 
 We have some initial code for your `mp1` for you to get started.
-Download it from [`mp1.zip`](mp1.zip) and unzip it on your computer into the `cs340` directory you created during the environment setup.
+Download it from [`mp1.zip`](../mp1.zip) and unzip it on your computer into the `cs340` directory you created during the environment setup.
 
 # Use Visual Studio Code
 
@@ -131,10 +131,7 @@ Only edit `gif.c`, none of the other files we provide.
 
 When you think you are done, `make test` will run all our tests and report what grade we think you've earned.
 
-Once you've passed all the tests, submit your code on the upload site.
-
-The final line of output from `make test` will be `SCORE: 0 / 1` or `SCORE: 1 / 1`:
-this tells you how much credit you'll get if you submit this code.
+Once you've passed all the tests, submit your code on PrairieLearn (linked at the top of the page).
 
 You may submit as often as you like, including replacing old submissions.
 This is true of all MPs.

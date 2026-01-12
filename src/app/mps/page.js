@@ -63,7 +63,7 @@ export default function MPsPage() {
             // Create local date object
             currentEvent.date = new Date(
               parseInt(year),
-              parseInt(month) - 1,
+              parseInt(month),
               parseInt(day),
               parseInt(hour),
               parseInt(minute),
@@ -74,7 +74,7 @@ export default function MPsPage() {
             const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
             if (dateMatch) {
               const [_, year, month, day] = dateMatch;
-              currentEvent.date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+              currentEvent.date = new Date(parseInt(year), parseInt(month), parseInt(day));
             }
           }
         } else if (line.startsWith('SUMMARY:')) {
@@ -148,11 +148,11 @@ export default function MPsPage() {
   };
 
   const formatDate = (date) => {
-    const month = date.getMonth() + 1;
+    const month = date.getMonth() - 1;
     const day = date.getDate();
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${monthNames[month - 1]} ${day}`;
+    return `${monthNames[month]} ${day}`;
   };
 
   const getStatus = (releaseDate, dueDate) => {
@@ -413,8 +413,7 @@ export default function MPsPage() {
       {/* Main Content */}
       <main style={styles.mainContent}>
         <div style={styles.header}>
-          <h1 style={styles.title}>Machine Problems</h1>
-          <p style={styles.subtitle}>Complete all 10 MPs throughout the semester</p>
+          <h1 style={styles.title}>MPs</h1>
         </div>
 
         {/* MP List */}

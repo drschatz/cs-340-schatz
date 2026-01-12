@@ -1,11 +1,10 @@
 ---
 title: MP2
-subtitle: C++ to C
+subtitle: Linked List in C
 author: Luther Tychonievich
 ---
 
-This is not a full MP; it is primarily testing your setup and ensuring you are ready for subsequent MPs.
-It is **dramatically easier** than other MPs.
+This Mighty Problem (MP) is **easier** than other MPs.
 Don't plan your time on other MPs based on this one.
 
 This MP has only one goal: to help you understand how C is unlike C++.

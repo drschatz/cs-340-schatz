@@ -1,6 +1,8 @@
 'use client';
 
 import { colors } from '../styles/colors.js';
+import Navigation from '../components/Navigation';  // Adjust path as needed
+
 
 
 import React, { useState, useEffect } from 'react';
@@ -143,51 +145,12 @@ export default function CoursePortal() {
     return `${month}/${day}`;
   };
 
-  const navItems = [
-    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
-    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
-    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
-    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
-    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
-  ];
   const styles = {
     container: {
       minHeight: '100vh',
       backgroundColor: colors.white,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     },
-    nav: {
-      backgroundColor: 'transparent',
-      borderBottom: 'none',
-      padding: '16px 32px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '0px'
-    },
-    navGroup: {
-      display: 'flex',
-      gap: '0px'
-    },
-    navGroupSpacer: {
-      width: '16px'
-    },
-    navItems: {
-      display: 'flex',
-      gap: '0px',
-      alignItems: 'center'
-    },
-    navButton: (color, isFirstInGroup, isLastInGroup) => ({
-      padding: '8px 16px',
-      borderRadius: isFirstInGroup && isLastInGroup ? '8px' : isFirstInGroup ? '8px 0 0 8px' : isLastInGroup ? '0 8px 8px 0' : '0px',
-      border: 'none',
-      backgroundColor: color || 'transparent',
-      cursor: 'pointer',
-      fontWeight: '500',
-      fontSize: '15px'
-    }),
     header: {
       backgroundColor: colors.white,
       borderBottom: 'none',
@@ -333,71 +296,8 @@ export default function CoursePortal() {
         }
       `}</style>
       
-      <nav style={styles.nav} role="navigation" aria-label="Main navigation">
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 1).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 1);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={{
-                  ...styles.navButton(item.color, isFirstInGroup, isLastInGroup),
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}
-                aria-current={item.label === 'Home' ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 2).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 2);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={{
-                  ...styles.navButton(item.color, isFirstInGroup, isLastInGroup),
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 3).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 3);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={{
-                  ...styles.navButton(item.color, isFirstInGroup, isLastInGroup),
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
+      <Navigation currentPage="Home" />
+
       
       <header style={styles.header}>
         <h1 style={styles.title}>{constants.courseNumber}</h1>

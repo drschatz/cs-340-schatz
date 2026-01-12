@@ -4,6 +4,9 @@ import { allMPs } from '.contentlayer/generated'
 import { notFound } from 'next/navigation'
 import { colors } from '../../../styles/colors'
 import { useState, useEffect } from 'react'
+import Navigation from '../../../components/Navigation';  // Add this import at the top
+
+
 
 export default function MPPage({ params }) {
   const mp = allMPs.find((m) => m.number.toString() === params.number)
@@ -129,71 +132,11 @@ export default function MPPage({ params }) {
     notFound()
   }
 
-  const navItems = [
-    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
-    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
-    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
-    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
-    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
-  ]
 
   return (
     <div style={styles.container}>
-      {/* Navigation */}
-      <nav style={styles.nav} role="navigation" aria-label="Main navigation">
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 1).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 1);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 2).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 2);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 3).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 3);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
+    <Navigation currentPage="MPPage" />
+
       
       <div style={styles.mainContent} className="mainContent">
         {/* TOC Sidebar */}

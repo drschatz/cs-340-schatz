@@ -1,4 +1,5 @@
 import { allReadings } from '.contentlayer/generated'
+import Navigation from '../../../components/Navigation';  // Add this import at the top
 import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {

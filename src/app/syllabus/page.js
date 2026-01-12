@@ -1,4 +1,5 @@
 'use client';
+import Navigation from '../../components/Navigation';  // Add this import at the top
 
 import React from 'react';
 import { allSyllabuses } from '.contentlayer/generated';
@@ -13,16 +14,6 @@ export default function SyllabusPage() {
   }
 
   const MDXContent = useMDXComponent(syllabus.body.code);
-
-  const navItems = [
-    { label: 'Home', color: colors.navCream, group: 1, href: '/' },
-    { label: 'Syllabus', color: colors.navCream, group: 1, href: '/syllabus' },
-    { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
-    { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
-    { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
-    { label: 'PraireLearn', color: colors.navOrange, group: 2, href: '/prairielearn' },
-    { label: 'Campuswire', color: colors.navBlue, group: 3, href: '/campuswire' }
-  ];
 
   // Process ToC without requiring numbers (only if toc exists)
   const processedToc = syllabus.toc ? syllabus.toc.reduce((acc, item) => {
@@ -49,34 +40,6 @@ export default function SyllabusPage() {
       backgroundColor: colors.white,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     },
-    nav: {
-      backgroundColor: 'transparent',
-      borderBottom: 'none',
-      padding: '16px 32px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '0px'
-    },
-    navGroup: {
-      display: 'flex',
-      gap: '0px'
-    },
-    navGroupSpacer: {
-      width: '16px'
-    },
-    navButton: (color, isFirstInGroup, isLastInGroup) => ({
-      padding: '8px 16px',
-      borderRadius: isFirstInGroup && isLastInGroup ? '8px' : isFirstInGroup ? '8px 0 0 8px' : isLastInGroup ? '0 8px 8px 0' : '0px',
-      border: 'none',
-      backgroundColor: color || 'transparent',
-      cursor: 'pointer',
-      fontWeight: '500',
-      fontSize: '15px',
-      textDecoration: 'none',
-      color: 'inherit',
-      display: 'inline-block'
-    }),
     mainContent: {
       maxWidth: '1600px',
       margin: '0 auto',
@@ -129,60 +92,8 @@ export default function SyllabusPage() {
 
   return (
     <div style={styles.container}>
-      {/* Navigation */}
-      <nav style={styles.nav} role="navigation" aria-label="Main navigation">
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 1).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 1);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-                aria-current={item.label === 'Syllabus' ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 2).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 2);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div style={styles.navGroupSpacer} />
-        <div style={styles.navGroup}>
-          {navItems.filter(item => item.group === 3).map((item, i) => {
-            const groupItems = navItems.filter(it => it.group === 3);
-            const isFirstInGroup = i === 0;
-            const isLastInGroup = i === groupItems.length - 1;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                style={styles.navButton(item.color, isFirstInGroup, isLastInGroup)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
+      <Navigation currentPage="Syllabus" />
+
 
       {/* Main Content */}
       <div style={styles.mainContent}>

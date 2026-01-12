@@ -62,7 +62,7 @@ export default function SyllabusPage() {
       maxWidth: '800px'
     },
     sidebarTitle: {
-      fontSize: '21px',
+      fontSize: '20px',
       fontWeight: '700',
       marginBottom: '24px',
       color: colors.black,
@@ -74,7 +74,7 @@ export default function SyllabusPage() {
     tocSectionTitle: {
       fontWeight: '600',
       marginBottom: '10px',
-      fontSize: '19px',
+      fontSize: '16px',
       color: colors.black
     },
     tocLink: {
@@ -83,7 +83,7 @@ export default function SyllabusPage() {
       display: 'block'
     },
     tocSubsection: {
-      fontSize: '18px',
+      fontSize: '15px',
       marginLeft: '16px',
       marginTop: '8px',
       color: colors.mediumGray

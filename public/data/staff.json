@@ -2,7 +2,21 @@
   "staff": [
     {
       "name": "Daixuan Li",
-      "callMe": "he/him",
+      "callMe": "",
+      "bio": "Short bio coming soon!",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Otto Piramuthu",
+      "callMe": "",
+      "bio": "Short bio coming soon!",
+      "role": "staff",
+      "image": ""
+    },
+    {
+      "name": "Anton Dmitriev",
+      "callMe": "",
       "bio": "Short bio coming soon!",
       "role": "staff",
       "image": ""

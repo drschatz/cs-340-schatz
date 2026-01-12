@@ -183,7 +183,7 @@ export default function SyllabusPage() {
           margin-bottom: 20px;
           line-height: 1.75;
           color: ${colors.darkGray};
-          font-size: 16px;
+          font-size: 18px;
         }
         
         /* Lists */

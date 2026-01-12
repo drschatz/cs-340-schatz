@@ -62,7 +62,7 @@ export default function SyllabusPage() {
       maxWidth: '800px'
     },
     sidebarTitle: {
-      fontSize: '20px',
+      fontSize: '21px',
       fontWeight: '700',
       marginBottom: '24px',
       color: colors.black,
@@ -74,7 +74,7 @@ export default function SyllabusPage() {
     tocSectionTitle: {
       fontWeight: '600',
       marginBottom: '10px',
-      fontSize: '15px',
+      fontSize: '19px',
       color: colors.black
     },
     tocLink: {
@@ -83,7 +83,7 @@ export default function SyllabusPage() {
       display: 'block'
     },
     tocSubsection: {
-      fontSize: '14px',
+      fontSize: '18px',
       marginLeft: '16px',
       marginTop: '8px',
       color: colors.mediumGray
@@ -196,7 +196,7 @@ export default function SyllabusPage() {
         .syllabus-content li {
           margin-bottom: 14px;
           color: ${colors.darkGray};
-          font-size: 16px;
+          font-size: 18px;
         }
         
         /* Strong text */
@@ -266,7 +266,7 @@ export default function SyllabusPage() {
           padding: 3px 7px;
           border-radius: 4px;
           font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-          font-size: 14px;
+          font-size: 18px;
           color: ${colors.black};
           font-weight: 500;
         }

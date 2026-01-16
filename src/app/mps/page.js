@@ -189,8 +189,8 @@ export default function MPsPage() {
     return 'active'; // Between release and due
   };
 
-  // Create array of all 10 MPs (0-9)
-  const allMPsList = Array.from({ length: 10 }, (_, i) => {
+  // Create array of all 11 MPs (0-10)
+  const allMPsList = Array.from({ length: 11 }, (_, i) => {
     const mpData = mps.find(mp => mp.number === i);
     const mpContent = allMPs.find(mp => mp.number === i);
     

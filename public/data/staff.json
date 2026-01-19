@@ -23,10 +23,10 @@
     },
     {
       "name": "Roma Chandra",
-      "callMe": "",
-      "bio": "Short bio coming soon!",
+      "callMe": "she/her",
+      "bio": "Hi! My name is Roma, and I'm a senior majoring in Math & CS. This is my third semester as a CA for CS 340, and I love reading, working out, and listening to music! Let me if you have any recs :)",
       "role": "staff",
-      "image": ""
+      "image": "roma.JPG"
     },
     {
       "name": "Janice Mei",
@@ -37,10 +37,10 @@
     },
     {
       "name": "Kavya Sachdeva",
-      "callMe": "",
-      "bio": "Short bio coming soon!",
+      "callMe": "he/him",
+      "bio": "Interested in how systems work and where to eat next",
       "role": "staff",
-      "image": ""
+      "image": "kavya.JPG"
     },
     {
       "name": "Frank Schmidt",
@@ -52,16 +52,16 @@
     {
       "name": "Ria Bhargava",
       "callMe": "",
-      "bio": "Short bio coming soon!",
+      "bio": "Hi! I’m Ria, a senior studying CS + Statistics, and this is my second semester on the CS340 course staff. I’m excited to meet you all and help you succeed this semester — please reach out with questions in office hours or on the forums. Outside of class, you can find me studying at cafés, going on a run, or hanging out with friends. Looking forward to a great semester!",
       "role": "staff",
-      "image": ""
+      "image": "ria.png"
     },
     {
       "name": "Albert Lee",
-      "callMe": "",
-      "bio": "Short bio coming soon!",
+      "callMe": "he/him",
+      "bio": "2nd year Computer Science + Education Major. Come find me playing board games where board games are played!",
       "role": "staff",
-      "image": ""
+      "image": "albert.png"
     }
   ]
 }

@@ -262,7 +262,24 @@ export default function CoursePortal() {
       transition: 'all 0.2s',
       minHeight: '44px',
       minWidth: '44px'
-    })
+    }),
+    footer: {
+      backgroundColor: colors.lightGray,
+      padding: '24px 32px',
+      textAlign: 'center',
+      marginTop: '48px',
+      borderTop: `1px solid ${colors.tableBorder}`
+    },
+    creditText: {
+      fontSize: '14px',
+      color: colors.mediumGray,
+      margin: 0
+    },
+    creditLink: {
+      color: colors.black,
+      textDecoration: 'underline',
+      fontWeight: '500'
+    }
   };
 
   return (
@@ -374,6 +391,13 @@ export default function CoursePortal() {
           </div>
         </section>
       </main>
+
+      {/* Credit Section */}
+      <footer style={styles.footer}>
+        <p style={styles.creditText}>
+          Website designed and built by Jule Schatz, Michelle Ru, and Janice Mei.
+        </p>
+      </footer>
     </div>
   );
 }

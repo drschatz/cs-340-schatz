@@ -1,8 +1,3 @@
-export const metadata = {
-  title: 'CS 340',
-  description: 'Introduction to Computer Systems at UIUC',
-}
-
 export default function RootLayout({ children }) {
  return (
     <html lang="en">
@@ -10,5 +5,11 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
-
-//oops
+export const metadata = {
+  title: 'CS 340',
+  description: 'Introduction to Computer Systems at UIUC',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png', // if you have this
+  }
+}

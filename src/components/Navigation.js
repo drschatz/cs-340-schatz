@@ -1,3 +1,4 @@
+'use client';
 import { colors } from '../styles/colors';
 
 export default function Navigation({ currentPage }) {

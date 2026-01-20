@@ -145,9 +145,9 @@ VS Code connects to the virtual machine using a protocol and tool called SSH. SS
 
 3. Run `ls $env:USERPROFILE/.ssh/` to see what file named `id_`*something*`.pub` you have. Common files are `id_rsa.pub` and `id_ed25519.pub`, but others are possible. The next step assumes `id_rsa.pub` but you can change that part of the command if it was something different.
 
-4. Run `ssh` *your VM* `"mkdir .ssh"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+4. Run `ssh` *your VM* `"mkdir .ssh"`, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
-5. Run `type $env:USERPROFILE\.ssh\id_rsa.pub | ssh` *your VM* `"cat >> .ssh/authorized_keys"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+5. Run `type $env:USERPROFILE\.ssh\id_rsa.pub | ssh` *your VM* `"cat >> .ssh/authorized_keys"`, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
 **MacOS or Linux:**
 
@@ -156,7 +156,7 @@ VS Code connects to the virtual machine using a protocol and tool called SSH. SS
     
     a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 
-3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@fa25-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
 If this is successful, you should then be able to run `ssh` *your VM* and connect without requiring a password. If it is not successful, you'll need to use the password-based authentication instead, and may also share how it failed on CampusWire; we might be able to find a workaround, but no promises.
 
@@ -170,7 +170,7 @@ If this is successful, you should then be able to run `ssh` *your VM* and connec
     
     b. Select "Add New SSH Host…"
     
-    c. Type `ssh `netid`@fa25-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
+    c. Type `ssh `netid`@sp26-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
     
     d. Pick a config file from the available options; the first displayed option should work fine.
     
@@ -182,7 +182,7 @@ When running VS Code, you should see the bottom-left button says the name of you
 
 In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 
-- See the prompt line is netid`@fa25-cs340-`num`:~$` with your NetID and VM number.
+- See the prompt line is netid`@sp26-cs340-`num`:~$` with your NetID and VM number.
 - Run `gcc --version` to see a version number (`13.3.0` or later).
 - Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
 - Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
@@ -203,7 +203,7 @@ Your virtual machine has a separate disk from your personal computer. To move fi
     
     b. use `scp currentLocation desiredLocation`, where:
         
-    - One of the locations has the form netid`@fa25-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
+    - One of the locations has the form netid`@sp26-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
 
     - The other location is a local filename
 

@@ -6,9 +6,6 @@ import { allMPs } from '.contentlayer/generated';
 import Navigation from '../../components/Navigation';  // Add this import at the top
 
 
-console.log("PAGE COMPONENT LOADED");
-
-
 export default function MPsPage() {
   const [mps, setMps] = useState([]);
   const [calendarEvents, setCalendarEvents] = useState({});
@@ -65,12 +62,13 @@ export default function MPsPage() {
             // Create local date object
             currentEvent.date = new Date(
               parseInt(year),
-              parseInt(month),
+              parseInt(month) - 1,
               parseInt(day),
               parseInt(hour),
               parseInt(minute),
               parseInt(second)
             );
+             // ADD DEBUG CODE HERE
           } else {
             // Fallback for date-only format
             const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
@@ -150,7 +148,7 @@ export default function MPsPage() {
   };
 
   const formatDate = (date) => {
-    const month = date.getMonth() - 1;
+    const month = date.getMonth();
     const day = date.getDate();
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -159,8 +157,9 @@ export default function MPsPage() {
 
   const getStatus = (releaseDate, dueDate) => {
     const now = new Date();
-    
+
     if (!releaseDate || releaseDate > now) {
+      console.log("inactive");
       return 'inactive'; // Not released yet
     }
     
@@ -195,10 +194,11 @@ export default function MPsPage() {
     const mpContent = allMPs.find(mp => mp.number === i);
     
     // Use flexible lookup for calendar events
-    const releaseEvent = findCalendarEvent(i, 'Release');
+    const releaseEvent = findCalendarEvent(i, 'Released');
     const dueEvent = findCalendarEvent(i, 'Due');
     
     const now = new Date();
+
     const isReleased = !releaseEvent || (releaseEvent.rawDate <= now);
     const status = getStatus(releaseEvent?.rawDate, dueEvent?.rawDate);
     
@@ -208,7 +208,7 @@ export default function MPsPage() {
       dueDate: dueEvent ? dueEvent.date : null,
       releaseDate: releaseEvent ? releaseEvent.date : null,
       hasSpec: !!mpContent,
-      isAvailable: !!mpData && isReleased,
+      isAvailable: !!mpData,
       status: status
     };
   });

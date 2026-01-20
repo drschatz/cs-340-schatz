@@ -126,7 +126,7 @@ All ways of powering on your VM require you to either (a) be on campus or (b) be
     
     d. Type `cs-vmfarm-poweron`
     
-    e. Enter the information that it requests, including the full VM name (`fa25-cs340-`num`.cs.illinois.edu`)
+    e. Enter the information that it requests, including the full VM name (`sp26-cs340-`num`.cs.illinois.edu`)
     
     f. Type `exit` to close your connection to EWS
 

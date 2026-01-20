@@ -8,7 +8,7 @@ This is not a full Machine Project (MP).
 It is **dramatically easier** than other MPs.
 Don't plan your time on other MPs based on this one.
 
-The purposes of this MP is to have you see some of the functionality the VS Code debugger can do.
+The purposes of this MP is to have you see some of the functionality the VS Code debugger can do. It is not to understand the C code or write C code.
 
 Is it possible to create the required `gif.c` without doing these two things?
 Yes.
@@ -46,7 +46,7 @@ To open VS Code's integrated terminal, use the keyboard shortcut Ctrl+~.
 
 Using the integrated terminal, let's verify you are all set up for running C programs by doing the following:
 
-- On your terminal, run `make` to compile the provided code.
+- On your terminal, run `make` to compile the provided code or run `make test` to run the provided tests. For this MP run `make test`. 
 - If you receive any errors, read the error messages. They will often be helpful to describe what's going wrong. If you're stuck here, reach out to get help!
 
 ## Visual Debugger
@@ -109,8 +109,6 @@ When a program is doing the wrong thing, the most common approach to debug is to
 This means picking a line of code and telling the debugger to pause when it reaches that line (before it runs it).
 
 To set a breakpoint, **click on the space immediately to the left of the line number**. A bright red dot will appear to indicate that an active breakpoint is set.
-
-In the example above, execution will pause after running Line 834 but before running Line 835. Since it's paused, you can inspect all of the variables at the exact moment before running Line 835. If you resume the program and the breakpoint is encountered again, it will pause again.
 
 If you've done print-based debugging before, that's a sloppy way of trying to approximate a breakpoint + hovering over variables without using a debugger.
 

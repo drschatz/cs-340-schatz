@@ -24,7 +24,7 @@ Install the following tools:
 
 ## Setup
 
-1. Download [cs340.zip](cs340.zip) which contains some basic VS Code and Docker setup and unzip it in a place that you can easily access (you'll need to upload from and download to this folder). We'll call the folder this creates your `cs340` folder for the rest of the semester.
+1. Download [cs340.zip](../cs340.zip) which contains some basic VS Code and Docker setup and unzip it in a place that you can easily access (you'll need to upload from and download to this folder). We'll call the folder this creates your `cs340` folder for the rest of the semester.
 
 *NOTE: the unzipped folder contains "hidden" folders as well as visible ones; you need to keep the entire unzipped folder intact, not copy its visible contents to another location. If in VS Code you don't see something named `.devcontainer` then you didn't keep all parts of the unzipped folder.*
 

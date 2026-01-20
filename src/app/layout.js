@@ -10,6 +10,5 @@ export const metadata = {
   description: 'Introduction to Computer Systems at UIUC',
   icons: {
     icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png', // if you have this
   }
 }

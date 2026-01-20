@@ -104,7 +104,7 @@ All parts of the VM process require that you are either on the campus network or
 
 ## Identify and Turn On your VM
 
-You will be given a single VM. It's name will have the form `fa25-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
+You will be given a single VM. It's name will have the form `sp26-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
 
 The VM will be turned off after a few hours of idleness. To turn it back on, follow these directions: <https://answers.uillinois.edu/illinois.engineering/page.php?id=108475>. Your VM needs to be on to interact with it in any way.
 

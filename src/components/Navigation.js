@@ -8,8 +8,8 @@ export default function Navigation({ currentPage }) {
     { label: 'Staff', color: colors.navCream, group: 1, href: '/staff' },
     { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
     { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
-    { label: 'PrairieLearn', color: colors.navOrange, group: 2, href: 'https://us.prairielearn.com/pl/course/YOUR_COURSE_ID' },
-    { label: 'Campuswire', color: colors.navBlue, group: 3, href: 'https://campuswire.com/c/YOUR_COURSE_ID' }
+    { label: 'PrairieLearn', color: colors.navOrange, group: 2, href: 'https://us.prairielearn.com/pl/course_instance/193960' },
+    { label: 'Campuswire', color: colors.navBlue, group: 3, href: 'https://campuswire.com/c/G0463FDE3/feed' }
   ];
 
   const styles = {

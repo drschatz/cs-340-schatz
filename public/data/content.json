@@ -4,16 +4,16 @@
       "date": "1/20",
       "topic": "Syllabus",
       "slides_google": "https://docs.google.com/presentation/d/1n-yPIUu9KXlzuRGx9eYl11f08du0qJIEw-c_HaAdfbM/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/sp26-intro.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_s8ch78gc",
       "texts": []
     },
     {
       "date": "1/20",
       "topic": "Part 1 Overview",
       "slides_google": "https://docs.google.com/presentation/d/1wwgCAWFdS_VhFD9jKqYwqQoH0bRGk25lzRg7oQsKW6A/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/sp26-overview.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_s8ch78gc",
       "texts": []
     }
 

@@ -110,7 +110,7 @@ The VM will be turned off after a few hours of idleness. To turn it back on, fol
 
 *NOTE: vsphere, the web portal for turning on VMs, can sometimes have intermittent trouble. "Other Ways" #2 below does not depend on vsphere.*
 
-### Other Ways
+### Other Ways if the Above Does not Work
 
 All ways of powering on your VM require you to either (a) be on campus or (b) be connected to [the VPN](https://answers.uillinois.edu/illinois/98773).
 
@@ -132,7 +132,7 @@ All ways of powering on your VM require you to either (a) be on campus or (b) be
 
 *NOTE: Your VM's password is your NetID password. If you change your NetID password it may take a couple of days for the VM to catch up.*
 
-### Connecting without typing your password
+### Connecting without typing your password (Optional)
 
 VS Code connects to the virtual machine using a protocol and tool called SSH. SSH has several ways to authenticate users: it defaults to checking passwords, but can be set up to compare files on your machine and the virtual machine instead. Because there are several implementations of SSH, the details of how that works vary, but the following should work for most students.
 
@@ -152,7 +152,8 @@ VS Code connects to the virtual machine using a protocol and tool called SSH. SS
 **MacOS or Linux:**
 
 1. Open the terminal application; the following steps are run from that window.
-2. If `ls $HOME/.ssh/` does **not** show a file named `id_`*something*`.pub`:
+
+If `ls $HOME/.ssh/` does **not** show a file named `id_`*something*`.pub`:
     
     a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 

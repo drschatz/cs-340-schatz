@@ -18,7 +18,7 @@ export default function ReadingPage({ params }) {
   return (
     <div style={styles.container}>
       <nav style={styles.nav}>
-        <a href="/" style={styles.navLink}>← Back to Content</a>
+        <a href="/content" style={styles.navLink}>← Back to Content</a>
       </nav>
       
       <article style={styles.article}>

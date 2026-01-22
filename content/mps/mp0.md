@@ -110,7 +110,7 @@ The VM will be turned off after a few hours of idleness. To turn it back on, fol
 
 *NOTE: vsphere, the web portal for turning on VMs, can sometimes have intermittent trouble. "Other Ways" #2 below does not depend on vsphere.*
 
-### Other Ways if the Above Does not Work
+### Other Ways If The Above Does Not Work
 
 All ways of powering on your VM require you to either (a) be on campus or (b) be connected to [the VPN](https://answers.uillinois.edu/illinois/98773).
 

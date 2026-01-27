@@ -95,7 +95,7 @@ export default function ContentPage({ params }) {
         <article style={styles.article}>
           <header style={styles.header}>
             <div style={styles.backLink}>
-              <a href="/readings" style={styles.backLinkText}>← Back to Readings</a>
+              <a href="/content" style={styles.backLinkText}>← Back to Content</a>
             </div>
             <h1 style={styles.title}>{content.title}</h1>
             {content.description && (

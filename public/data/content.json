@@ -31,6 +31,14 @@
       "slides_pdf": "/lectures/sp26-c1.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_9jmdseom",
       "texts": ["cfromcpp", "c"]
+    },
+    {
+      "date": "1/29",
+      "topic": "C without the ++ (0b10)",
+      "slides_google": "https://docs.google.com/presentation/d/1kvFM72Unw9Rms1xYUq-T6A4M7pkVpnCIo_WAEEdWEf8/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

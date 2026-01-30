@@ -117,10 +117,11 @@ If you've done print-based debugging before, that's a sloppy way of trying to ap
 Sometimes a variable changes many times, with the information you need to debug it appearing and then disappearing later.
 There are multiple debugging tools for these situations, which can get quite involved.
 
-In MP1 we have one bug that could benefit from these tools, though it could also be debugged with a breakpoint and stepping if you are patient.
+In MP1 we have one bug that could benefit from these tools, though it could also be debugged with a breakpoint and stepping if you are patient. 
+
 After you've fixed all the obvious bugs the code will run but it won't do very much.
 
-There's still another bug: logic error in the resulting behavior, one of the hardest kinds of bugs to find because nothing crashes. To help you find it, **there's a secret message** explaining how to fix it inside the global `message` variable, but that message is only there part-way through a run of the program. Find the message and make the final fix to complete the MP.
+There's still another bug: logic error in the resulting behavior, one of the hardest kinds of bugs to find because nothing crashes. To help you find it, **there's a secret message** explaining how to fix it inside the global `message` variable, but that message is only there part-way through a run of the program. We recommend using a watch and breakpoints to check the value. Find the message and make the final fix to complete the MP.
 
 # Submission and Grading
 

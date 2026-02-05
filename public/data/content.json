@@ -42,11 +42,19 @@
     },
     {
       "date": "2/03",
-      "topic": "Building Blocks (0b10)",
+      "topic": "Building Blocks (0b01)",
       "slides_google": "https://docs.google.com/presentation/d/18DM8EX8sx4kXfbE9NI39UCIb1pSAG22ZGZmSfWnUgdI/edit?usp=sharing",
       "slides_pdf": "/lectures/sp26-bb1.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_v91nh9sj",
       "texts": ["hardware", "bits"]
+    },
+    {
+      "date": "2/05",
+      "topic": "Building Blocks (0b10)",
+      "slides_google": "https://docs.google.com/presentation/d/1sdr-8PTATInLR6_nZqcX0Ub5fcT804nHFZETSW4-FTA/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["building-hardware", "cache"]
     }
   ]
 }

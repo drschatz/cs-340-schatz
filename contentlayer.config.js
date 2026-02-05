@@ -1,6 +1,8 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
 
 export const Syllabus = defineDocumentType(() => ({
   name: 'Syllabus',
@@ -99,6 +101,22 @@ export const Doc = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Syllabus, Reading, MP, Doc],
+  markdown: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeRaw,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap',
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
+    ],
+  },
   mdx: {
     rehypePlugins: [
       rehypeSlug,

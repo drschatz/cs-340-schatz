@@ -220,6 +220,34 @@ export default function ContentPage({ params }) {
           border-radius: 8px;
           margin: 24px 0;
         }
+        
+        .content-body table {
+          border-collapse: collapse;
+          width: 100%;
+          margin: 24px 0;
+          font-size: 16px;
+        }
+        
+        .content-body table th,
+        .content-body table td {
+          border: 1px solid ${colors.tableBorder};
+          padding: 12px 16px;
+          text-align: left;
+        }
+        
+        .content-body table th {
+          background-color: ${colors.tableHeaderBlue};
+          font-weight: 700;
+          color: ${colors.black};
+        }
+        
+        .content-body table td {
+          color: ${colors.darkGray};
+        }
+        
+        .content-body table tr:hover {
+          background-color: ${colors.lightGray};
+        }
       `}</style>
     </div>
   );

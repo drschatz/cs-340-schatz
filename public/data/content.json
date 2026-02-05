@@ -52,8 +52,8 @@
       "date": "2/05",
       "topic": "Building Blocks (0b10)",
       "slides_google": "https://docs.google.com/presentation/d/1sdr-8PTATInLR6_nZqcX0Ub5fcT804nHFZETSW4-FTA/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "/lectures/sp26-bb2.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_sd5wqlwx",
       "texts": ["building-hardware", "cache"]
     }
   ]

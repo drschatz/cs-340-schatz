@@ -39,7 +39,7 @@ Implement a C version of a doubly linked list for a list of `char`s and a list o
 
 ## C you will need
 
-You'll probably want to use `strlen`, `free`, and either `malloc` or `calloc`. Other functions defined in `string.h`, like `strcmp` and `memset`, are also permitted. The tests will verify that those are the only library functions that you use.
+You'll probably want to use `free`, and either `malloc` or `calloc`. Other functions defined in `string.h`, like `strcmp` and `memset`, are also permitted. The tests will verify that those are the only library functions that you use.
 
 You'll be required to meet all the rules of C. This will be enforced by compiling with the following compiler flags:
 

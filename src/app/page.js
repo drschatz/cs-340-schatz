@@ -21,6 +21,33 @@ export default function CoursePortal() {
     courseTitle: 'Introduction to Computer Systems'
   });
 
+  // Add this function inside your component, before the return statement
+const renderTextWithLinks = (text) => {
+  // Match markdown-style links: [text](url)
+  const parts = text.split(/(\[.*?\]\(.*?\))/g);
+  
+  return parts.map((part, index) => {
+    const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
+    if (linkMatch) {
+      const [, linkText, url] = linkMatch;
+      return (
+        <a 
+          key={index}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: colors.black,
+            textDecoration: 'underline'          }}
+        >
+          {linkText}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
   useEffect(() => {
     // Load constants
     fetch('/data/constants.json')
@@ -48,6 +75,8 @@ export default function CoursePortal() {
     // Load upcoming events from our API route
     fetchUpcomingEvents();
   }, []);
+
+
 
   const fetchUpcomingEvents = async () => {
     try {
@@ -331,8 +360,9 @@ export default function CoursePortal() {
                 announcements.map((ann, i) => (
                   <article key={i} style={styles.announcementItem}>
                     <p style={styles.announcementDate}>{ann.date}</p>
-                    <p style={styles.announcementText}>{ann.content}</p>
-                  </article>
+<p style={styles.announcementText}>
+  {renderTextWithLinks(ann.content)}
+</p>                  </article>
                 ))
               ) : (
                 <p style={styles.emptyState}>No recent announcements</p>

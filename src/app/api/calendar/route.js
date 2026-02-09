@@ -1,4 +1,4 @@
-
+export const dynamic = 'force-dynamic';
 import { join } from 'path';
 import { readFile } from 'fs/promises';
 

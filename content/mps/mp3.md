@@ -118,7 +118,7 @@ Also note that the appendix is somewhat old and assumes that `long` means a 32-b
 
 # Share Your Image
 
-Put a secret payload inside a PNG of your choice and share it [on the CampusWire post "Post Your MP3 Images Here!"]() and [its accompanying Drive folder]().
+Put a secret payload inside a PNG of your choice and share it [on the CampusWire post](https://campuswire.com/c/G0463FDE3/feed/40) and [its accompanying Drive folder](https://drive.google.com/drive/folders/10NjGG9nwkIqw6fJvel5BuWvHcimmoZ4o).
 This is an opportunity to share a bit about yourself and your interests; please keep it (both the image and its hidden contents) inoffensive.
 
 # Testing Your Program

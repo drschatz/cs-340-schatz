@@ -55,6 +55,14 @@
       "slides_pdf": "/lectures/sp26-bb2.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_sd5wqlwx",
       "texts": ["building-hardware", "cache"]
+    },
+      {
+      "date": "2/10",
+      "topic": "Storing Data",
+      "slides_google": "https://docs.google.com/presentation/d/1vlm93f8uNdPQxLV95TRmXWCDXehIH7NElSpAy8pz6YE/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["bytes"]
     }
   ]
 }

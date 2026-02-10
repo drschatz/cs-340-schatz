@@ -54,7 +54,7 @@ Answer
 
 # Initial Files
 
-[`mp3.zip`](mp3.zip) contains header files, testers, and a Makefile.
+[`mp3.zip`](../mp3.zip) contains header files, testers, and a Makefile.
 You will edit the following files:
 
 - `pngchunklist.c`

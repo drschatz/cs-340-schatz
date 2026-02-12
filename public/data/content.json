@@ -68,8 +68,8 @@
       "date": "2/10",
       "topic": "Central Processing Unit (CPU)",
       "slides_google": "https://docs.google.com/presentation/d/13M_8hIPVd-w8otl_D9YgKvRKKRaI2niu_hFhYWViZUE/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "/lectures/sp26-cpu.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_n1lmt7k5",
       "texts": ["isa"]
     }
   ]

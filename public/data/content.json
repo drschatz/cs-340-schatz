@@ -79,6 +79,14 @@
       "slides_pdf": "/lectures/sp26-exam1.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_cc8f7g78",
       "texts": [""]
+    },
+    {
+      "date": "2/24",
+      "topic": "Bitwise Operations",
+      "slides_google": "https://docs.google.com/presentation/d/11jzzYmbSYMPXImDqrxtPgsxOGUJhUM4jjiFddrD6BMI/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["bitwise", "utf8"]
     }
   ]
 }

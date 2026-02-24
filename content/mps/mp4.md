@@ -10,7 +10,7 @@ In this Maddening Puzzle (MP), you will work with strings in C. While there are 
 
 # Initial Files
 
-[`mp4.zip`](mp4.zip) contains header files, testers, and a Makefile.
+[`mp4.zip`](../mp4.zip) contains header files, testers, and a Makefile.
 You will add to `utf8lib.c` (and only that file).
 
 `utf8lib.h` documents the functions you should add to `utf8lib.c`.

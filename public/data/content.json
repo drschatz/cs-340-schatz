@@ -82,11 +82,19 @@
     },
     {
       "date": "2/24",
-      "topic": "Bitwise Operations",
+      "topic": "Bitwise Operations 0b01",
       "slides_google": "https://docs.google.com/presentation/d/11jzzYmbSYMPXImDqrxtPgsxOGUJhUM4jjiFddrD6BMI/edit?usp=sharing",
       "slides_pdf": "/lectures/sp26-bitwise.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_rahcgd4t",
       "texts": ["bitwise", "utf8"]
+    },
+      {
+      "date": "2/26",
+      "topic": "Bitwise Operations 0b10",
+      "slides_google": "https://docs.google.com/presentation/d/1FZ5WkpY4EZ7hLG7wblg36tPbIBoUH6HKXac_jg_UDSs/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

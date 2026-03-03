@@ -40,7 +40,7 @@ When using `sbrk`, the heap is just a big continuous range of addresses.
 Any internal structure and usage is up to you.
 One of the most popular internal structures is managed by `malloc`.
 
-# Heap, level 1: `malloc` and friends
+# Heap, level 1: malloc and friends
 
 `malloc` and its related functions `free`, `calloc`, and `realloc` use `sbrk` to request heap memory from the OS,
 then add their own bookkeeping to the big region of available memory,

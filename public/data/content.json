@@ -88,13 +88,21 @@
       "recording": "https://mediaspace.illinois.edu/media/t/1_rahcgd4t",
       "texts": ["bitwise", "utf8"]
     },
-      {
+    {
       "date": "2/26",
       "topic": "Bitwise Operations 0b10",
       "slides_google": "https://docs.google.com/presentation/d/1FZ5WkpY4EZ7hLG7wblg36tPbIBoUH6HKXac_jg_UDSs/edit?usp=sharing",
       "slides_pdf": "/lectures/sp26-bitwise10.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_b0lyeku2",
       "texts": []
+    },
+    {
+      "date": "3/03",
+      "topic": "Program's Memory | Virtual Memory",
+      "slides_google": "https://docs.google.com/presentation/d/1G8bGh0JzscfLS5LVNzW1AFG-4VAqOH_qQpR30FM5fRw/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["vm", "management"]
     }
   ]
 }

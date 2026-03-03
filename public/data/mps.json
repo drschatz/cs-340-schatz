@@ -2,7 +2,7 @@
   "mps": [
     {
       "number": 0,
-      "title": "Enviornment Setup",
+      "title": "Environment Setup",
       "prairielearn": ""
     },
     {
@@ -23,6 +23,11 @@
     {
       "number": 4,
       "title": "UTF-8",
+      "prairielearn": ""
+    },
+        {
+      "number": 5,
+      "title": "Allocator",
       "prairielearn": ""
     }
   ]

@@ -38,7 +38,7 @@ You can write programs that use memory without ever asking "how much memory does
 This freedom is also enabled by virtual memory:
 it (mostly) pretends you have all the memory you need.
 If you access more total memory than there is available in the memory system
-it will try to pretend you have more memory than you do by treating main memory like a [cache](cache.html) for a special part of the disk called "swap space".
+it will try to pretend you have more memory than you do by treating main memory like a cache for a special part of the disk called "swap space".
 Because disks tend to be at least a thousand times slower than main memory, this can cause a very substantial performance penalty, but it can let some programs run that otherwise would crash.
 
 # Address translation
@@ -46,8 +46,8 @@ Because disks tend to be at least a thousand times slower than main memory, this
 Address translation, they key operation of the virtual memory system, works in several steps.
 The goal of these steps is to rapidly and in hardware
 
-1. Maintain a mapping between virtual and physical addresses, `map<virtal_address, physical_addres> vm`{.cpp}.
-2. With every memory access, use `memory[vm[address]]`{.cpp}, not `memory[address]`{.cpp}.
+1. Maintain a mapping between virtual and physical addresses, `map<virtal_address, physical_addres> vm`.
+2. With every memory access, use `memory[vm[address]]`, not `memory[address]`.
 
 This is accomplished as follows:
 
@@ -63,49 +63,6 @@ We only translate the page number, not the page offset.
 This reduces the work we need to do,
 guarantees that spatial locality will be preserved across address translation,
 and allows for better integration with the cache system.
-
-
-## Sparse arrays
-
-The virtual page number to physical page number conversion is implemented using a data structure for storing sparse arrays called a "multi-level page table".
-
-This data structure has a tree-like shape.
-Each node in the tree is quite large.
-The tree also has a fixed height: every leaf node is exactly the same number of steps from the root.
-Keys in this tree are integers -- initially a virtual page number.
-Each step down the tree we use the high-order bits of the integer
-to pick which child to go to, removing those bits.
-When we get to the leaf the remaining bits are the index of the value within the leaf.
-
-### example
-Suppose we have 256 entries per node in the tree,
-the tree has 3 steps from root to leaf,
-and we're using the 32-bit key 0x12345678.
-
-We start at the root node and use the high-order 8 bits of the key (0x12) to pick one of its children.
-
-From that child we use the next 8 bits (0x34) to pick one of its children.
-
-From that child we use the next 8 bits (0x56) to pick one of its children.
-
-We're now at the leaf, so the remaining bits (0x78) pick a value out of the leaf node.
-
-
-The details of this structure are rarely important, but there are a few ideas worth understanding:
-
-1. It's a tree, meaning it starts with a single pointer to the root.
-    Changing this pointer changes the entire tree.
-    The pointer is stored in a special register in the processor
-    which only the operating system may change.
-
-2. It's stored in physical memory with big nodes sized to fit one node per page.
-    Thus the entire address translation system fits within its own rules:
-    memory in pages, accessed at the page level.
-
-3. The data structure is sparse: until you use a page, it isn't allocated to you.
-
-4. Memory is allocated at the page granularity by the hardware and operating system.
-    Using 1 byte or 4Ki bytes uses the same amount of system resources.
 
 
 # Pages and Segments

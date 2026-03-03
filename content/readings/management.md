@@ -28,7 +28,7 @@ The stack has two common bugs:
 - "Use after return" -- if a pointer to stack memory outlives the function that allocated the memory, it still runs (the pointer is to valid memory) but no longer runs correctly (it's pointing to memory the program is now using for something else).
 - "Stack overflow" -- if a function puts too much data on the stack or deep recursion causes too many stack frames to be allocated at once, the stack and exceed the size of the segment the OS set aside for it.
 
-# Heap, level 0: `sbrk`
+# Heap, level 0: sbrk
 
 The segment of memory storing the heap is initially small or even empty.
 The beginning of that segment is fixed, but the end of that segment can be changed by the operating system.
@@ -38,11 +38,11 @@ which accepts a delta change in the number of bytes to allocate for the heap.
 
 When using `sbrk`, the heap is just a big continuous range of addresses.
 Any internal structure and usage is up to you.
-One of the most popular internal structures is managed by `malloc`{.man3}.
+One of the most popular internal structures is managed by `malloc`.
 
 # Heap, level 1: `malloc` and friends
 
-`malloc`{.man3} and its related functions `free`, `calloc`, and `realloc` use `sbrk` to request heap memory from the OS,
+`malloc` and its related functions `free`, `calloc`, and `realloc` use `sbrk` to request heap memory from the OS,
 then add their own bookkeeping to the big region of available memory,
 thus chopping it into smaller pieces that can be individually managed and deallocated.
 
@@ -91,26 +91,4 @@ but two common techniques track it automatically:
 - *Ownership tracking*, popularized in the Rust language, requires that each pointer be owned by a specific block of code or other memory region and enforces that when the owner goes out of scope, the pointer is `free`d. This is generally implemented in the programming language itself and enforced by the compiler's type checker.
 
     Language-level ownership tracking prohibits some coding patterns and requires some extra annotation to make others work. Some programmers appreciate this as a way of preventing risky coding practices. Others find it frustrating.
-
-# Heap, level 3: garbage collection
-
-**Garbage** is defined as allocated heap memory that will never be used by the program again.
-**Unreachable memory** is a subset of garbage that *cannot* be used again because no pointers to it are still available to the program.
-**Garbage collectors** are tools that search through the registers and stack to find what pointers do exist, then through the heap to find allocated memory that isn't reachable from those pointers, then `free`s all such memory.
-
-Garbage collectors take time to run (they have to read the entire stack and skim much of the heap) and add extra constraints to how memory is used (for example, pointers cannot be compressed or encrypted). However, they make it much easier to write code because deallocation and lifetimes needn't be considered.
-
-Garbage collectors are built in to most high-level languages, including Java, Python, JavaScript, Bash, and so on.
-These languages are characterized by having a way of allocating memory and creating objects, but no explicit way of deallocating them because deallocation is handled by the garbage collector instead.
-There are multiple designs of garbage collectors, and which one a language uses can have a noticeable impact on what kinds of code are slowed down by the garbage collector the most.
-
-The languages I know that do not have mandatory language-level garbage collectors^[Here I'm treating language-automated reference counting as a form of garbage collection, though that's not always the right way to think of it.] are:
-
-- Fortran, though most Fortran code I've seen doesn't use the heap.
-
-- Rust, because it has type-checker-enforced ownership tracking and compiler-inserted deallocations instead.
-
-- C, C++, and Zig. There are a few third-party garbage collector libraries that can be used with these languages, most popularly the [Boehm garbage collector](https://www.hboehm.info/gc/), but I've almost never seen these used in production code.
-
-- D and V have language-level garbage collectors that can be mixed freely with manual `malloc`-style allocations, disabled selectively for certain functions, or disabled entirely from the command line.
 

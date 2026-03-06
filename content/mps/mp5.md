@@ -149,8 +149,7 @@ You might find this useful in some debugging situations, and for doing step 5 be
 
 ## 2. Shrink efficiently
 
-Don't copy data or change the pointer when decreasing the size of a block in realloc.
-Also don't change its size: simply ignore shrink requests.
+In `realloc`, if the user is requesting a smaller or same sized block, do nothing. 
 
 This will improve your code's **runtime** and **space**.
 

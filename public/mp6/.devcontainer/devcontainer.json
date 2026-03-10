@@ -1,0 +1,31 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "Existing Dockerfile",
+	"build": {
+		// Sets the run context to one level up instead of the .devcontainer folder.
+		"context": "..",
+		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+		"dockerfile": "../../Dockerfile"
+	},
+
+	// increase default limit on open file descriptors to support valgrind, which opens many
+	"runArgs": [ "--ulimit", "nofile=262144:262144" ],
+	
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// enable the C/C++ tools in the docker image
+				"ms-vscode.cpptools",
+				// enable the Python tools in the docker image
+				"ms-python.python",
+				// enable advanced Python debugging in the docker image
+				"ms-python.debugpy"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// To allow a server to use port 5000 and 34248, use [5000, 34248] and rebuild the container.
+	"forwardPorts": []
+}

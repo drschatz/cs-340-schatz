@@ -111,6 +111,14 @@
       "slides_pdf": "/lectures/sp26-concur.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_xi5nicbz",
       "texts": ["kernel"]
+    },
+            {
+      "date": "3/10",
+      "topic": "Threading",
+      "slides_google": "https://docs.google.com/presentation/d/1GrvfCsnxl-V1v0bIobjXhAWG83LDswIOjAfq-IZ_LII/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["concurrency", "sync-c"]
     }
   ]
 }

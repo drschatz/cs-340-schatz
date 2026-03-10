@@ -25,9 +25,14 @@
       "title": "UTF-8",
       "prairielearn": ""
     },
-        {
+    {
       "number": 5,
       "title": "Allocator",
+      "prairielearn": ""
+    },
+    {
+      "number": 6,
+      "title": "Wallet",
       "prairielearn": ""
     }
   ]

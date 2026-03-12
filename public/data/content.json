@@ -119,6 +119,14 @@
       "slides_pdf": "/lectures/sp26-thread.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_63i27044",
       "texts": ["concurrency", "sync-c"]
+    },
+    {
+      "date": "3/12",
+      "topic": "Threading 0b10",
+      "slides_google": "https://docs.google.com/presentation/d/1ea0IT4XeHgy61-quesTfzQU1urTu94K73qYU8R6jLhs/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

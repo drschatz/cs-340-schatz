@@ -1,0 +1,149 @@
+# Scheduler Specification
+A process scheduler is a core operating system component responsible for deciding when and how pending jobs are dispatched for execution, subject to finite system resources. 
+
+This scheduler reads a list of jobs from a file and runs them as external
+processes, subject to two resource constraints:
+
+- **Worker Limit**: the maximum number of jobs that can run concurrently.
+- **CPU capacity**: the total CPU units available. Each job declares how many
+  CPU units it needs. The sum of CPU units across all currently running jobs
+  may not exceed the capacity.
+
+A job can only be run when there is both a free worker slot and
+enough CPU capacity to accommodate it. Jobs that have CPU requirement that exceeds the total CPU capacity are identified immediately at startup and recorded with a special status. They do not consume resources or affect other jobs.
+
+When a job finishes, for any reason, its worker slot and CPU units are immediately returned to the pool, potentially allowing queued jobs to start.
+
+---
+
+## Command-Line Interface
+
+```
+./scheduler_X <jobs_file> [options]
+
+Positional arguments:
+  jobs_file             Path to the jobs file
+
+Options:
+  --workers N           Maximum concurrent jobs (default: 4)
+  --cpu-capacity N      Total CPU units available (default: 4)
+  --timeout S           Default per-job timeout in seconds (default: 5.0)
+  --out DIR             Directory for captured output files (default: out/)
+  --summary PATH        Path for the JSON results file (default: summary.json)
+  --shell               Run commands via shell (enables pipes, redirection)
+```
+
+**Exit code:** 0 if every job that ran finished successfully. 1 if any job
+failed or was terminated due to timeout. Jobs that never run do not affect
+the exit code.
+
+---
+
+## Jobs File Format
+
+One job per line.
+
+```
+[cpu=<int>] [timeout=<float>] <command...>
+```
+
+- **`cpu=<int>`** — CPU units this job requires. Positive integer, default 1.
+- **`timeout=<float>`** — how long this job is allowed to run, in seconds,
+  before it is forcibly terminated. Overrides the global `--timeout` for this
+  job only. Default: the value of `--timeout`.
+- The two prefix fields may appear in either order but must precede the command.
+- Everything after the prefixes is the command, tokenized with standard shell
+  quoting rules.
+- Blank lines and lines beginning with `#` are ignored.
+- A line with prefixes but no command is ignored.
+
+**Example:**
+```
+# run some diagnostics
+cpu=2 timeout=10.0 python3 analyze.py --input data.csv
+cpu=1 echo "done"
+timeout=0.5 ping -c 1 localhost
+cpu=8 ./heavy_job          # will be unrunnable if capacity < 8
+```
+
+---
+
+## Output Files
+
+For every job that runs, the scheduler creates two files in the `--out`
+directory capturing the job's standard output and standard error:
+
+```
+<out>/<job_id:04d>_cpu<cpu>_<sanitized_cmd>.stdout.txt
+<out>/<job_id:04d>_cpu<cpu>_<sanitized_cmd>.stderr.txt
+```
+
+Both files are created even if empty. Jobs that never run do not produce
+output files.
+
+---
+
+## Results File
+
+After all jobs have been processed, the scheduler writes a JSON file to
+`--summary`. The file contains one result object per job from the input
+file, in ascending order by job ID (zero-based, assigned in file order).
+
+### Result Object
+
+```json
+{
+  "job_id":      0,
+  "cmd":         "echo hello",
+  "cpu":         1,
+  "status":      "SUCCESS",
+  "returncode":  0,
+  "wall_time_s": 0.041,
+  "stdout_path": "out/0000_cpu1_echo_hello.stdout.txt",
+  "stderr_path": "out/0000_cpu1_echo_hello.stderr.txt",
+  "error":       ""
+}
+```
+
+### Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `job_id` | int | Position of the job in the input file, starting from 0 |
+| `cmd` | string | The command as parsed (resource prefixes stripped) |
+| `cpu` | int | CPU units requested |
+| `status` | string | Outcome: `SUCCESS`, `FAIL`, `TIMEOUT`, or `UNSCHEDULABLE` |
+| `returncode` | int or null | Process exit code; null if the process did not exit normally |
+| `wall_time_s` | float | Elapsed time from start to finish in seconds |
+| `stdout_path` | string | Path to the captured stdout file |
+| `stderr_path` | string | Path to the captured stderr file |
+| `error` | string | Human-readable description of any error; empty string if none |
+
+### Status Values
+
+| Status | Meaning |
+|--------|---------|
+| `SUCCESS` | Process exited with code 0 |
+| `FAIL` | Process exited with a non-zero code |
+| `TIMEOUT` | Process was terminated because it exceeded its time limit |
+| `UNSCHEDULABLE` | Job's CPU requirement exceeds total system capacity |
+
+### Field Values by Status
+
+| Field | SUCCESS | FAIL | TIMEOUT | UNSCHEDULABLE |
+|-------|---------|------|---------|---------------|
+| `returncode` | exit code | exit code | null | null |
+| `wall_time_s` | actual elapsed time | actual elapsed time | actual elapsed time | 0.0 |
+| `stdout_path` | non-empty string | non-empty string | non-empty string | empty string |
+| `stderr_path` | non-empty string | non-empty string | non-empty string | empty string |
+
+---
+
+## Scheduling Behavior
+
+Jobs are considered for dispatch in the order they appear in the input file.
+The scheduler does not reorder jobs or skip ahead to dispatch a later job
+while an earlier one is still waiting for resources. If the next pending job
+does not fit within current resource availability, the scheduler waits until
+resources are freed.
+

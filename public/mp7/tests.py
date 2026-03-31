@@ -1,12 +1,9 @@
 import sys
 import time
-import traceback
 from typing import List
 
 from scheduler_test_harness import (
     run_scheduler,
-    assert_statuses,
-    get_by_id,
     SchedulerResult,
 )
 
@@ -15,32 +12,13 @@ from scheduler_test_harness import (
 # Name each function test_* and give it a single parameter: scheduler_path.
 # =============================================================================
 
-def test_simple(scheduler_path: str) -> None:
-    results = run_scheduler(
-        scheduler_path,
-        job_lines=["echo hello", "echo world", "echo done"],
-        workers=4,
-        cpu_capacity=4,
-    )
-    assert len(results) == 3, f"expected 3 results, got {len(results)}"
 
 
 # =============================================================================
 # Test runner — do not modify below this line
 # =============================================================================
 
-SCHEDULERS = [
-    "./scheduler_a",
-    "./scheduler_b",
-    "./scheduler_c",
-    "./scheduler_d",
-    "./scheduler_e",
-    "./scheduler_f",
-]
-
-
 def collect_tests():
-    import types
     current = sys.modules[__name__]
     tests = []
     for name in dir(current):
@@ -82,42 +60,50 @@ def run_against(scheduler_path: str, verbose: bool = True) -> dict:
 
 def main():
     import argparse, os
-    ap = argparse.ArgumentParser(description="Scheduler test runner")
-    ap.add_argument("scheduler", nargs="?", help="Path to scheduler binary")
-    ap.add_argument("--all", action="store_true", help="Run against all six schedulers")
+    ap = argparse.ArgumentParser(
+        description="Scheduler test runner",
+        usage="python3 tests.py <scheduler> [scheduler2 ...]"
+    )
+    ap.add_argument(
+        "schedulers",
+        nargs="*",
+        help="One or more paths to scheduler binaries (e.g. ./scheduler_a ./scheduler_b)"
+    )
     args = ap.parse_args()
 
-    if args.all:
+    if not args.schedulers:
+        ap.print_help()
+        sys.exit(1)
+
+    if len(args.schedulers) == 1:
+        # Single scheduler — verbose output
+        run_against(args.schedulers[0], verbose=True)
+    else:
+        # Multiple schedulers — summary table
         tests = collect_tests()
         test_names = [name for name, _ in tests]
         all_results = {}
 
-        for sched in SCHEDULERS:
+        for sched in args.schedulers:
             all_results[sched] = run_against(sched, verbose=False)
 
-        print(f"\n{'Scheduler':<15}", end="")
+        # Print summary table
+        print(f"\n{'Scheduler':<20}", end="")
         for name in test_names:
             short = name.replace("test_", "")[:10]
             print(f"  {short:<10}", end="")
         print(f"  {'TOTAL':>6}")
-        print("-" * (15 + 12 * len(test_names) + 10))
+        print("-" * (20 + 12 * len(test_names) + 10))
 
         for sched, results in all_results.items():
             label = os.path.basename(sched)
-            print(f"{label:<15}", end="")
+            print(f"{label:<20}", end="")
             for name in test_names:
                 sym = "  PASS    " if results.get(name) else "  FAIL    "
                 print(f"{sym:<12}", end="")
             passed = sum(results.values())
             print(f"  {passed:>4}/{len(test_names)}")
         print()
-
-    elif args.scheduler:
-        run_against(args.scheduler, verbose=True)
-
-    else:
-        ap.print_help()
-        sys.exit(1)
 
 
 if __name__ == "__main__":

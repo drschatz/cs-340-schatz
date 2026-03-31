@@ -24,10 +24,10 @@ To compile all schedulers for testing run, `make` from the terminal. This will c
 # Your Task
 Note that while staff are happy to help they will expect you to have followed these steps. For example, if you missing a bug the staff will ask to see your worksheet, not your tests.py. 
 
-1. Read through the [`Scheduler Specification`](../mp7/scheduler_spec.pdf).
+1. Read through the [`Scheduler Specification`](../mp7_files/scheduler_spec.pdf).
     - This describes the expected behavior from a scheduler.
     - You will come back to this document often. This is just your first read through.
-2. Read through the [`Testing Guide`](../mp7/testing_guide.pdf).
+2. Read through the [`Testing Guide`](../mp7_files/testing_guide.pdf).
     - This explains how you will write tests and what resources you have access to when using the test harness. 
 3. Open and make a copy of the [`Worksheet`](https://docs.google.com/document/d/1rmUiLuMFQQHgMEvTQwxIfAX8CoND-xfH_9XE1RfgNQ8/edit?usp=sharing).
     - This worksheet specifies which sections of the scheduler specifcations you need to verify: The results file, scheduling behavior, and timing. 

@@ -1,10 +1,14 @@
+/*
+ * scheduler_correct.c — correct single-threaded scheduler
+ * Uses fork/waitpid with poll loop. Deterministic and easy to reason about.
+ */
 #include "scheduler_common.h"
 
 #define MAX_RUNNING 64
 
 typedef struct {
     pid_t   pid;
-    int     job_idx;   
+    int     job_idx;   /* index into jobs[] */
     double  start;
     double  deadline;
 } Running;
@@ -47,14 +51,16 @@ int main(int argc, char **argv) {
     memset(results, 0, sizeof(results));
     int n_results = 0;
 
+    /* track which jobs are still pending (index into jobs[]) */
     int pending[MAX_JOBS], n_pending = 0;
     for (int i = 0; i < n_jobs; i++) pending[n_pending++] = i;
 
     Running running[MAX_RUNNING];
-    int running_cpu_used[MAX_RUNNING]; 
+    int running_cpu_used[MAX_RUNNING]; /* cpu units for each running slot */
     int n_running = 0;
     int total_running_cpu = 0;
 
+    /* handle UNSCHEDULABLE immediately */
     int new_pending[MAX_JOBS], nn = 0;
     for (int i = 0; i < n_pending; i++) {
         Job *j = &jobs[pending[i]];
@@ -72,6 +78,7 @@ int main(int argc, char **argv) {
     memcpy(pending, new_pending, nn * sizeof(int));
 
     while (n_pending > 0 || n_running > 0) {
+        /* dispatch as many as fit */
         int dispatched = 1;
         while (dispatched && n_running < cfg.workers) {
             dispatched = 0;
@@ -79,6 +86,7 @@ int main(int argc, char **argv) {
                 Job *j = &jobs[pending[i]];
                 if (n_running >= cfg.workers) break;
                 if (total_running_cpu + j->cpu > cfg.cpu_capacity) continue;
+                /* fits — dispatch */
                 int slot = n_running;
                 char sp[MAX_PATH], ep[MAX_PATH];
                 build_paths(&cfg, j, sp, ep);
@@ -88,20 +96,23 @@ int main(int argc, char **argv) {
                     total_running_cpu += j->cpu;
                     n_running++;
                     dispatched = 1;
+                    /* remove from pending */
                     memmove(&pending[i], &pending[i+1], (n_pending-i-1)*sizeof(int));
                     n_pending--;
                 }
-                break;
+                break; /* dispatch at most one per scan, re-scan from top */
             }
         }
 
         if (n_running == 0) break;
 
+        /* poll for completions and timeouts */
         struct timespec ts = {0, 10000000};
         nanosleep(&ts, NULL);
 
         double t = now_s();
         for (int i = 0; i < n_running; ) {
+            /* check timeout */
             if (t >= running[i].deadline) {
                 kill(running[i].pid, SIGKILL);
                 waitpid(running[i].pid, NULL, 0);
@@ -117,6 +128,7 @@ int main(int argc, char **argv) {
                 running_cpu_used[i] = running_cpu_used[n_running];
                 continue;
             }
+            /* check exit */
             int status; pid_t w = waitpid(running[i].pid, &status, WNOHANG);
             if (w == running[i].pid) {
                 Job *j = &jobs[running[i].job_idx];

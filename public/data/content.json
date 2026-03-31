@@ -135,6 +135,14 @@
       "slides_pdf": "/lectures/sp26-exam2.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_4wc6bjyt",
       "texts": []
+    },
+    {
+      "date": "3/31",
+      "topic": "Python",
+      "slides_google": "https://docs.google.com/presentation/d/1dQzl0kgdLhdHaEaPmJUARhCp7IGEFqsOfhedNL6iHzM/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["python"]
     }
   ]
 }

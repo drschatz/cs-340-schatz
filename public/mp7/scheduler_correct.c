@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
             for (int i = 0; i < n_pending; i++) {
                 Job *j = &jobs[pending[i]];
                 if (n_running >= cfg.workers) break;
-                if (total_running_cpu + j->cpu > cfg.cpu_capacity) continue;
+                if (total_running_cpu + j->cpu > cfg.cpu_capacity) break;
                 /* fits — dispatch */
                 int slot = n_running;
                 char sp[MAX_PATH], ep[MAX_PATH];

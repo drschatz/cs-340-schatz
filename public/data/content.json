@@ -143,6 +143,14 @@
       "slides_pdf": "/lectures/sp26-python.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_9idf63fm",
       "texts": ["python"]
+    },
+    {
+      "date": "4/02",
+      "topic": "Networks",
+      "slides_google": "https://docs.google.com/presentation/d/1PxYboi2QlEvYrqEKP8QD_Mi94VNcuwQnDvgAtAaS8xY/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["networks"]
     }
   ]
 }

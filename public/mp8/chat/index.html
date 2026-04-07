@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hello, world!</title>
+  <script>
+function chatter(val) {
+  const text = document.querySelector('input[type="text"]')
+  const value = text.value
+  const ol = document.getElementById('dump')
+  text.value = ''
+  fetch('index.html', {method:'POST',body:JSON.stringify({"msg":value,"have":ol.children.length}),headers:{'Content-Type':'application/json'}})
+    .then(res => res.json())
+    .then(lst => {
+      for(let entry of lst) {
+        const li = document.createElement('li')
+        li.append(JSON.stringify(entry, null, "  "))
+        ol.append(li)
+      }
+    })
+  return false
+}
+  </script>
+  <style>#dump li { white-space: pre; font-family: ui-monospace, monospace; }</style>
+</head>
+<body>
+  <img src="340.png">
+  <p>Try opening this page in multiple tabs, typing in one and then the other.</p>
+  <form onsubmit="return chatter(this)"><input type="text" style="width:100%"><input type="submit"></form>
+  <ol id="dump"></ol>
+</body>
+</html>

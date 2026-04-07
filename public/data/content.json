@@ -151,6 +151,14 @@
       "slides_pdf": "/lectures/sp26-networks.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_qn6gekor",
       "texts": ["networks"]
+    },
+    {
+      "date": "4/07",
+      "topic": "HTTP",
+      "slides_google": "https://docs.google.com/presentation/d/1ugkeWLIgAF3otuOrEs6u1RslHWq_EfOWGx5go77hrck/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

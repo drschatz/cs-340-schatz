@@ -39,6 +39,11 @@
       "number": 7,
       "title": "Scheduler Tests",
       "prairielearn": ""
+    },
+    {
+      "number": 8,
+      "title": "Aiohttp Lite",
+      "prairielearn": ""
     }
   ]
 }

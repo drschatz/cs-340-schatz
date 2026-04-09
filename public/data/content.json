@@ -159,6 +159,14 @@
       "slides_pdf": "/lectures/sp26-http.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_fua4ysz7",
       "texts": []
+    },
+    {
+      "date": "4/09",
+      "topic": "AIOHTTP",
+      "slides_google": "https://docs.google.com/presentation/d/1aNCd510ivlJG_RbWAfAIVCFx5lDgUuYFBagqwimvdLU/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

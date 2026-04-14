@@ -167,6 +167,14 @@
       "slides_pdf": "/lectures/sp26-aiohttp.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_n64lezpo",
       "texts": []
+    },
+        {
+      "date": "4/14",
+      "topic": "Big Picture and APIs",
+      "slides_google": "https://docs.google.com/presentation/d/1OLRg1yzmiWoEYmJ-HFDZzY4YTC92sEsfhFph9X1qFRc/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
     }
   ]
 }

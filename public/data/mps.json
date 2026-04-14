@@ -44,6 +44,11 @@
       "number": 8,
       "title": "Aiohttp Lite",
       "prairielearn": ""
+    },
+    {
+      "number": 9,
+      "title": "Weather Filter",
+      "prairielearn": ""
     }
   ]
 }

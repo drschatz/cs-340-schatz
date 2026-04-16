@@ -51,7 +51,7 @@ async def test_locations(aiohttp_client, location):
 async def test_results():
     global res
     async with aiohttp.ClientSession() as session:
-        async with session.post('http://fa25-cs340-s20.cs.illinois.edu:34008/check', json=got) as resp:
+        async with session.post('http://sp26-cs340-s01.cs.illinois.edu:34008/check', json=got) as resp:
             res = await resp.json()
 
 @pytest.mark.parametrize("location", [

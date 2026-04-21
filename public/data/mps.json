@@ -49,6 +49,11 @@
       "number": 9,
       "title": "Weather Filter",
       "prairielearn": ""
+    },
+    {
+      "number": 10,
+      "title": "Tetris",
+      "prairielearn": ""
     }
   ]
 }

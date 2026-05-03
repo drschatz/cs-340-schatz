@@ -363,6 +363,17 @@ export default function MPsPage() {
               </div>
             )
           ))}
+
+          {/* Final Project Row */}
+          <a
+            href="/final-project"
+            style={styles.mpRow(true)}
+            className="mp-row-clickable"
+          >
+            <div style={styles.mpNumber}>Final</div>
+            <div style={styles.mpTitle}>Final Project</div>
+            <div style={styles.mpDue}>Due: May 11 at 1:30pm</div>
+          </a>
         </div>
       </main>
     </div>

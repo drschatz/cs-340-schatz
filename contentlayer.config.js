@@ -16,14 +16,12 @@ export const Syllabus = defineDocumentType(() => ({
     toc: {
       type: 'json',
       resolve: async (doc) => {
-        // Extract headings for TOC from markdown
         const headingRegex = /^(#{2,3})\s+(.+)$/gm;
         const headings = [];
         let match;
         while ((match = headingRegex.exec(doc.body.raw)) !== null) {
           const level = match[1].length === 2 ? 'two' : 'three';
           const text = match[2].trim();
-          // Create slug from text (same as rehype-slug does)
           const slug = text
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
@@ -85,6 +83,21 @@ export const MP = defineDocumentType(() => ({
   },
 }))
 
+export const FinalProject = defineDocumentType(() => ({
+  name: 'FinalProject',
+  filePathPattern: `final-project.md`,
+  contentType: 'markdown',
+  fields: {
+    title: { type: 'string', required: false },
+    subtitle: { type: 'string', required: false },
+    author: { type: 'string', required: false },
+    summary: { type: 'string', required: false },
+  },
+  computedFields: {
+    url: { type: 'string', resolve: () => `/final-project` },
+  },
+}))
+
 export const Doc = defineDocumentType(() => ({
   name: 'Doc',
   filePathPattern: `**/*.{md,mdx}`,
@@ -100,7 +113,7 @@ export const Doc = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Syllabus, Reading, MP, Doc],
+  documentTypes: [Syllabus, Reading, MP, FinalProject, Doc],
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

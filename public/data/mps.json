@@ -1,59 +1,10 @@
 {
   "mps": [
     {
-      "number": 0,
-      "title": "Environment Setup",
-      "prairielearn": ""
-    },
-    {
-      "number": 1,
-      "title": "Debugging",
-      "prairielearn": ""
-    },
-    {
-      "number": 2,
-      "title": "Linked List",
-      "prairielearn": ""
-    },
-    {
-      "number": 3,
-      "title": "PNG",
-      "prairielearn": ""
-    },
-    {
-      "number": 4,
-      "title": "UTF-8",
-      "prairielearn": ""
-    },
-    {
-      "number": 5,
-      "title": "Allocator",
-      "prairielearn": ""
-    },
-    {
-      "number": 6,
-      "title": "Wallet",
-      "prairielearn": ""
-    },
-    {
-      "number": 7,
-      "title": "Scheduler Tests",
-      "prairielearn": ""
-    },
-    {
-      "number": 8,
-      "title": "Aiohttp Lite",
-      "prairielearn": ""
-    },
-    {
-      "number": 9,
-      "title": "Weather Filter",
-      "prairielearn": ""
-    },
-    {
-      "number": 10,
-      "title": "Tetris",
-      "prairielearn": ""
+      "slug": "envr",
+      "label": "Environment Check-Off",
+      "title": "Environment Check-Off",
+      "eventMatch": "check-off"
     }
   ]
 }

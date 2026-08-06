@@ -1,16 +1,16 @@
 ---
-title: MP0
-subtitle: Environment Setup
+title: Environment Setup
+subtitle: 
 number: 0
 ---
 
-This Machine Problem (MP) is NOT turned in on Prairie Learn, instead, to get the points, you will need to get it checked-off at office hours before the deadline or during the grace period (24 hours after the deadline). See the [home page](/) for the office hours schedule and the [syllabus](/syllabus) for course policies.
+This is NOT turned in on Prairie Learn, instead, to get the points (1% of your final grade), you will need to get the setup checked-off at office hours before the deadline. See the [home page](/) for the office hours schedule and the [syllabus](/syllabus) for course policies.
 
-For this MP only, we will help you during office hours even after the original deadline.
+Often, issues come up for the setup that need a few days to resolve. Please aim to get this setup completed ASAP and not the day of the deadline. I will not grant extensions for waiting until the last day to start.
 
-In this class, we will develop code through two different toolchains. The first, Docker, is used for MPs 1-9. The second, a VM, is only required for MP10 and the final project but can be used for other MPs if docker isn't working. For MP0, you are required to get both toolchains working to avoid future issues. 
+In this class, we will develop code through two different toolchains. The first, Docker, is used for MPs 1-7. The second, a VM, is only required for MP 8 and the final project but can be used for other MPs if docker isn't working. For the environment setup you are required to get both toolchains working to avoid future issues. 
 
-You are encouraged to look back at this MP through the course to help with working with the toolchains. 
+You are encouraged to look back at this through the course to help with working with the toolchains. 
 
 
 # Local toolchain with Docker
@@ -104,7 +104,7 @@ All parts of the VM process require that you are either on the campus network or
 
 ## Identify and Turn On your VM
 
-You will be given a single VM. It's name will have the form `sp26-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
+You will be given a single VM. It's name will have the form `fa26-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
 
 The VM will be turned off after a few hours of idleness. To turn it back on, follow these directions: <https://answers.uillinois.edu/illinois.engineering/page.php?id=108475>. Your VM needs to be on to interact with it in any way.
 
@@ -126,7 +126,7 @@ All ways of powering on your VM require you to either (a) be on campus or (b) be
     
     d. Type `cs-vmfarm-poweron`
     
-    e. Enter the information that it requests, including the full VM name (`sp26-cs340-`num`.cs.illinois.edu`)
+    e. Enter the information that it requests, including the full VM name (`fa26-cs340-`num`.cs.illinois.edu`)
     
     f. Type `exit` to close your connection to EWS
 
@@ -145,9 +145,9 @@ VS Code connects to the virtual machine using a protocol and tool called SSH. SS
 
 3. Run `ls $env:USERPROFILE/.ssh/` to see what file named `id_`*something*`.pub` you have. Common files are `id_rsa.pub` and `id_ed25519.pub`, but others are possible. The next step assumes `id_rsa.pub` but you can change that part of the command if it was something different.
 
-4. Run `ssh` *your VM* `"mkdir .ssh"`, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+4. Run `ssh` *your VM* `"mkdir .ssh"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
-5. Run `type $env:USERPROFILE\.ssh\id_rsa.pub | ssh` *your VM* `"cat >> .ssh/authorized_keys"`, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+5. Run `type $env:USERPROFILE\.ssh\id_rsa.pub | ssh` *your VM* `"cat >> .ssh/authorized_keys"`, replacing "*your vm*" with your user-qualified full VM name (netid`@fa26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
 **MacOS or Linux:**
 
@@ -157,7 +157,7 @@ If `ls $HOME/.ssh/` does **not** show a file named `id_`*something*`.pub`:
     
     a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 
-3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@sp26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@fa26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
 If this is successful, you should then be able to run `ssh` *your VM* and connect without requiring a password. If it is not successful, you'll need to use the password-based authentication instead, and may also share how it failed on CampusWire; we might be able to find a workaround, but no promises.
 
@@ -171,7 +171,7 @@ If this is successful, you should then be able to run `ssh` *your VM* and connec
     
     b. Select "Add New SSH Host…"
     
-    c. Type `ssh `netid`@sp26-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
+    c. Type `ssh `netid`@fa26-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
     
     d. Pick a config file from the available options; the first displayed option should work fine.
     
@@ -183,7 +183,7 @@ When running VS Code, you should see the bottom-left button says the name of you
 
 In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 
-- See the prompt line is netid`@sp26-cs340-`num`:~$` with your NetID and VM number.
+- See the prompt line is netid`@fa26-cs340-`num`:~$` with your NetID and VM number.
 - Run `gcc --version` to see a version number (`13.3.0` or later).
 - Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
 - Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
@@ -204,7 +204,7 @@ Your virtual machine has a separate disk from your personal computer. To move fi
     
     b. use `scp currentLocation desiredLocation`, where:
         
-    - One of the locations has the form netid`@sp26-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
+    - One of the locations has the form netid`@fa26-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
 
     - The other location is a local filename
 
@@ -215,5 +215,5 @@ For files located online, you can download them to the VM directly by using `wge
 
 # Check-Off Requirements
 
-To get points for this MP, you must show a staff member at office hours the "Verify Docker" and "Verify VM" steps from above.
+To get credit for this setup, you must show a staff member at office hours the "Verify Docker" and "Verify VM" steps from above BEFORE the deadline.
 

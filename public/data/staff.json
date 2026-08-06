@@ -1,13 +1,6 @@
 {
   "staff": [
     {
-      "name": "Daixuan Li",
-      "callMe": "",
-      "bio": "5th PhD working on the intersection of AI and Systems.",
-      "role": "staff",
-      "image": "daixuan.jpg"
-    },
-    {
       "name": "Otto Piramuthu",
       "callMe": "he/him",
       "bio": "I'm a 2nd year PhD student in Systems/Networking specializing in IoT",
@@ -20,41 +13,6 @@
       "bio": "Hi! My name is Anton, I'm a second year PhD student researching wireless systems for Augmented Reality. In my free time, I like reading, bouldering, and doing judo.",
       "role": "staff",
       "image": "anton.jpg"
-    },
-    {
-      "name": "Roma Chandra",
-      "callMe": "she/her",
-      "bio": "Hi! My name is Roma, and I'm a senior majoring in Math & CS. This is my third semester as a CA for CS 340, and I love reading, working out, and listening to music! Let me know if you have any recs :)",
-      "role": "staff",
-      "image": "roma.JPG"
-    },
-    {
-      "name": "Janice Mei",
-      "callMe": "she/her",
-      "bio": "Hi! My name is Janice, I'm a senior studying Computer Science + Geography & GIS with a minor in Statistics :) I love to dance in my free time!",
-      "role": "staff",
-      "image": "janice.JPG"
-    },
-    {
-      "name": "Kavya Sachdeva",
-      "callMe": "he/him",
-      "bio": "Interested in how systems work and where to eat next",
-      "role": "staff",
-      "image": "kavya.JPG"
-    },
-    {
-      "name": "Frank Schmidt",
-      "callMe": "",
-      "bio": "I am a Statistics & Computer Science major who loves music, movies, and math! Most importantly, a proud Illini! Go Illini!",
-      "role": "staff",
-      "image": "frank.JPG"
-    },
-    {
-      "name": "Ria Bhargava",
-      "callMe": "",
-      "bio": "Hi! I’m Ria, a senior studying CS + Statistics, and this is my second semester on the CS340 course staff. I’m excited to meet you all and help you succeed this semester — please reach out with questions in office hours or on the forums. Outside of class, you can find me studying at cafés, going on a run, or hanging out with friends. Looking forward to a great semester!",
-      "role": "staff",
-      "image": "ria.png"
     },
     {
       "name": "Albert Lee",

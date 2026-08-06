@@ -3,29 +3,31 @@
 import React, { useState, useEffect } from 'react';
 import { colors } from '../../styles/colors';
 import { allMPs } from '.contentlayer/generated';
-import Navigation from '../../components/Navigation';  // Add this import at the top
+import Navigation from '../../components/Navigation';
 
+// Ignore any calendar events before this date (previous-semester due dates).
+const SEMESTER_START = new Date(2026, 7, 1); // Aug 1, 2026 (month is 0-indexed)
 
 export default function MPsPage() {
   const [mps, setMps] = useState([]);
-  const [calendarEvents, setCalendarEvents] = useState({});
+  const [calendarEvents, setCalendarEvents] = useState([]);
+  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
     // Load MPs configuration
     fetch('/data/mps.json')
       .then(response => response.json())
       .then(data => {
-        setMps(data.mps);
+        setMps(data.mps || []);
       })
       .catch(error => console.error('Error loading MPs:', error));
 
-    // Load calendar events to get release and due dates
+    // Load calendar events to get due dates
     fetchCalendarDates();
   }, []);
 
   const fetchCalendarDates = async () => {
     try {
-      // Just fetch from API - it handles the config internally
       const response = await fetch('/api/calendar');
       const icsData = await response.text();
       const events = parseICSForDates(icsData);
@@ -35,8 +37,9 @@ export default function MPsPage() {
     }
   };
 
+  // Parse the ICS feed into a flat list of { summary, date, rawDate }.
   const parseICSForDates = (icsText) => {
-    const events = {};
+    const events = [];
     const lines = icsText.split('\n');
     let currentEvent = null;
 
@@ -46,20 +49,25 @@ export default function MPsPage() {
       if (line === 'BEGIN:VEVENT') {
         currentEvent = {};
       } else if (line === 'END:VEVENT' && currentEvent) {
-        if (currentEvent.date && currentEvent.summary) {
-          events[currentEvent.summary] = {
+        // Only keep events on/after the semester start (Aug 1, 2026) so
+        // due dates from previous semesters don't get matched.
+        if (
+          currentEvent.date &&
+          currentEvent.summary &&
+          currentEvent.date >= SEMESTER_START
+        ) {
+          events.push({
+            summary: currentEvent.summary,
             date: formatDate(currentEvent.date),
             rawDate: currentEvent.date
-          };
+          });
         }
         currentEvent = null;
       } else if (currentEvent) {
         if (line.startsWith('DTSTART')) {
-          // Match date AND time: 20251211T160000 (local time after API conversion)
           const dateTimeMatch = line.match(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/);
           if (dateTimeMatch) {
             const [_, year, month, day, hour, minute, second] = dateTimeMatch;
-            // Create local date object
             currentEvent.date = new Date(
               parseInt(year),
               parseInt(month) - 1,
@@ -68,13 +76,11 @@ export default function MPsPage() {
               parseInt(minute),
               parseInt(second)
             );
-             // ADD DEBUG CODE HERE
           } else {
-            // Fallback for date-only format
             const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/);
             if (dateMatch) {
               const [_, year, month, day] = dateMatch;
-              currentEvent.date = new Date(parseInt(year), parseInt(month), parseInt(day));
+              currentEvent.date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
             }
           }
         } else if (line.startsWith('SUMMARY:')) {
@@ -86,135 +92,206 @@ export default function MPsPage() {
     return events;
   };
 
-  // Helper function to find calendar event with flexible naming
-  const findCalendarEvent = (mpNumber, eventType) => {
-    // Try different variations of event names
-    const variations = [
-      `MP${mpNumber} ${eventType}`,
-      `MP ${mpNumber} ${eventType}`,
-      `mp${mpNumber} ${eventType}`,
-      `mp ${mpNumber} ${eventType}`,
-      `MP${mpNumber}${eventType}`,
-      `MP ${mpNumber}${eventType}`,
-    ];
+  // Extract the MP identifier (e.g. "1", "1.1", "3.2") that appears right after "MP".
+  const extractMpId = (summary) => {
+    const match = summary.match(/MP\s*(\d+(?:\.\d+)?)/i);
+    return match ? match[1] : null;
+  };
 
-    // Also try different capitalizations of the event type
-    const typeVariations = [
-      eventType.toLowerCase(),
-      eventType.charAt(0).toUpperCase() + eventType.slice(1).toLowerCase(),
-      eventType.toUpperCase()
-    ];
+  // Find the official (non-suggested) due-date event for a whole MP number.
+  // Rule: summary contains "Due", does NOT contain "Suggested", and the id
+  // right after "MP" equals the MP number.
+  const findOfficialDue = (mpNumber) => {
+    return calendarEvents.find(ev => {
+      const s = ev.summary;
+      if (!/due/i.test(s)) return false;
+      if (/suggested/i.test(s)) return false;
+      return extractMpId(s) === String(mpNumber);
+    }) || null;
+  };
 
-    for (const baseVar of variations) {
-      for (const typeVar of typeVariations) {
-        const testName = baseVar.replace(eventType, typeVar);
-        // Check exact match
-        if (calendarEvents[testName]) {
-          return calendarEvents[testName];
-        }
-        // Check case-insensitive match
-        const match = Object.keys(calendarEvents).find(
-          key => key.toLowerCase().trim() === testName.toLowerCase().trim()
-        );
-        if (match && calendarEvents[match]) {
-          return calendarEvents[match];
-        }
-      }
-    }
+  // Find the suggested due-date event for a specific part (e.g. "1.1").
+  // Rule: summary contains "Due" and "Suggested", and the id equals the part id.
+  const findSuggestedDue = (partId) => {
+    return calendarEvents.find(ev => {
+      const s = ev.summary;
+      if (!/due/i.test(s)) return false;
+      if (!/suggested/i.test(s)) return false;
+      return extractMpId(s) === partId;
+    }) || null;
+  };
 
-    // For "Due" events, also try just "MP0", "MP 0", etc. without "Due"
-    if (eventType.toLowerCase() === 'due') {
-      const simpleVariations = [
-        `MP${mpNumber}`,
-        `MP ${mpNumber}`,
-        `mp${mpNumber}`,
-        `mp ${mpNumber}`
-      ];
-      
-      for (const variant of simpleVariations) {
-        if (calendarEvents[variant]) {
-          return calendarEvents[variant];
-        }
-        const match = Object.keys(calendarEvents).find(
-          key => key.toLowerCase().trim() === variant.toLowerCase().trim()
-        );
-        if (match && calendarEvents[match]) {
-          return calendarEvents[match];
-        }
-      }
-    }
+  // Find the release event for a given MP or part id (e.g. "1.1" or "2").
+  // Rule: summary contains "Release" and the id matches.
+  const findRelease = (id) => {
+    return calendarEvents.find(ev => {
+      const s = ev.summary;
+      if (!/release/i.test(s)) return false;
+      return extractMpId(s) === String(id);
+    }) || null;
+  };
 
-    return null;
+  // Find a due event by matching a keyword in the summary (for non-MP items
+  // like the environment checkoff, whose event has no "MP <n>" id).
+  const findDueByKeyword = (keyword) => {
+    if (!keyword) return null;
+    const kw = keyword.toLowerCase();
+    return calendarEvents.find(ev => {
+      const s = ev.summary.toLowerCase();
+      return /due/i.test(s) && !/suggested/i.test(s) && s.includes(kw);
+    }) || null;
   };
 
   const formatDate = (date) => {
     const month = date.getMonth();
     const day = date.getDate();
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return `${monthNames[month]} ${day}`;
   };
 
-  const getStatus = (releaseDate, dueDate) => {
+  // Status is driven by release + official due date.
+  // Before release -> inactive. Released & before due -> active.
+  // Past due but within grace -> grace. Past grace -> inactive.
+  // noGrace: skip the grace window (past due goes straight to inactive).
+  const getStatus = (releaseDate, dueDate, noGrace = false) => {
     const now = new Date();
 
+    // Not yet released (or no release info) -> inactive.
     if (!releaseDate || releaseDate > now) {
-      console.log("inactive");
-      return 'inactive'; // Not released yet
+      return 'inactive';
     }
-    
+
     if (!dueDate) {
-      return 'active'; // Released but no due date
+      return 'active'; // Released, no known due date
     }
-    
-    // Grace period ends 24 hours after 11:59pm of the due date
-    // So if due date is Dec 10, grace period ends at 11:59pm Dec 11
+
+    const dueDateEnd = new Date(dueDate);
+    dueDateEnd.setHours(23, 59, 59, 999);
+
+    // No grace period: once past the due date, it's inactive.
+    if (noGrace) {
+      return now > dueDateEnd ? 'inactive' : 'active';
+    }
+
+    // Grace period ends 24 hours after 11:59pm of the due date.
     const gracePeriodEnd = new Date(dueDate);
-    gracePeriodEnd.setHours(23, 59, 59, 999); // Set to 11:59:59.999pm of due date
-    gracePeriodEnd.setDate(gracePeriodEnd.getDate() + 1); // Add 1 day (so 11:59pm next day)
-    
+    gracePeriodEnd.setHours(23, 59, 59, 999);
+    gracePeriodEnd.setDate(gracePeriodEnd.getDate() + 1);
+
     if (now > gracePeriodEnd) {
       return 'inactive'; // Past grace period
     }
-    
-    // Check if we're past the due date (need to handle if due date has a time)
-    const dueDateEnd = new Date(dueDate);
-    dueDateEnd.setHours(23, 59, 59, 999); // End of due date
-    
+
     if (now > dueDateEnd) {
       return 'grace'; // In grace period
     }
-    
-    return 'active'; // Between release and due
+
+    return 'active'; // Released and before/through the due date
   };
 
-  // Create array of all 11 MPs (0-10)
-  const allMPsList = Array.from({ length: 11 }, (_, i) => {
-    const mpData = mps.find(mp => mp.number === i);
-    const mpContent = allMPs.find(mp => mp.number === i);
-    
-    // Use flexible lookup for calendar events
-    const releaseEvent = findCalendarEvent(i, 'Released');
-    const dueEvent = findCalendarEvent(i, 'Due');
-    
-    const now = new Date();
+  // Build the display list straight from the config file.
+  const mpList = mps.map((mp) => {
+    // Non-MP items (e.g. the environment check-off) carry an explicit slug,
+    // a display label, and a keyword to match their calendar events by name
+    // instead of by "MP <n>" id.
+    const isCustom = !!mp.eventMatch;
 
-    const isReleased = !releaseEvent || (releaseEvent.rawDate <= now);
-    const status = getStatus(releaseEvent?.rawDate, dueEvent?.rawDate);
-    
+    if (isCustom) {
+      const dueEvent = findDueByKeyword(mp.eventMatch);
+      const releaseEvent = calendarEvents.find(ev => {
+        const s = ev.summary.toLowerCase();
+        return /(open|release)/i.test(s) && s.includes(mp.eventMatch.toLowerCase());
+      }) || null;
+      const content = allMPs.find(c => c.slug === mp.slug);
+
+      return {
+        number: mp.slug,          // used only as a React key
+        label: mp.label || mp.title,
+        title: mp.title || '',
+        slug: mp.slug,
+        isMultiPart: false,
+        isCustom: true,
+        parts: [],
+        dueDate: dueEvent ? dueEvent.date : null,
+        status: getStatus(releaseEvent?.rawDate, dueEvent?.rawDate, true),
+        hasSpec: !!content
+      };
+    }
+
+    const mpSlug = mp.slug || `mp${mp.number}`;
+    const mpContent = allMPs.find(c => c.slug === mpSlug)
+      || allMPs.find(c => c.number === mp.number);
+    const officialEvent = findOfficialDue(mp.number);
+    const officialDateLabel = officialEvent ? officialEvent.date : null;
+    const officialDue = officialEvent ? officialEvent.rawDate : null;
+
+    const parts = (mp.parts || []).map((part) => {
+      const suggestedEvent = findSuggestedDue(part.id);
+      const releaseEvent = findRelease(part.id);
+      const partContent = allMPs.find(c => c.slug === part.slug);
+
+      const releaseLabel = releaseEvent ? releaseEvent.date : null;
+      const suggestedLabel = suggestedEvent ? suggestedEvent.date : officialDateLabel;
+
+      // Display a release -> suggested range when both ends are known.
+      let rangeLabel;
+      if (releaseLabel && suggestedLabel) {
+        rangeLabel = `${releaseLabel} – ${suggestedLabel}`;
+      } else {
+        rangeLabel = suggestedLabel || releaseLabel || null;
+      }
+
+      // A part is "active" once released, through the MP's official due date.
+      const partStatus = getStatus(releaseEvent?.rawDate, officialDue);
+
+      return {
+        id: part.id,
+        title: part.title || `Part ${part.id}`,
+        slug: part.slug || `mp${part.id}`,
+        rangeLabel,
+        status: partStatus,
+        hasSpec: !!partContent
+      };
+    });
+
+    let status;
+    if (parts.length > 0) {
+      // Parent is active if ANY part is active; grace if any is in grace;
+      // otherwise inactive.
+      if (parts.some(p => p.status === 'active')) {
+        status = 'active';
+      } else if (parts.some(p => p.status === 'grace')) {
+        status = 'grace';
+      } else {
+        status = 'inactive';
+      }
+    } else {
+      // Single MP: gate on its own release + due.
+      const releaseEvent = findRelease(mp.number);
+      status = getStatus(releaseEvent?.rawDate, officialDue);
+    }
+
     return {
-      number: i,
-      title: mpData?.title || `Machine Problem ${i}`,
-      dueDate: dueEvent ? dueEvent.date : null,
-      releaseDate: releaseEvent ? releaseEvent.date : null,
-      hasSpec: !!mpContent,
-      isAvailable: !!mpData,
-      status: status
+      number: mp.number,
+      label: `MP${mp.number}`,
+      title: mp.title || `Machine Problem ${mp.number}`,
+      slug: mpSlug,
+      isMultiPart: parts.length > 0,
+      isCustom: false,
+      parts,
+      dueDate: officialDateLabel,
+      status,
+      hasSpec: !!mpContent
     };
   });
 
+  const toggleExpanded = (number) => {
+    setExpanded(prev => ({ ...prev, [number]: !prev[number] }));
+  };
+
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'active': return colors.statusActive;
       case 'grace': return colors.statusGrace;
       case 'inactive': return colors.statusInactive;
@@ -223,7 +300,7 @@ export default function MPsPage() {
   };
 
   const getStatusText = (status) => {
-    switch(status) {
+    switch (status) {
       case 'active': return 'Active';
       case 'grace': return 'Grace Period';
       case 'inactive': return 'Inactive';
@@ -252,29 +329,29 @@ export default function MPsPage() {
       marginBottom: '16px',
       color: colors.black
     },
-    subtitle: {
-      fontSize: '18px',
-      color: colors.mediumGray
-    },
     mpList: {
       display: 'flex',
       flexDirection: 'column',
       gap: '16px'
     },
-    mpRow: (isAvailable) => ({
+    mpRow: {
       display: 'flex',
       alignItems: 'center',
       gap: '24px',
       padding: '20px 24px',
-      backgroundColor: isAvailable ? colors.white : colors.lightGray,
+      minHeight: '76px',
+      boxSizing: 'border-box',
+      backgroundColor: colors.white,
       borderRadius: '12px',
-      border: `2px solid ${isAvailable ? colors.tableBorder : colors.borderLight}`,
-      opacity: isAvailable ? 1 : 0.5,
-      cursor: isAvailable ? 'pointer' : 'not-allowed',
+      border: `2px solid ${colors.tableBorder}`,
       textDecoration: 'none',
       color: 'inherit',
-      transition: 'all 0.2s'
-    }),
+      transition: 'all 0.2s',
+      width: '100%',
+      textAlign: 'left',
+      font: 'inherit',
+      cursor: 'pointer'
+    },
     mpNumber: {
       fontSize: '24px',
       fontWeight: 'bold',
@@ -294,15 +371,102 @@ export default function MPsPage() {
       fontSize: '14px',
       fontWeight: '600',
       color: colors.black,
-      minWidth: '100px',
-      textAlign: 'center'
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      boxSizing: 'border-box'
     }),
+    statusSlot: {
+      minWidth: '110px',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end'
+    },
     mpDue: {
       fontSize: '15px',
       color: colors.mediumGray,
-      minWidth: '100px'
+      minWidth: '120px',
+      flexShrink: 0,
+      textAlign: 'right'
+    },
+    chevron: (isOpen) => ({
+      fontSize: '14px',
+      color: colors.mediumGray,
+      width: '16px',
+      minWidth: '16px',
+      flexShrink: 0,
+      transition: 'transform 0.2s',
+      transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)'
+    }),
+    // Empty spacer in part rows matching the chevron column, so a part's
+    // "MP" label lines up horizontally with the parent's "MP" label.
+    chevronSpacer: {
+      width: '16px',
+      minWidth: '16px',
+      flexShrink: 0
+    },
+    partList: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+      marginTop: '8px'
+    },
+    partRow: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '24px',
+      padding: '14px 24px',
+      backgroundColor: colors.lightGray,
+      borderRadius: '10px',
+      border: `1px solid ${colors.borderLight}`,
+      textDecoration: 'none',
+      color: 'inherit',
+      transition: 'all 0.2s'
+    },
+    partId: {
+      fontSize: '18px',
+      fontWeight: '600',
+      color: colors.black,
+      minWidth: '80px'
+    },
+    partTitle: {
+      flex: '1',
+      fontSize: '16px',
+      color: colors.black
+    },
+    // Timeline cell: fixed label + fixed-width date, both left-anchored so
+    // the label never shifts with the length of the date range.
+    partTimeline: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      fontSize: '15px',
+      color: colors.mediumGray,
+      minWidth: '300px',
+      flexShrink: 0
+    },
+    partTimelineLabel: {
+      fontWeight: '500',
+      color: colors.black,
+      whiteSpace: 'nowrap'
+    },
+    partTimelineValue: {
+      whiteSpace: 'nowrap'
     }
   };
+
+  const renderStatusAndDue = (status, dueLabel) => (
+    <>
+      <div style={styles.statusSlot} data-cell="status">
+        {(status === 'active' || status === 'grace') && (
+          <div style={styles.statusTag(status)}>
+            {getStatusText(status)}
+          </div>
+        )}
+      </div>
+      <div style={styles.mpDue} data-cell="due">Due: {dueLabel || 'N/A'}</div>
+    </>
+  );
 
   return (
     <div style={styles.container}>
@@ -312,15 +476,88 @@ export default function MPsPage() {
           outline: 3px solid ${colors.focusBlue};
           outline-offset: 2px;
         }
-        
+
         .mp-row-clickable:hover {
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-      `}</style>
-      
-      <Navigation currentPage="MPs" />
 
+        .part-row-clickable:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* On desktop the meta wrapper is transparent to layout, so the
+           status + due cells sit directly in the row's flex line. */
+        .mp-row-meta {
+          display: contents;
+        }
+
+        /* Below full width: the meta block (status + due) becomes a single
+           flex unit that stays inline and right-aligned while it fits, and
+           drops to its own line as a whole when it doesn't — so the date is
+           never pushed off the edge, and there's no gap between behaviors. */
+        @media (max-width: 900px) {
+          .mp-row-mobile,
+          .part-row-mobile {
+            flex-wrap: wrap;
+            min-height: 0;
+            row-gap: 10px;
+          }
+
+          .mp-title-cell {
+            min-width: 140px;
+          }
+
+          .mp-row-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+          }
+
+          .mp-row-meta > div[data-cell="status"] {
+            min-width: 0 !important;
+          }
+
+          .mp-row-meta > div[data-cell="due"] {
+            min-width: 0 !important;
+          }
+
+          .part-row-mobile .part-timeline {
+            min-width: 0 !important;
+            margin-left: auto;
+          }
+        }
+
+        /* Phone widths: force the meta/timeline onto its own full line,
+           left-aligned, and let the title wrap freely. */
+        @media (max-width: 560px) {
+          .mp-row-mobile > div,
+          .part-row-mobile > div {
+            white-space: normal;
+          }
+
+          .mp-row-meta {
+            flex-basis: 100%;
+            width: 100%;
+            margin-left: 0;
+          }
+
+          .mp-row-meta > div {
+            text-align: left !important;
+          }
+
+          .part-row-mobile .part-timeline {
+            flex-basis: 100%;
+            width: 100%;
+            margin-left: 0;
+            flex-wrap: wrap;
+          }
+        }
+      `}</style>
+
+      <Navigation currentPage="MPs" />
 
       {/* Main Content */}
       <main style={styles.mainContent}>
@@ -330,50 +567,119 @@ export default function MPsPage() {
 
         {/* MP List */}
         <div style={styles.mpList}>
-          {allMPsList.map((mp) => (
-            mp.isAvailable && mp.hasSpec ? (
+          {mpList.map((mp) => {
+            if (mp.isMultiPart) {
+              const isOpen = !!expanded[mp.number];
+              return (
+                <div key={mp.number}>
+                  <button
+                    type="button"
+                    style={styles.mpRow}
+                    className="mp-row-clickable mp-row-mobile"
+                    onClick={() => toggleExpanded(mp.number)}
+                    aria-expanded={isOpen}
+                  >
+                    <div style={styles.chevron(isOpen)}>▶</div>
+                    <div style={styles.mpNumber}>MP{mp.number}</div>
+                    <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
+                    <div className="mp-row-meta">
+                      {renderStatusAndDue(mp.status, mp.dueDate)}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div style={styles.partList}>
+                      {mp.parts.map((part) => (
+                        part.hasSpec ? (
+                          <a
+                            key={part.id}
+                            href={`/mps/${part.slug}`}
+                            style={styles.partRow}
+                            className="part-row-clickable part-row-mobile"
+                          >
+                            <div style={styles.chevronSpacer}></div>
+                            <div style={styles.partId}>MP{part.id}</div>
+                            <div style={styles.partTitle} className="mp-title-cell">{part.title}</div>
+                            <div style={styles.partTimeline} className="part-timeline">
+                              <span style={styles.partTimelineLabel}>Suggested Timeline:</span>
+                              <span style={styles.partTimelineValue}>{part.rangeLabel || 'N/A'}</span>
+                            </div>
+                          </a>
+                        ) : (
+                          <div key={part.id} style={styles.partRow} className="part-row-mobile">
+                            <div style={styles.chevronSpacer}></div>
+                            <div style={styles.partId}>MP{part.id}</div>
+                            <div style={styles.partTitle} className="mp-title-cell">{part.title}</div>
+                            <div style={styles.partTimeline} className="part-timeline">
+                              <span style={styles.partTimelineLabel}>Suggested Timeline:</span>
+                              <span style={styles.partTimelineValue}>{part.rangeLabel || 'N/A'}</span>
+                            </div>
+                          </div>
+                        )
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            // Custom non-MP item (e.g. environment check-off)
+            if (mp.isCustom) {
+              const inner = (
+                <>
+                  <div style={styles.chevronSpacer}></div>
+                  <div style={styles.mpTitle} className="mp-title-cell">{mp.label}</div>
+                  <div className="mp-row-meta">
+                    {renderStatusAndDue(mp.status, mp.dueDate)}
+                  </div>
+                </>
+              );
+              return mp.hasSpec ? (
+                <a
+                  key={mp.number}
+                  href={`/mps/${mp.slug}`}
+                  style={styles.mpRow}
+                  className="mp-row-clickable mp-row-mobile"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div
+                  key={mp.number}
+                  style={{ ...styles.mpRow, opacity: 0.5, cursor: 'not-allowed' }}
+                  className="mp-row-mobile"
+                >
+                  {inner}
+                </div>
+              );
+            }
+
+            // Single-part MP
+            return mp.hasSpec ? (
               <a
                 key={mp.number}
-                href={`/mps/${mp.number}`}
-                style={styles.mpRow(true)}
-                className="mp-row-clickable"
+                href={`/mps/${mp.slug}`}
+                style={styles.mpRow}
+                className="mp-row-clickable mp-row-mobile"
               >
+                <div style={styles.chevronSpacer}></div>
                 <div style={styles.mpNumber}>MP{mp.number}</div>
-                <div style={styles.mpTitle}>{mp.title}</div>
-                {(mp.status === 'active' || mp.status === 'grace') && (
-                  <div style={styles.statusTag(mp.status)}>
-                    {getStatusText(mp.status)}
-                  </div>
-                )}
-                <div style={styles.mpDue}>Due: {mp.dueDate || 'N/A'}</div>
+                <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
+                <div className="mp-row-meta">
+                  {renderStatusAndDue(mp.status, mp.dueDate)}
+                </div>
               </a>
             ) : (
-              <div
-                key={mp.number}
-                style={styles.mpRow(mp.isAvailable)}
-              >
+              <div key={mp.number} style={{ ...styles.mpRow, opacity: 0.5, cursor: 'not-allowed' }} className="mp-row-mobile">
+                <div style={styles.chevronSpacer}></div>
                 <div style={styles.mpNumber}>MP{mp.number}</div>
-                <div style={styles.mpTitle}>{mp.title}</div>
-                {(mp.status === 'active' || mp.status === 'grace') && (
-                  <div style={styles.statusTag(mp.status)}>
-                    {getStatusText(mp.status)}
-                  </div>
-                )}
-                <div style={styles.mpDue}>Due: {mp.dueDate || 'N/A'}</div>
+                <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
+                <div className="mp-row-meta">
+                  {renderStatusAndDue(mp.status, mp.dueDate)}
+                </div>
               </div>
-            )
-          ))}
-
-          {/* Final Project Row */}
-          <a
-            href="/final-project"
-            style={styles.mpRow(true)}
-            className="mp-row-clickable"
-          >
-            <div style={styles.mpNumber}>Final</div>
-            <div style={styles.mpTitle}>Final Project</div>
-            <div style={styles.mpDue}>Due: May 11 at 1:30pm</div>
-          </a>
+            );
+          })}
         </div>
       </main>
     </div>

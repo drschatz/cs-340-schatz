@@ -1,24 +1,31 @@
 ---
-title: MP1
-subtitle: Debugging
+title: MP1.1
+subtitle: VS Code Debugger
 author: Wade Fagen-Ulmschneider
 ---
 
-This is not a full Machine Project (MP).
-It is **dramatically easier** than other MPs.
-Don't plan your time on other MPs based on this one.
+# Overview 
+This is not the full Machine Project (MP). It is part 1 of 3 that will count as MP1. 
 
-The purposes of this MP is to have you see some of the functionality the VS Code debugger can do. It is not to understand the C code or write C code.
+MP1 - The goal of MP1 as a whole (parts 1, 2, and 3) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the the rest of the course (MPs, HWs, and Exams). Each part has a slighlty different approach to give you a variety of practice. 
+
+The purposes of this MP part is to have you see some of the functionality the VS Code debugger can do. It is not to understand the C code or write C code.
 
 Is it possible to create the required `gif.c` without doing these two things?
 Yes.
 Should you do that?
 No.
 
+# Learning Goals
+1. Be able to use the VS Code debugger to set breakpoints, to step through code, to step into functions, and to watch variables of interest. In the general sense, be able to use the VS Code debugger to debug a program. 
+
+2. Be able to recognize common issues, like a segmentation fault, and be able to find the cause. 
+
+
 # Fetch starter code
 
-We have some initial code for your `mp1` for you to get started.
-Download it from [`mp1.zip`](../mp1.zip) and unzip it on your computer into the `cs340` directory you created during the environment setup.
+We have some initial code for your `mp1.1` for you to get started.
+Download it from [`mp1.1.zip`](../mp1.1.zip) and unzip it on your computer into the `cs340` directory you created during the environment setup.
 
 # Use Visual Studio Code
 
@@ -29,14 +36,14 @@ Learning to use it well will help you feel comfortable in other IDEs you may use
 
 IDEs have the notion of projects, which contain a set of files related to a single task or program.
 Typically, these reside in a folder and all of its subfolders.
-In this class, each MP will be its own project, meaning you need to open VS Code in `mp1` or `mp2` or the like, not in some parent folder that contains them all.
+In this class, each MP part will be its own project, meaning you need to open VS Code in `mp1.1` or `mp2` or the like, not in some parent folder that contains them all.
 
 A folder that is set up to be a VS Code project will have inside of it a folder named `.vscode`.
 In many systems files and folders with names that start with a `.` are hidden from view.
 
-To open the `mp1` folder in VS Code, do one of the following:
+To open the `mp1.1` folder in VS Code, do one of the following:
 
-- From a terminal, `cd` into the `mp1` folder and run `code .`
+- From a terminal, `cd` into the `mp1.1` folder and run `code .`
 - Inside of VS Code, use File → Open Folder to open a new folder.
 
 ## Integrated Terminal
@@ -130,8 +137,19 @@ Only edit `gif.c`, none of the other files we provide.
 
 When you think you are done, `make test` will run all our tests and report what grade we think you've earned.
 
-Once you've passed all the tests, submit your code on PrairieLearn (linked at the top of the page).
+Once you've passed all the tests, submit your code on PrairieLearn.
 
 You may submit as often as you like, including replacing old submissions.
 This is true of all MPs.
 Only your last submission (prior to the end of the late submission window) will be included in your grade.
+
+## AI Policy
+To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
+
+1. Do not feed AI/Search Engines any of the code.
+
+2. You may use AI/Search Engines to learn more about concepts. For example, you can look up "What is a segmentation fault?" or "What is helpful about using a VS Code Debugger?"
+
+3. Office hours are always open to any questions!
+
+** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

@@ -6,11 +6,12 @@ import { colors } from '../../../styles/colors'
 import { useState, useEffect } from 'react'
 import Navigation from '../../../components/Navigation';  // Add this import at the top
 
-
+// Ignore any calendar events before this date (previous-semester events).
+const SEMESTER_START = '2026-08-01'
 
 export default function MPPage({ params }) {
-  const mp = allMPs.find((m) => m.number.toString() === params.number)
-  const [dates, setDates] = useState({ release: null, due: null })
+  const mp = allMPs.find((m) => m.slug === params.number)
+  const [dates, setDates] = useState({ release: null, suggestedDue: null, due: null })
   const [toc, setToc] = useState([])
 
   useEffect(() => {
@@ -50,36 +51,52 @@ export default function MPPage({ params }) {
       // Just fetch from API - it handles the config internally
       const response = await fetch('/api/calendar')
       const icsData = await response.text()
-      const { release, due } = parseICSForMPDates(icsData, params.number)
-      setDates({ release, due })
+
+      // Non-MP items (e.g. the environment check-off) don't have an
+      // "MP <n>" id. Map their slug to a keyword found in the event summary.
+      const nonMpKeywords = {
+        envr: 'check-off'
+      }
+
+      if (nonMpKeywords[params.number]) {
+        const { release, due } = parseICSByKeyword(icsData, nonMpKeywords[params.number])
+        setDates({ release, suggestedDue: null, due })
+        return
+      }
+
+      // Extract the numeric id from the slug: "mp1.1" -> "1.1", "mp2" -> "2".
+      const idMatch = params.number.match(/mp\s*(\d+(?:\.\d+)?)/i)
+      const mpId = idMatch ? idMatch[1] : params.number
+      // The parent MP number (e.g. "1.1" -> "1"); same as mpId for single MPs.
+      const parentId = mpId.split('.')[0]
+      const isPart = mpId.includes('.')
+      const { release, suggestedDue, due } = parseICSForMPDates(icsData, mpId, parentId, isPart)
+      setDates({ release, suggestedDue, due })
     } catch (error) {
       console.error('Error loading calendar:', error)
     }
   }
 
-  const parseICSForMPDates = (icsText, mpNumber) => {
+  // Parse release/due for a non-MP item by matching a keyword in the summary.
+  const parseICSByKeyword = (icsText, keyword) => {
     const lines = icsText.split('\n')
+    const kw = keyword.toLowerCase()
     let currentEvent = null
     let release = null
     let due = null
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim()
-
       if (line === 'BEGIN:VEVENT') {
         currentEvent = {}
       } else if (line === 'END:VEVENT' && currentEvent) {
-        if (currentEvent.date && currentEvent.summary) {
-          const summary = currentEvent.summary.toLowerCase()
-          // Match exact MP number with word boundaries (MP1, MP 1, etc.) but not MP10 when looking for MP1
-          const mpPattern = new RegExp(`\\bmp\\s*${mpNumber}\\b`, 'i')
-          
-          if (mpPattern.test(summary)) {
-            if (summary.includes('release')) {
-              console.log(currentEvent.date)
+        if (currentEvent.date && currentEvent.summary && currentEvent.date >= SEMESTER_START) {
+          const s = currentEvent.summary.toLowerCase()
+          if (s.includes(kw)) {
+            if (/(open|release)/i.test(s)) {
               release = formatDateWithTime(currentEvent.date, currentEvent.time)
-            } else if (summary.includes('due')) {
-              due = formatDateWithTime(currentEvent.date, null, true) // true = add 11:59pm
+            } else if (/due/i.test(s) && !/suggested/i.test(s)) {
+              due = formatDateWithTime(currentEvent.date, null, true)
             }
           }
         }
@@ -101,6 +118,71 @@ export default function MPPage({ params }) {
     }
 
     return { release, due }
+  }
+
+  const parseICSForMPDates = (icsText, mpId, parentId, isPart) => {
+    const lines = icsText.split('\n')
+    let currentEvent = null
+    let release = null
+    let suggestedDue = null
+    let due = null
+
+    // Match "mp" + id, not followed by another digit or dot, so MP1 doesn't
+    // match MP1.1 and MP1 doesn't match MP10.
+    const idPattern = (id) => {
+      const escaped = String(id).replace(/\./g, '\\.')
+      return new RegExp(`\\bmp\\s*${escaped}(?![\\d.])`, 'i')
+    }
+    const selfPattern = idPattern(mpId)
+    const parentPattern = idPattern(parentId)
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim()
+
+      if (line === 'BEGIN:VEVENT') {
+        currentEvent = {}
+      } else if (line === 'END:VEVENT' && currentEvent) {
+        // Skip events before the semester start (ISO date strings sort lexically).
+        if (currentEvent.date && currentEvent.summary && currentEvent.date >= SEMESTER_START) {
+          const summary = currentEvent.summary.toLowerCase()
+          const isReleaseEvent = summary.includes('release')
+          const isDueEvent = summary.includes('due')
+          const isSuggested = summary.includes('suggested')
+
+          // Release date for this specific MP/part.
+          if (isReleaseEvent && selfPattern.test(summary)) {
+            release = formatDateWithTime(currentEvent.date, currentEvent.time)
+          }
+
+          // Suggested due date for this part (only on part pages).
+          if (isPart && isDueEvent && isSuggested && selfPattern.test(summary)) {
+            suggestedDue = formatDateWithTime(currentEvent.date, null, true)
+          }
+
+          // Official due date. For a part, this is the parent MP's deadline;
+          // for a single MP, it's its own. Never a "suggested" event.
+          if (isDueEvent && !isSuggested && parentPattern.test(summary)) {
+            due = formatDateWithTime(currentEvent.date, null, true)
+          }
+        }
+        currentEvent = null
+      } else if (currentEvent) {
+        if (line.startsWith('DTSTART')) {
+          const dateMatch = line.match(/(\d{4})(\d{2})(\d{2})/)
+          const timeMatch = line.match(/T(\d{2})(\d{2})(\d{2})/)
+          if (dateMatch) {
+            currentEvent.date = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`
+            if (timeMatch) {
+              currentEvent.time = `${timeMatch[1]}:${timeMatch[2]}`
+            }
+          }
+        } else if (line.startsWith('SUMMARY:')) {
+          currentEvent.summary = line.substring(8).trim()
+        }
+      }
+    }
+
+    return { release, suggestedDue, due }
   }
 
   const formatDateWithTime = (dateStr, timeStr = null, isDue = false) => {
@@ -166,9 +248,11 @@ export default function MPPage({ params }) {
           </div>
           <h1 style={styles.title}>{mp.title} - {mp.subtitle}</h1>
           <div style={styles.datesContainer}>
-            <div style={styles.dateItem}>
-              <span style={styles.dateLabel}>Released:</span> {dates.release || 'N/A'}
-            </div>
+            {dates.suggestedDue && (
+              <div style={styles.dateItem}>
+                <span style={styles.dateLabel}>Suggested Due:</span> {dates.suggestedDue}
+              </div>
+            )}
             <div style={styles.dateItem}>
               <span style={styles.dateLabel}>Due:</span> {dates.due || 'N/A'}
             </div>

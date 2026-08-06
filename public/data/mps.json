@@ -2,8 +2,8 @@
   "mps": [
     {
       "slug": "envr",
-      "label": "Environment Check-Off",
-      "title": "Environment Check-Off",
+      "label": "Environment Setup Check-Off",
+      "title": "Environment Setup Check-Off",
       "eventMatch": "check-off"
     }
   ]

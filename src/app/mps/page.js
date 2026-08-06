@@ -530,28 +530,61 @@ export default function MPsPage() {
           }
         }
 
-        /* Phone widths: force the meta/timeline onto its own full line,
-           left-aligned, and let the title wrap freely. */
+        /* Phone widths: stack and center the title, due date, and status. */
         @media (max-width: 560px) {
+          .mp-row-mobile,
+          .part-row-mobile {
+            justify-content: center;
+            text-align: center;
+            column-gap: 10px;
+          }
+
           .mp-row-mobile > div,
           .part-row-mobile > div {
             white-space: normal;
           }
 
+          /* Drop the leading spacer so it doesn't push the centered group. */
+          .mp-spacer {
+            display: none !important;
+          }
+
+          /* Number/chevron stay on the first line next to the title, centered. */
+          .mp-number-cell,
+          .mp-partid-cell {
+            min-width: 0 !important;
+          }
+
+          /* Title shares the first line with the number, centered. */
+          .mp-title-cell {
+            flex: 0 1 auto !important;
+            min-width: 0 !important;
+            text-align: center;
+          }
+
+          /* Meta (status + due) drops to its own centered line. */
           .mp-row-meta {
             flex-basis: 100%;
             width: 100%;
             margin-left: 0;
+            justify-content: center;
           }
 
           .mp-row-meta > div {
-            text-align: left !important;
+            text-align: center !important;
           }
 
+          /* Empty status slot collapses so the centered group isn't offset. */
+          .mp-row-meta > div[data-cell="status"] {
+            min-width: 0 !important;
+          }
+
+          /* Timeline drops to its own centered line. */
           .part-row-mobile .part-timeline {
             flex-basis: 100%;
             width: 100%;
             margin-left: 0;
+            justify-content: center;
             flex-wrap: wrap;
           }
         }
@@ -579,8 +612,8 @@ export default function MPsPage() {
                     onClick={() => toggleExpanded(mp.number)}
                     aria-expanded={isOpen}
                   >
-                    <div style={styles.chevron(isOpen)}>▶</div>
-                    <div style={styles.mpNumber}>MP{mp.number}</div>
+                    <div style={styles.chevron(isOpen)} className="mp-chevron">▶</div>
+                    <div style={styles.mpNumber} className="mp-number-cell">MP{mp.number}</div>
                     <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
                     <div className="mp-row-meta">
                       {renderStatusAndDue(mp.status, mp.dueDate)}
@@ -597,8 +630,8 @@ export default function MPsPage() {
                             style={styles.partRow}
                             className="part-row-clickable part-row-mobile"
                           >
-                            <div style={styles.chevronSpacer}></div>
-                            <div style={styles.partId}>MP{part.id}</div>
+                            <div style={styles.chevronSpacer} className="mp-spacer"></div>
+                            <div style={styles.partId} className="mp-partid-cell">MP{part.id}</div>
                             <div style={styles.partTitle} className="mp-title-cell">{part.title}</div>
                             <div style={styles.partTimeline} className="part-timeline">
                               <span style={styles.partTimelineLabel}>Suggested Timeline:</span>
@@ -607,8 +640,8 @@ export default function MPsPage() {
                           </a>
                         ) : (
                           <div key={part.id} style={styles.partRow} className="part-row-mobile">
-                            <div style={styles.chevronSpacer}></div>
-                            <div style={styles.partId}>MP{part.id}</div>
+                            <div style={styles.chevronSpacer} className="mp-spacer"></div>
+                            <div style={styles.partId} className="mp-partid-cell">MP{part.id}</div>
                             <div style={styles.partTitle} className="mp-title-cell">{part.title}</div>
                             <div style={styles.partTimeline} className="part-timeline">
                               <span style={styles.partTimelineLabel}>Suggested Timeline:</span>
@@ -627,7 +660,7 @@ export default function MPsPage() {
             if (mp.isCustom) {
               const inner = (
                 <>
-                  <div style={styles.chevronSpacer}></div>
+                  <div style={styles.chevronSpacer} className="mp-spacer"></div>
                   <div style={styles.mpTitle} className="mp-title-cell">{mp.label}</div>
                   <div className="mp-row-meta">
                     {renderStatusAndDue(mp.status, mp.dueDate)}
@@ -662,8 +695,8 @@ export default function MPsPage() {
                 style={styles.mpRow}
                 className="mp-row-clickable mp-row-mobile"
               >
-                <div style={styles.chevronSpacer}></div>
-                <div style={styles.mpNumber}>MP{mp.number}</div>
+                <div style={styles.chevronSpacer} className="mp-spacer"></div>
+                <div style={styles.mpNumber} className="mp-number-cell">MP{mp.number}</div>
                 <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
                 <div className="mp-row-meta">
                   {renderStatusAndDue(mp.status, mp.dueDate)}
@@ -671,8 +704,8 @@ export default function MPsPage() {
               </a>
             ) : (
               <div key={mp.number} style={{ ...styles.mpRow, opacity: 0.5, cursor: 'not-allowed' }} className="mp-row-mobile">
-                <div style={styles.chevronSpacer}></div>
-                <div style={styles.mpNumber}>MP{mp.number}</div>
+                <div style={styles.chevronSpacer} className="mp-spacer"></div>
+                <div style={styles.mpNumber} className="mp-number-cell">MP{mp.number}</div>
                 <div style={styles.mpTitle} className="mp-title-cell">{mp.title}</div>
                 <div className="mp-row-meta">
                   {renderStatusAndDue(mp.status, mp.dueDate)}

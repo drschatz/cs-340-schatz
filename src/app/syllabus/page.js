@@ -96,10 +96,10 @@ export default function SyllabusPage() {
 
 
       {/* Main Content */}
-      <div style={styles.mainContent}>
+      <div style={styles.mainContent} className="syllabus-main">
         {/* Sidebar with Table of Contents */}
         {processedToc.length > 0 && (
-          <aside style={styles.sidebar} role="navigation" aria-label="Table of contents">
+          <aside style={styles.sidebar} className="syllabus-sidebar" role="navigation" aria-label="Table of contents">
             <h2 style={styles.sidebarTitle}>Contents</h2>
             <nav>
               {processedToc.map((section, idx) => (
@@ -289,6 +289,22 @@ export default function SyllabusPage() {
         
         /* Responsive */
         @media (max-width: 1024px) {
+          .syllabus-main {
+            flex-direction: column !important;
+            gap: 32px !important;
+          }
+
+          .syllabus-sidebar {
+            flex: 1 1 auto !important;
+            max-width: 100% !important;
+            position: static !important;
+            top: auto !important;
+          }
+
+          .syllabus-content {
+            max-width: 100% !important;
+          }
+
           .syllabus-content h1 {
             font-size: 36px;
           }

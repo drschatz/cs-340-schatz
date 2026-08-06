@@ -16,7 +16,7 @@ export default function CoursePortal() {
     schedule: ''
   });
   const [constants, setConstants] = useState({
-    semester: 'Spring 2026',
+    semester: 'Fall 2026',
     courseNumber: 'CS 340',
     courseTitle: 'Introduction to Computer Systems'
   });

@@ -9,7 +9,7 @@ export default function Navigation({ currentPage }) {
     { label: 'Content', color: colors.navCream, group: 1, href: '/content' },
     { label: 'MPs', color: colors.navCream, group: 1, href: '/mps' },
     { label: 'PrairieLearn', color: colors.navOrange, group: 2, href: 'https://us.prairielearn.com/pl/course_instance/222439' },
-    { label: 'Campuswire', color: colors.navBlue, group: 3, href: 'https://campuswire.com/c/G0463FDE3/feed' }
+    { label: 'Campuswire', color: colors.navBlue, group: 3, href: 'https://campuswire.com/c/G4ABE149E/feed' }
   ];
 
   const styles = {

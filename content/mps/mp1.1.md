@@ -7,19 +7,14 @@ author: Wade Fagen-Ulmschneider
 # Overview 
 This is not the full Machine Project (MP). It is part 1 of 3 that will count as MP1. 
 
-MP1 - The goal of MP1 as a whole (parts 1, 2, and 3) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the the rest of the course (MPs, HWs, and Exams). Each part has a slighlty different approach to give you a variety of practice. 
+MP1 - The goal of MP1 as a whole (parts 1, 2, and 3) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the rest of the course (MPs, HWs, and Exams). Each part has a slightly different approach to give you a variety of practice. 
 
-The purposes of this MP part is to have you see some of the functionality the VS Code debugger can do. It is not to understand the C code or write C code.
-
-Is it possible to create the required `gif.c` without doing these two things?
-Yes.
-Should you do that?
-No.
+The purposes of this MP part is to have you see some of the functionality the VS Code debugger can do. **It is not to understand the C code or write C code.**
 
 # Learning Goals
 1. Be able to use the VS Code debugger to set breakpoints, to step through code, to step into functions, and to watch variables of interest. In the general sense, be able to use the VS Code debugger to debug a program. 
 
-2. Be able to recognize common issues, like a segmentation fault, and be able to find the cause. 
+2. Be able to recognize common issues, like a segmentation fault. 
 
 
 # Fetch starter code
@@ -29,14 +24,11 @@ Download it from [`mp1.1.zip`](../mp1.1.zip) and unzip it on your computer into 
 
 # Use Visual Studio Code
 
-Visual Studio Code (more often called VS Code) is an Integrated Development Environment (IDE) with many features shared with other IDEs.
-Learning to use it well will help you feel comfortable in other IDEs you may use in the future.
+Visual Studio Code (more often called VS Code) is an Integrated Development Environment (IDE) with many features shared with other IDEs. Learning to use it well will help you feel comfortable in other IDEs you may use in the future.
 
 ## Projects
 
-IDEs have the notion of projects, which contain a set of files related to a single task or program.
-Typically, these reside in a folder and all of its subfolders.
-In this class, each MP part will be its own project, meaning you need to open VS Code in `mp1.1` or `mp2` or the like, not in some parent folder that contains them all.
+IDEs have the notion of projects, which contain a set of files related to a single task or program. Typically, these reside in a folder and all of its subfolders. In this class, each MP part will be its own project, meaning you need to open VS Code in `mp1.1` or `mp2` or the like, not in some parent folder that contains them all.
 
 A folder that is set up to be a VS Code project will have inside of it a folder named `.vscode`.
 In many systems files and folders with names that start with a `.` are hidden from view.
@@ -48,12 +40,12 @@ To open the `mp1.1` folder in VS Code, do one of the following:
 
 ## Integrated Terminal
 
-IDEs give access to the terminal, but often add configuration so that it's got everything needed to build the project ready to use.
-To open VS Code's integrated terminal, use the keyboard shortcut Ctrl+~.
+IDEs give access to the terminal, but often add configuration so that it's got everything needed to build the project ready to use. To open VS Code's integrated terminal, use the keyboard shortcut Ctrl+~.
 
 Using the integrated terminal, let's verify you are all set up for running C programs by doing the following:
 
 - On your terminal, run `make` to compile the provided code or run `make test` to run the provided tests. For this MP run `make test`. 
+
 - If you receive any errors, read the error messages. They will often be helpful to describe what's going wrong. If you're stuck here, reach out to get help!
 
 ## Visual Debugger
@@ -73,7 +65,7 @@ You can run VS Code's debugger in two ways:
 
 Depending on the project, it may ask you to pick a launch configuration to run and may ask for per-run configuration.
 
-For MP1, start by accepting the defaults when you run the debugger.
+For MP1.1, start by accepting the defaults when you run the debugger.
 After a moment the debugger will pause execution because of a segmentation fault.
 
 # Debug the Code
@@ -89,7 +81,7 @@ A segmentation fault occurs when code tries to dereference a pointer to memory t
 Memory references occur with the `*address`, `address->`, and `address[offset]` operators.
 Debuggers are very good at locating segmentation faults, but the bug that caused the fault is often in an earlier line that computed the address (or failed to do so).
 
-MP1 has several segmentation faults.
+MP1.1 has several segmentation faults.
 
 ## Call Stack Inspection
 
@@ -97,7 +89,7 @@ When the debugger pauses, either on an error or because you added a breakpoint, 
 
 One panel is labeled "Call Stack". It will list the function calls that were called leading to where your program is currently paused. You can **click on them** to jump to their location in code.
 
-In a call stack, the top is the most recent function called. The call stack is very useful for finding **infinite recursion** if you see the same function name again and again and again. You will want to reference the call stack for several bugs in `mp1`.
+In a call stack, the top is the most recent function called. The call stack is very useful for finding **infinite recursion** if you see the same function name again and again and again. You will want to reference the call stack for several bugs in mp1.1.
 
 ## Pause-and-step
 
@@ -121,14 +113,13 @@ If you've done print-based debugging before, that's a sloppy way of trying to ap
 
 ## Watches and Beyond
 
-Sometimes a variable changes many times, with the information you need to debug it appearing and then disappearing later.
-There are multiple debugging tools for these situations, which can get quite involved.
+Sometimes a variable changes many times, with the information you need to debug it appearing and then disappearing later. There are multiple debugging tools for these situations, which can get quite involved.
 
-In MP1 we have one bug that could benefit from these tools, though it could also be debugged with a breakpoint and stepping if you are patient. 
+In MP1.1 we have one bug that could benefit from these tools, though it could also be debugged with a breakpoint and stepping if you are patient. 
 
 After you've fixed all the obvious bugs the code will run but it won't do very much.
 
-There's still another bug: logic error in the resulting behavior, one of the hardest kinds of bugs to find because nothing crashes. To help you find it, **there's a secret message** explaining how to fix it inside the global `message` variable, but that message is only there part-way through a run of the program. We recommend using a watch and breakpoints to check the value. Find the message and make the final fix to complete the MP.
+There's still another bug: a logic error in the resulting behavior, one of the hardest kinds of bugs to find because nothing crashes. To help you find it, **there's a secret message** explaining how to fix it inside the global `message` variable, but that message is only there part-way through a run of the program. We recommend using a watch and breakpoints to check the value. Find the message and make the final fix to complete the MP.
 
 # Submission and Grading
 
@@ -140,7 +131,6 @@ When you think you are done, `make test` will run all our tests and report what 
 Once you've passed all the tests, submit your code on PrairieLearn.
 
 You may submit as often as you like, including replacing old submissions.
-This is true of all MPs.
 Only your last submission (prior to the end of the late submission window) will be included in your grade.
 
 ## AI Policy

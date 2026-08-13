@@ -10,9 +10,9 @@ The specific tasks of this MP involve working with PNG files, a common image fil
 PNG files, like many other file formats, are not text-based: unlike JSON, txt, or source code you cannot simply open them in a text editor to explore their contents. You will need to consult the PNG documentation to understand the meaning of the bytes in a PNG file.
 
 If you get stuck try the following:
-1. Read through the code and comments carefully. Feel free to add more comments as you figure things out.  
+1. Write out, with comments, what you want your code to do. Expand each comment until they are small enough to be accomplished with a few lines of code.
 
-2. Run the code with the debugger and step through each part slowly. Think critically what you expect the code to do and then see if that is what is actually happening based on the debugger output. Feel free to add code and play around.
+2. Run the code with the debugger and step through each part slowly. Think critically what you expect the code to do and then see if that is what is actually happening based on the debugger output.
 
 3. If you get stuck (30+ minutes of no progress), post on campuswire or come to office hours. This will take longer than getting the answer from AI but it has two benefits. 
     a. You will get a hint to get unstuck instead of just the answer. This will help you actually learn the skills you need.
@@ -45,21 +45,8 @@ One benefit of a chunk-based design is that basic applications can skip chunks t
 ## Starting from Nothing
 The initial files I provide have very little structure in them, not much more than picking out the command line arguments. A learning goal of this MP is for you to be able to take high-level text instructions, and documentation to create a finished program. We believe this is a valuable skill. 
 
-### The two most common student questions
-Question
-:   How do I get started?
-
-Answer
-:   Think high level what you want the code to do, then break that into smaller steps and so forth. Eventually you will have small enough steps you can start turing them into C code. 
-
-Question
-:   I'm stuck, what do I do next?
-
-Answer
-:   Reflect back on the high level things you want your program to do, then see if your code is doing them. You can also walk through each line in the debugger, step by step. Check that the variable values after each line makes sense. See where it is in the file when it gets to the end of your code, then ask "what comes next?" and do that.
-
 # Task 1 - pngchunklist
-This application lists the type and size of each chunk in the PNG file in the order that they appear in the file. The format of this should be one printed-out line per chunk, each with the type, a space, and the length.
+This application should list the type and size of each chunk in the PNG file in the order that they appear in the file. The format of this should be one printed-out line per chunk, each with the type, a space, and the length.
 
 You can implement it in whatever way you wish, provided that you write all the code yourself without copying from any AI system or third party.
 We recommend using the following libraries:
@@ -72,9 +59,9 @@ We recommend using the following libraries:
 Coding this application shouldn't require `malloc` and should `fseek` past most of the bytes in the file
 
 # Task 2 - extractuiucchunk
-This application looks for a special chunk with type `uiuc`; if found, it copies the data inside that chunk into a separate file.
+This application should look for a special chunk with type `uiuc`; if found, it copies the data inside that chunk into a separate file.
 If there is more than one such chunk, it copies the first and then exits with code 0.
-If there is no such chunk, prints an error message to stderr and exists with code 4.
+If there is no such chunk, prints an error message to stderr and exits with code 4.
 
 You can implement it in whatever way you wish, provided that you write all the code yourself without copying from any AI system or third party.
 
@@ -84,14 +71,15 @@ We recommend sharing significant code from `pngchunklist` (ideally by putting th
 - `malloc` and `free` -- not strictly required, but several simple approaches to the task would need them.
 
 # Task 3 - insertuiucchunk
-This application makes a copy of a PNG file with a new `uiuc` chunk.
+This application should make a copy of a PNG file with a new `uiuc` chunk.
 If the input PNG file already has a `uiuc` chunk, replace it.
 If not, add it between two existing chunks.
 
 You can implement it in whatever way you wish, provided that you write all the code yourself without copying from any AI system or third party. We recommend sharing significant code with the other two applications (ideally by putting the shared code in library functions in `pnglib.c` and `pnglib.h`).
 
-You'll also need to generate a crc32 checksum; this is a computation based in coding theory which most CS programs either don't teach at all or only teach it in an elective course. Perhaps that is why the code you need is given in the PNG specification in [Appendix D](https://www.w3.org/TR/png/#D-CRCAppendix).
-Note there are three functions in that appendix: the first to be run just once, the second to be given bytes of a chunk (either all at once or a few bytes at a time, it makes no difference), and the third a reference showing how you'd use the second if you have the entire chunk in one array of unsigned characters. Also note that the appendix is somewhat old and assumes that `long` means a 32-bit integer; currently `int` (or `int32_t` from `#include <stdint.h>`{.c}) is the type with that size.
+You'll also need to generate a crc32 checksum; this is a computation based in coding theory. The idea behind the checksum is to detect accidental corruption of the data. The theory behind the checksum is not important for this class and you may use the code given in the PNG specification in [Appendix D](https://www.w3.org/TR/png/#D-CRCAppendix).
+
+Note there are three functions in that appendix: the first to be run just once, the second to be given bytes of a chunk (either all at once or a few bytes at a time, it makes no difference), and the third a reference showing how you'd use the second if you have the entire chunk in one array of unsigned characters. Also note that the appendix is somewhat old and assumes that `unsigned long` means a 32-bit integer; currently `unsigned int` is the type with that size.
 
 # Logisitics
 
@@ -116,8 +104,7 @@ Automated tests are provided in the `make test` target.
 These use specific images in the provided `img/` directory to run.
 
 ## Debugging failed tests
-If you fail a test case, you should look inside `tests.py` and search for the message associated with the string,
-then look for the command that was run to create that error message (which are strings that begin `./` and the name of one of your three programs) and try running that yourself.
+If you fail a test case, you should look inside `tests.py` and search for the message associated with the string, then look for the command that was run to create that error message (which are strings that begin `./` and the name of one of your three programs) and try running that yourself.
 Note that some tests depend on the outcome of previous instructions; for example, one of the commands (line 185) is
 
 ```sh

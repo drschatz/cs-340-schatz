@@ -6,7 +6,7 @@ author: Luther Tychonievich and Jule Schatz
 
 This is not the full Machine Project (MP). It is part 3 of 3 that will count as MP1. 
 
-MP1 - The goal of MP1 as a whole (parts 0, 1, and 2) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the the rest of the course (MPs, HWs, and Exams). Each part has a slighlty different approach to give you a variety of practice. 
+MP1 - The goal of MP1 as a whole (parts 1, 2, and 3) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the rest of the course (MPs, HWs, and Exams). Each part has a slightly different approach to give you a variety of practice. 
 
 This MP part requires you to write a doubly linked list in C for both a char and a c-string. You will have the required knowledge to start this MP after the second "C not C++" lecture.
 
@@ -28,7 +28,7 @@ If you get stuck try the following:
 
 # Task 1 - Implement a linked list
 
-Implement a C version of a doubly linked list for a list of `char`s and a list of c-strings or `char *`s.
+Implement a C version of a doubly linked list for a list of `char`s and a list of c-strings.
 
 ## C you will need
 
@@ -56,7 +56,7 @@ valgrind --leak-check=full --show-leak-kinds=all ./dll_c
 
 must end with an "ERROR SUMMARY" reporting "0 errors" and no other error messages. Run the above command yourself to see specific valgrind information.
 
-# Logisitics
+# Logistics
 
 ## Starter Code
 
@@ -68,7 +68,7 @@ Our first recommendation is to add enough that it does compile (stub out the fun
 
 `dll.c` does not include `stdio.h`, and you should not add it. Do not use any printing functions (such as `printf`) in your code. Instead, we recommend using the debugger. That lack of printing will be checked by `make test`, the command used to grade your code.
 
-### For help writing C code, see relevant lectures and readings from the Content page linked above. ###
+### For help writing C code, see relevant lectures and readings from the Content page on this website. ###
 
 ## Running the code 
 This MP does come with a makefile and tests ready to go.  
@@ -77,7 +77,7 @@ This MP does come with a makefile and tests ready to go.
 - Run for more test details `./dll_c`
 
 # Submitting and Grading
-Submit on the PrairieLearn. Only submit `dll.c`; do not modify any other file. This MP part does have public tests and the PrairieLearn Autograder will show you your projected score. 
+Submit on the Prairie Learn. Only submit `dll.c`; do not modify any other file. This MP part does have public tests and the Prairie Learn autograder will show you your projected score. 
 
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.

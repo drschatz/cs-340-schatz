@@ -191,7 +191,9 @@ export default function MPsPage() {
   };
 
   // Build the display list straight from the config file.
-  const mpList = mps.map((mp) => {
+  // Student page: only show entries explicitly marked ready (ready: true).
+  // Anything without the flag is hidden here until it's ready.
+  const mpList = mps.filter((mp) => mp.ready === true).map((mp) => {
     // Non-MP items (e.g. the environment check-off) carry an explicit slug,
     // a display label, and a keyword to match their calendar events by name
     // instead of by "MP <n>" id.

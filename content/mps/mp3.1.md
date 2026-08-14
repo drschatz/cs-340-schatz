@@ -4,9 +4,9 @@ subtitle: UTF-8
 author: Luther Tychonievich and Jule Legende
 ---
 
-This is not the full Mighty Problem (MP). It is part 1 of 2 that will count as MP3. 
+This is not the full Mighty Problem (MP). It is part 1 of 2 that will count as MP 3. 
 
-MP3 - The goal of MP3 as a whole (parts 1 and 2) is to give you practice and intuition around manipulating data on a bit level. Each part is meant to show you a different use case. 
+MP 3 - The goal of MP 3 as a whole (parts 1 and 2) is to give you practice and intuition around manipulating data on a bit level. Each part uses a different example.
 
 For this part of MP3 you will be encoding and decoding UTF-8 characters.
 

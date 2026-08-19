@@ -16,6 +16,7 @@ In the modern world of programming, you will often have to read, verify, and fix
 2. Run the code with the debugger and step through each part slowly. Think critically what you expect the code to do and then see if that is what is actually happening based on the debugger output. Feel free to add code and play around.
 
 3. If you get stuck (30+ minutes of no progress), post on campuswire or come to office hours. This will take longer than getting the answer from AI but it has two benefits. 
+
     a. You will get a hint to get unstuck instead of just the answer. This will help you actually learn the skills you need.
 
     b. You will network with the professor, course staff, and other students. These connections will be vital in your schooling and career. It's also nice to connect with other humans! 
@@ -25,7 +26,7 @@ In the modern world of programming, you will often have to read, verify, and fix
 2. Be able to work with dynamic memory, arrays, and c-strings in C. 
 3. Be able to verify a program works as expected.
 4. Be able to figure out how to work with VS Code (prompting AI is allowed for this part)
-5. Be able to answer the 2 questions on lines 15 and 96. 
+5. Be able to answer the 2 questions on lines 23 and 102. 
 
 # Task 1 - Fix the code
 Imagine you received the file `mystery.c` code from an AI or colleague. You need to send a working version to your boss within a week. You can assume all the comments are accurate but that some of the code does not fully implement what the comments claim. Feel free to rework the code however you wish but each issue can be fixed with only changing a few lines.

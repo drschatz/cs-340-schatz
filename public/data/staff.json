@@ -1,6 +1,13 @@
 {
   "staff": [
     {
+      "name": "Daixuan Li",
+      "callMe": "",
+      "bio": "5th PhD working on the intersection of AI and Systems.",
+      "role": "staff",
+      "image": "daixuan.jpg"
+    },
+    {
       "name": "Otto Piramuthu",
       "callMe": "he/him",
       "bio": "I'm a 2nd year PhD student in Systems/Networking specializing in IoT",

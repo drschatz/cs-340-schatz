@@ -188,7 +188,7 @@ In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 - Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
 - Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
 
-## File transfer
+## File transfer (Used later in the semester)
 
 Your virtual machine has a separate disk from your personal computer. To move files back and forth, use `scp`.
 

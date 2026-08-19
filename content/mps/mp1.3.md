@@ -18,6 +18,7 @@ If you get stuck try the following:
 2. Run the code with the debugger and step through each part slowly. Think critically what you expect the code to do and then see if that is what is actually happening based on the debugger output. Feel free to add code and play around.
 
 3. If you get stuck (30+ minutes of no progress), post on campuswire or come to office hours. This will take longer than getting the answer from AI but it has two benefits. 
+
     a. You will get a hint to get unstuck instead of just the answer. This will help you actually learn the skills you need.
 
     b. You will network with the professor, course staff, and other students. These connections will be vital in your schooling and career. It's also nice to connect with other humans! 
@@ -68,7 +69,7 @@ Our first recommendation is to add enough that it does compile (stub out the fun
 
 `dll.c` does not include `stdio.h`, and you should not add it. Do not use any printing functions (such as `printf`) in your code. Instead, we recommend using the debugger. That lack of printing will be checked by `make test`, the command used to grade your code.
 
-### For help writing C code, see relevant lectures and readings from the Content page on this website. ###
+For help writing C code, see relevant lectures and readings from the Content page on this website.
 
 ## Running the code 
 This MP does come with a makefile and tests ready to go.  

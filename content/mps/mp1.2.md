@@ -8,7 +8,7 @@ This is not the full Machine Project (MP). It is part 2 of 3 that will count as 
 
 MP1 - The goal of MP1 as a whole (parts 1, 2, and 3) is to give you indepth practice with C, VS Code, and problem solving. These are vital skills for the rest of the course (MPs, HWs, and Exams). Each part has a slightly different approach to give you a variety of practice. 
 
-This MP part requires you to read, understand, debug, and verify C code. You will have the required knowledge to start this MP part after the first "C not C++" lecture.
+This MP part requires you to read, understand, debug, and verify C code. You will have the required knowledge to start this MP part after the second "C not C++" lecture.
 
 In the modern world of programming, you will often have to read, verify, and fix code you are given, rather than write it from scratch. This MP part is designed to help you work on these skills. To get the most out of this MP part, I recommend not feeding any of the code to AI. Instead, I recommend the following approach:
 1. Read through the code and comments carefully. Feel free to add more comments as you figure things out. Read the code multiple times.

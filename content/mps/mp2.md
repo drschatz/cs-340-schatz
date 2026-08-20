@@ -15,6 +15,7 @@ If you get stuck try the following:
 2. Run the code with the debugger and step through each part slowly. Think critically what you expect the code to do and then see if that is what is actually happening based on the debugger output.
 
 3. If you get stuck (30+ minutes of no progress), post on campuswire or come to office hours. This will take longer than getting the answer from AI but it has two benefits. 
+
     a. You will get a hint to get unstuck instead of just the answer. This will help you actually learn the skills you need.
 
     b. You will network with the professor, course staff, and other students. These connections will be vital in your schooling and career. It's also nice to connect with other humans! 

@@ -80,6 +80,8 @@ This MP does come with a makefile and tests ready to go.
 # Submitting and Grading
 Submit on the Prairie Learn. Only submit `dll.c`; do not modify any other file. This MP part does have public tests and the Prairie Learn autograder will show you your projected score. 
 
+If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
+
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 

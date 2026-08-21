@@ -55,7 +55,9 @@ Download the buggy code from [`mp1.2.zip`](../mp1.2.zip) and unzip it on your co
 Part of the MP is figuring out how to compile and run this MP. You may use AI/Search Engines for help in how to compile, run, and start the debugger in VS Code. Feel free to look at other released MPs, to make your own Makefile, etc...
 
 ## Submitting and Grading
-You can submit `mystery.c` as many times as you would like on Prairie Learn up to the deadline. I will grade the most recent submission. If you submit past the deadline, but within 24 hours, you will only receive up to 90% of the points. See the syllabus for more details. 
+You can submit `mystery.c` as many times as you would like on Prairie Learn up to the deadline. I will grade the most recent submission. 
+
+If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
 
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP. 

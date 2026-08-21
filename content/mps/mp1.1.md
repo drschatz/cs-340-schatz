@@ -133,6 +133,8 @@ Once you've passed all the tests, submit your code on PrairieLearn.
 You may submit as often as you like, including replacing old submissions.
 Only your last submission (prior to the end of the late submission window) will be included in your grade.
 
+If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
+
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 

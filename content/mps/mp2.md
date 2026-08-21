@@ -131,6 +131,8 @@ then run the extract test that failed in the debugger.
 
 Submit on the Prairie Learn. Submit `pngchunklist.c`, `extractuiucchunk.c`, `insertuiucchunk.c`, `pnglib.c`, and `pnglib.h` (even if you didn't edit the last two).
 
+If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
+
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 

@@ -39,16 +39,17 @@ A character is an abstract entity like the "capital R" or "🧡."
 ASCII maps values 0-127 to 128 characters. The values 0-127 are small enough to be stored in a `char`. 
 
 ## Unicode, and UTF-8
-Unicode maps values 0-1,114,111 to 1,114,110 characters. In Unicode, these values are called code points. For example, the code point 129,505 maps to the 🧡 character. 129,505 is too big to be represented by 1-byte so we can't use a single `char` to hold the data. Instead, when working with Unicode, we use the UTF-8 encoding. This encoding translates a code point to a series of `char`s depending on how much space is needed. It is a variable length encoding which means different code points may use different numbers of `char`s (1-4). However, UTF-8 is a bit more complicated than just representing the code point across more bytes.
-
-So why use UTF-8 versus a simpler encoding?
-- UTF-8 can encode the full Unicode range (over a million code points) rather than just the 127 code points that ASCII can encode. This now includes Greek, Arabic, emoji, mathematical symbols, and more!
-- UTF-8 is backward compatible with ASCII. If a file uses ASCII it is already valid UTF-8 and doesn't need to be converted.
-- UTF-8 is space efficient. UTF-8 uses a variable length encoding which means smaller code points take up less space.
-- UTF-8 is self-synchronizing. The header of each byte indicates where in a series of UTF-8 encoded bytes it belongs. This makes it easy for the computer to find the start and end of a character.
-- UTF-8's byte sequence is independent of the machine architecture (it always uses big endian). This means a UTF-8 encoded file looks and means the same everywhere. 
+Unicode maps values 0-1,114,111 to 1,114,112 characters. In Unicode, these values are called code points. For example, the code point 129,505 maps to the 🧡 character. 129,505 is too big to be represented by 1-byte so we can't use a single `char` to hold the data. Instead, when working with Unicode, we use the UTF-8 encoding. This encoding translates a code point to a series of `char`s depending on how much space is needed. It is a variable length encoding which means different code points may use different numbers of `char`s (1-4). However, UTF-8 is a bit more complicated than just representing the code point across more bytes.
 
 See the relevant text chapter and lecture on UTF-8 for more details on the specifics of encoding the decoding code points with UTF-8.
+
+So why use UTF-8 versus a simpler encoding?
+- UTF-8 can encode the full Unicode range (over a million code points) rather than just the 128 code points that ASCII can encode. This now includes Greek, Arabic, emoji, mathematical symbols, and more!
+- UTF-8 is backward compatible with ASCII. If a file uses ASCII it is already valid UTF-8 and doesn't need to be converted.
+- UTF-8 is space efficient. UTF-8 uses a variable length encoding which means smaller code points take up less space.
+- UTF-8 is self-synchronizing. The header of each `char` indicates where in a series of UTF-8 encoded bytes it belongs. This makes it easy for the computer to find the start and end of a character.
+- UTF-8's byte sequence is independent of the machine architecture (it always uses big endian). This means a UTF-8 encoded file looks and means the same everywhere. 
+
 
 # Task 1 - Decode
 `int decodeCharacter(const char **utf8)` will decode one character from the string (pointed to by the parameter `utf8`) to its corresponding code point and return it as an int. Before returning, the function will move the pointer (`*utf8`) to the start of the next UTF-8 character. Repeated calls will read all code points in a string. More details can be found in the starter code header file.
@@ -97,6 +98,8 @@ valgrind --trace-children=yes --leak-check=full ./tester
 The test suite runs tests worth 69 point. Valgrind will also be run and worth 10 points on the autograder.
 
 To receive a grade, please submit on Prairie Learn. Remove any printouts from your code before submitting (including removing the `#include <stdio.h>` line explicitly and removing any commented out print statements).
+
+If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
 
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.

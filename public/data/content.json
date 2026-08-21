@@ -1,4 +1,20 @@
 {
   "lectures": [
+      {
+      "date": "8/25",
+      "topic": "Syllabus",
+      "slides_google": "https://docs.google.com/presentation/d/1pUXYKv_le_91MSLlRRV2E22lymMG6sQG7-0FsQGr9Yo/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
+    },
+    {
+      "date": "8/25",
+      "topic": "Part 1 Overview",
+      "slides_google": "https://docs.google.com/presentation/d/1ViC6dxAbXCe8bawSNE_P4S93r-o0Oo_dU5rMHCBRAuk/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": []
+    }
   ]
 }

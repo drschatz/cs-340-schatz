@@ -35,7 +35,6 @@ Various parties sometimes make less-complete but easier-to-read summaries, which
 
 We recommend using this resources <https://en.wikipedia.org/wiki/PNG> for this MP. We will not summarize or teach you this content directly.
 
-
 ### Background on Chunk-based Media Files
 In 1985 Electronic Arts introduced a concept for storing media files as a sequence of packets or chunks of binary data, each preceded by a short label stating what type of data the chunk contained.
 Their Interchange File Format was adopted with slight tweaks by Microsoft as the Resource Interchange File Format (RIFF) on top of which Windows 3.1's video, audio, and user interface element file formats were built.
@@ -97,7 +96,7 @@ You will edit the following files:
 The first three of these will be seperate command-line applications; we provide the basic command-line argument count checking for you and you write the rest. The pnglib files will not be directly tested, but can be used to keep your code organized.
 
 ## Share Your Image
-Put a secret inside a PNG of your choice and share it [on the CampusWire post](https://campuswire.com/c/G0463FDE3/feed/40) and [its accompanying Drive folder](https://drive.google.com/drive/folders/10NjGG9nwkIqw6fJvel5BuWvHcimmoZ4o).
+Put a secret inside a PNG of your choice and share it [on the CampusWire post]() and [its accompanying Drive folder](https://drive.google.com/drive/folders/1xNXWrKwDgZfXNd5M0dOrqrt1f04AwkQJ?usp=sharing).
 This is an opportunity to share a bit about yourself and your interests; please keep it (both the image and its hidden contents) inoffensive.
 
 ## Running the code 

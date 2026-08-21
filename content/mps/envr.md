@@ -8,7 +8,7 @@ This is NOT turned in on Prairie Learn, instead, to get the points (1% of your f
 
 Often, issues come up for the setup that need a few days to resolve. Please aim to get this setup completed ASAP and not the day of the deadline. I will not grant extensions for waiting until the last day to start.
 
-In this class, we will develop code through two different toolchains. The first, Docker, is used for MPs 1-7. The second, a VM, is only required for MP 8 and the final project but can be used for other MPs if docker isn't working. For the environment setup you are required to get both toolchains working to avoid future issues. 
+In this class, we will develop code through two different toolchains. The first, Docker, is used for MPs 1-4 and 6-7. The second, a VM, is only required for MP 5, MP 8 and the final project but can be used for other MPs if docker isn't working. For the environment setup you are required to get both toolchains working to avoid future issues. 
 
 You are encouraged to look back at this through the course to help with working with the toolchains. 
 

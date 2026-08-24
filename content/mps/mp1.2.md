@@ -39,6 +39,9 @@ To learn what different functions do we recommend using the linked documentation
 - [`fseek`](../man/fseek.html)
 - [`printf`](../man/printf.html)
 
+You may also need malloc...
+- [`malloc`](../man/malloc.html)
+
 # Task 2 - Verify the code
 This specific MP part does not have public tests. Instead, you will submit your code on Prairie Learn blind. You will receive a grade within a week AFTER the deadline. This is to give you experience with a realistic workflow. Imagine you are sending this file to your boss. It wouldn't be great if you kept sending her different versions until she says it works. Instead, you have to verify the code yourself before submitting. Note that not every MP will require you to verify your own code but the exams most likely will. 
 

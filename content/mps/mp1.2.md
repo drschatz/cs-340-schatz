@@ -68,6 +68,18 @@ You can submit `mystery.c` as many times as you would like on Prairie Learn up t
 
 If you submit within 24 hours after the deadline you will recieve only up to 90% credit for the MP.
 
+You'll be required to meet all the rules of C. This will be enforced by compiling with the following compiler flags:
+
+-Wall : Enable all the warnings, even those that programmers often ignore.
+
+-Werror : Makes warnings into errors, refusing to compile if there are warnings.
+
+-pedantic-errors : Emit errors for things that the standard specifies but the compiler knows how to ignore.
+
+-std=c17 : Uses the official 2017 standard version of C, the last version to be widely supported by compilers.
+
+You must not have any memory errors or leaks. This will be enforced in part using valgrind.
+
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP. 
 

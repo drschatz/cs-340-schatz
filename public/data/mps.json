@@ -9,7 +9,7 @@
     },
     {
       "number": 1,
-      "title": "Machine Problem 1",
+      "title": "MP 1",
       "ready": false,
       "parts": [
         { "id": "1.1", "title": "Part 1.1", "slug": "mp1.1" },
@@ -19,13 +19,13 @@
     },
     {
       "number": 2,
-      "title": "Machine Problem 2",
+      "title": "MP 2",
       "slug": "mp2",
       "ready": false
     },
     {
       "number": 3,
-      "title": "Machine Problem 3",
+      "title": "MP 3",
       "parts": [
         { "id": "3.1", "title": "Part 3.1", "slug": "mp3.1" },
         { "id": "3.2", "title": "Part 3.2", "slug": "mp3.2" }
@@ -33,7 +33,7 @@
     },
     {
       "number": 4,
-      "title": "Machine Problem 4",
+      "title": "MP 4",
       "slug": "mp4"
     }
   ]

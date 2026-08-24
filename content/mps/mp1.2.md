@@ -33,6 +33,12 @@ Imagine you received the file `mystery.c` code from an AI or colleague. You need
 
 ** Unlike MP1.1, you DO have to understand the C code to debug this program. **
 
+To learn what different functions do we recommend using the linked documentation. This will be similar to what you have access to on the exams.
+- [`fopen`](../man/fopen.html)
+- [`fread`](../man/fread.html)
+- [`fseek`](../man/fseek.html)
+- [`printf`](../man/printf.html)
+
 # Task 2 - Verify the code
 This specific MP part does not have public tests. Instead, you will submit your code on Prairie Learn blind. You will receive a grade within a week AFTER the deadline. This is to give you experience with a realistic workflow. Imagine you are sending this file to your boss. It wouldn't be great if you kept sending her different versions until she says it works. Instead, you have to verify the code yourself before submitting. Note that not every MP will require you to verify your own code but the exams most likely will. 
 

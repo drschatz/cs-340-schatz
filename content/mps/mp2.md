@@ -27,7 +27,6 @@ If you get stuck try the following:
 
 # Background
 ## Understanding PNG
-
 PNG is a chunk-based file format.
 It is an open format, completely specified in a public royalty-free document, <https://www.w3.org/TR/png/>.
 The goal of a specification like that is to leave no ambiguity in how to create a file or interpret one you receive, which can lead to them being rather dense and difficult to read.

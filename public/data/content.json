@@ -4,7 +4,7 @@
       "date": "8/25",
       "topic": "Syllabus",
       "slides_google": "https://docs.google.com/presentation/d/1pUXYKv_le_91MSLlRRV2E22lymMG6sQG7-0FsQGr9Yo/edit?usp=sharing",
-      "slides_pdf": "fa26-intro.pdf",
+      "slides_pdf": "../lectures/fa26-intro.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_jk37z5sx",
       "texts": []
     },
@@ -12,7 +12,7 @@
       "date": "8/25",
       "topic": "Part 1 Overview",
       "slides_google": "https://docs.google.com/presentation/d/1ViC6dxAbXCe8bawSNE_P4S93r-o0Oo_dU5rMHCBRAuk/edit?usp=sharing",
-      "slides_pdf": "fa26-part1.pdf",
+      "slides_pdf": "../lectures/fa26-part1.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_jk37z5sx",
       "texts": []
     }

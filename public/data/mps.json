@@ -10,7 +10,7 @@
     {
       "number": 1,
       "title": "MP 1",
-      "ready": false,
+      "ready": true,
       "parts": [
         { "id": "1.1", "title": "Part 1.1", "slug": "mp1.1" },
         { "id": "1.2", "title": "Part 1.2", "slug": "mp1.2" },

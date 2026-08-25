@@ -22,11 +22,67 @@
       "image": "anton.jpg"
     },
     {
+      "name": "Junbo Du",
+      "callMe": "",
+      "bio": "Hi, my name is Junbo, but you can call me Tim. I am first year computer science PhD student from Canada and currently a part of the DAIS group here at UIUC. I look forward to meeting you all!",
+      "role": "staff",
+      "image": "junbo.png"
+    },
+        {
       "name": "Albert Lee",
       "callMe": "he/him",
       "bio": "2nd year Computer Science + Education Major. Come find me playing board games where board games are played!",
       "role": "staff",
       "image": "albert.png"
+    },
+        {
+      "name": "Lily Liu",
+      "callMe": "she/her",
+      "bio": "Hi!! I'm a junior studying CS + Stats. When I'm not coding, you can find me drinking matcha, baking pastries, or singing karaoke. I also love trying new things, meeting new people, and making fun memories!",
+      "role": "staff",
+      "image": "lily.png"
+    },
+            {
+      "name": "Sarah Xu",
+      "callMe": "she/her",
+      "bio": "Hi! My name is Sarah and I'm a senior majoring in CS + Advertising. In my free time, I love to go running and watch movies!",
+      "role": "staff",
+      "image": "sarah.png"
+    },
+      {
+      "name": "Xingpeng He",
+      "callMe": "",
+      "bio": "Senior year Statistics & Computer Science Major. I enjoy producing music and playing soccer in my free time.",
+      "role": "staff",
+      "image": "xingpeng.png"
+    },
+          {
+      "name": "Jack Hu",
+      "callMe": "",
+      "bio": "Hello! My name is Jack, I'm a senior studying Computer Science and Economics. In my free time, I enjoy cooking and baking.",
+      "role": "staff",
+      "image": "jack.png"
+    },
+    {
+      "name": "Addie Potter",
+      "callMe": "she/her",
+      "bio": "I am a Junior studying CS + Chemistry! I took this class last semester and loved it, I hope you all will too!",
+      "role": "staff",
+      "image": "addie.png"
+    },
+          {
+      "name": "Adrian Gutierrez-Moreno",
+      "callMe": "",
+      "bio": "Hello! My name is Adrian, I'm majoring in Information Sciences with a minor in Computer Science. During my free time I like to go bouldering and play soccer.",
+      "role": "staff",
+      "image": "adrian.png"
+    },
+        {
+      "name": "Adaora Mbanefo",
+      "callMe": "adore-ah she/her",
+      "bio": "Hi, my name is Adaora! I'm studying CS, Linguistics, and Stats. I love reading fiction and learning new languages (spoken or code)! Always in need of new book recs :)",
+      "role": "staff",
+      "image": "adaora.png"
     }
   ]
 }

@@ -104,7 +104,7 @@ All parts of the VM process require that you are either on the campus network or
 
 ## Identify and Turn On your VM
 
-You will be given a single VM. It's name will have the form `fa26-cs340-`num`.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
+You will be given a single VM. It's name will have the form `fa26-cs340-num.cs.illinois.edu` where "num" is a 3-digit number unique to you this semester. You can find the exact name at <https://csid-basic-apps.cs.illinois.edu>. You must be on the campus network or using a VPN to access it. If you have been enrolled in the course for at least two school days and no VM is listed there for you, contact the professor.
 
 The VM will be turned off after a few hours of idleness. To turn it back on, follow these directions: <https://answers.uillinois.edu/illinois.engineering/page.php?id=108475>. Your VM needs to be on to interact with it in any way.
 
@@ -118,7 +118,7 @@ All ways of powering on your VM require you to either (a) be on campus or (b) be
 
 2. The Engineering Workstations have a script for turning on your VM. To use it:
     
-    a. From a command line, type `ssh `netid`@linux.ews.illinois.edu`
+    a. From a command line, type `ssh netid@linux.ews.illinois.edu`
     
     b. Log in with your NetID and its password. Note that the password might not appear on screen as you type it, but it is still being accepted.
     
@@ -157,7 +157,7 @@ If `ls $HOME/.ssh/` does **not** show a file named `id_`*something*`.pub`:
     
     a. Run `ssh-keygen` and press Enter without typing anything at each passphrase prompt.
 
-3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (netid`@fa26-cs340-`num`.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
+3. Run `ssh-copy-id` *your VM*, replacing "*your vm*" with your user-qualified full VM name (`netid@fa26-cs340-num.cs.illinois.edu`). When prompted, enter the password associated with your NetID.
 
 If this is successful, you should then be able to run `ssh` *your VM* and connect without requiring a password. If it is not successful, you'll need to use the password-based authentication instead, and may also share how it failed on CampusWire; we might be able to find a workaround, but no promises.
 
@@ -171,7 +171,7 @@ If this is successful, you should then be able to run `ssh` *your VM* and connec
     
     b. Select "Add New SSH Host…"
     
-    c. Type `ssh `netid`@fa26-cs340-`num`.cs.illinois.edu`, filling in your NetID and VM number.
+    c. Type `ssh netid@fa26-cs340-num.cs.illinois.edu`, filling in your NetID and VM number.
     
     d. Pick a config file from the available options; the first displayed option should work fine.
     
@@ -183,7 +183,7 @@ When running VS Code, you should see the bottom-left button says the name of you
 
 In a terminal in VS Code (e.g. by pressing `Ctrl` + `` ` ``), you should:
 
-- See the prompt line is netid`@fa26-cs340-`num`:~$` with your NetID and VM number.
+- See the prompt line is `netid@fa26-cs340-num:~$` with your NetID and VM number.
 - Run `gcc --version` to see a version number (`13.3.0` or later).
 - Run `valgrind --version` to see a version string (`valgrind-3.22.0` or later).
 - Run `pydoc3 aiohttp` to get a screen that says `Help on package aiohttp` (press Q to exit this screen).
@@ -204,7 +204,7 @@ Your virtual machine has a separate disk from your personal computer. To move fi
     
     b. use `scp currentLocation desiredLocation`, where:
         
-    - One of the locations has the form netid`@fa26-cs340-`num`.cs.illinois.edu:/home/netid/cs340/mp18`
+    - One of the locations has the form `netid@fa26-cs340-num.cs.illinois.edu:/home/netid/cs340/mp18`
 
     - The other location is a local filename
 

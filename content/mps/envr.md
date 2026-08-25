@@ -126,7 +126,7 @@ All ways of powering on your VM require you to either (a) be on campus or (b) be
     
     d. Type `cs-vmfarm-poweron`
     
-    e. Enter the information that it requests, including the full VM name (`fa26-cs340-`num`.cs.illinois.edu`)
+    e. Enter the information that it requests, including the full VM name (`fa26-cs340-num.cs.illinois.edu`)
     
     f. Type `exit` to close your connection to EWS
 
@@ -175,7 +175,7 @@ If this is successful, you should then be able to run `ssh` *your VM* and connec
     
     d. Pick a config file from the available options; the first displayed option should work fine.
     
-    e. In the new VS Code window that opens up, open up a terminal. It should have your VM name on the prompt line.
+    e. In the new VS Code window that opens up, open up a terminal. It should have your VM name on the prompt line. If it asks for an operating system select Linux and then put in your university password.
 
 ## Verify VM
 

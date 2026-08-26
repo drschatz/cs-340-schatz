@@ -11,7 +11,7 @@ description: An introduction to using the terminal and shell
 
 *Note: The terms *terminal*, *shell*, and *command line* are often used interchangeably.*
 
-**Directory** - Another name for a folder.
+**Directory** - Another name for folder.
 
 ---
 

@@ -80,6 +80,8 @@ You'll be required to meet all the rules of C. This will be enforced by compilin
 
 You must not have any memory errors or leaks. This will be enforced in part using valgrind.
 
+To recieve full credit your solution must work with the given input file (words_alpha.txt). This includes the white spaces found in that file. 
+
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP. 
 

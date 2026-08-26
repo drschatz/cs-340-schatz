@@ -4,8 +4,6 @@ subtitle: Allocator
 title: MP4
 ---
 
-# Overview
-
 In this Malloc Party (MP), you will implement your own memory
 allocator.
 
@@ -46,8 +44,7 @@ You will modify
 - `mytest.c` -- optionally, write your own test case here
 
 # Naive Implementation
-
-We provide the simplest functionally-correct implementation we know of.
+We provide a simple, functionally-correct implementation.
 It treats the heap like a stack that never pops:
 on allocation it pushes a new block on top of the stack
 and ignores all deallocations.
@@ -74,7 +71,7 @@ void allocator_reset() { used = 0; }
 
 /** Like malloc but using the memory provided to allocator_init */
 void *mymalloc(size_t size) {
-  // simplest version pushes each block on a stack
+  // simple version pushes each block on a stack
   void *ans = base + used;
   used += size;
   return ans;
@@ -82,12 +79,12 @@ void *mymalloc(size_t size) {
 
 /** Like free but using the memory provided to allocator_init */
 void myfree(void *ptr) {
-  // simplest version does nothing
+  // simple version does nothing
 }
 
 /** Like realloc but using the memory provided to allocator_init */
 void *myrealloc(void *ptr, size_t size) {
-  // simplest version is malloc-copy-free
+  // simple version does malloc-copy-free
   if (!size) { myfree(ptr); return NULL; }
   void *ans = mymalloc(size);
   if (ptr && ans) {
@@ -99,17 +96,11 @@ void *myrealloc(void *ptr, size_t size) {
 ```
 
 # What You Should Do
+Keep the functional correctness of the provided allocator but make it use less memory without adding too much time. That will involve at least the first 6 tasks outlined below.
 
-Keep the functional correctness of the provided allocator
-but make it use less memory without adding too much time.
-That will involve at least the first 6 of the following steps.
-The steps in the following subsections are ordered such that earlier items are easier to implement than later ones
-and also are either have more impact on memory use than later ones or are required components of later ones.
-Going in order is strongly recommended.
-
+The steps in the following subsections are ordered such that earlier items are easier to implement than later ones and also are either have more impact on memory use than later ones or are required components of later ones. Going in order is strongly recommended.
 
 ### Small testable steps, a professional practice
-
 As you walk through these steps, you will find yourself doing something in step n
 and then partially undoing it as part of step m>n.
 This is part of a general pattern of effective software development:
@@ -124,15 +115,11 @@ even if that means some of those steps involve a bit of extra work (which you mi
 
 
 ### Making your own tests
+The provided test cases in the `workloads` folder are intended to test both the functionality and performance of your code. Being useful cases for debugging your code was not a design goal of these workloads.
 
-The provided test cases in the `workloads` folder are intended to test both the functionality and performance of your code.
-Being useful cases for debugging your code was not a design goal of these workloads.
+If your code *crashes*, you might want to write your own test file with its own `main` function and so on that calls your allocation functions. This can help you not get distracted by the memory tracking system in `testharness.c`.
 
-If your code *crashes*, you might want to write your own test file with its own `main` function and so on that calls your allocation functions.
-This can help you not get distracted by the memory tracking system in `testharness.c`.
-
-If your code gives an allocator correctness error (such as "allocated illegal address" or "allocated already-used memory"), then the testharness might be useful in debugging, but you should probably minimize the test case before debugging.
-This means copying the test into `mytest.c` and then removing as much of it as you can without making the test pass.
+If your code gives an allocator correctness error (such as "allocated illegal address" or "allocated already-used memory"), then the testharness might be useful in debugging, but you should probably minimize the test case before debugging. This means copying the test into `mytest.c` and then removing as much of it as you can without making the test pass.
 In other words,
 
 1. Make `mytest.c` fail (when compiled to `mytest.so` and run using the test harness).
@@ -141,9 +128,8 @@ In other words,
     b. If mytest now passes, reinsert what you just removed.
 3. Debug the single mytest.so workload, using the "Debug one workload" run option, not "Debug all workloads" or "Run all tests".
 
-## 1. Metadata
-
-Add metadata to each allocation.
+## Task 1 - Metadata
+Starting from the given code, add metadata to each allocation.
 The usual way to do this is: when asked for an n-byte block,
 allocate an n + sizeof(metadata) block. Write to the first sizeof(metadata) bytes the metadata and then return a pointer to the first byte after the metadata.
 
@@ -154,10 +140,10 @@ but initially just store the size of the block in it. This will make your code t
 
 With size metadata it becomes possible to display your entire memory:
 you know where the first block is, and from its size can find the next, and so on.
-You might find this useful in some debugging situations, and for doing step 5 below.
+You might find this useful in some debugging situations, and for doing task 5 below.
 
 
-## 2. Shrink efficiently
+## Task 2 - Shrink efficiently
 
 In `realloc`, if the user is requesting a smaller or same sized block, do nothing. 
 
@@ -165,7 +151,7 @@ This will improve your code's **runtime** and **space**.
 
 This will cause the `realloc_jitter` test to use under 5,000 bytes instead of over 50,000.
 
-## 3. Grow at end of heap
+## Task 3 - Grow at end of heap
 
 Don't copy data or change the pointer when increasing the size of the block at the end of the allocated memory.
 
@@ -173,7 +159,7 @@ This will improve your code's **runtime** and **space**.
 
 This will cause the `small_resize` test to use under 1,000 bytes instead of over 10,000.
 
-## 4. Shrink at end of heap
+## Task 4 - Shrink at end of heap
 
 When deallocating (with `myfree`) or decreasing (with `myrealloc`) the size of the block at the end of the allocated memory,
 also return its memory to the unused memory set.
@@ -183,7 +169,7 @@ This will improve your code's **space**.
 This will cause the `backstep` test to use under 200,000 bytes instead of over 1,000,000
 and `mergesort_like` to use under 200,000 bytes instead of over 700,000.
 
-## 5. Reuse free memory
+## Task 5 - Reuse free memory
 
 When deallocating a block that has another block after it,
 mark it in some way as being unused (likely in the metadata).
@@ -209,7 +195,7 @@ There are at least three ways to do that; any one of these approaches should wor
 - Move the tests (both .c and .so) out of the `workloads/` folder. To re-enable them, move them back into that folder.
 
 
-## 6. Free list
+## Task 6 - Free list
 
 Avoid scanning through used blocks for unused blocks.
 Large linked data structures may have millions of small used blocks;
@@ -230,7 +216,7 @@ This will improve your code's **runtime**, but may worsen its **space** slightly
 
 This should result in runtimes similar to step 4 and space utilization comparable to step 5.
 
-## 7. Block merging [Extra Credit]
+## Block merging [Extra Credit]
 
 When marking a block as unused, see if the block before and/or after it in memory are also unused; if so, merge them into one large unused block instead of several smaller ones. Do this *before* the end-of-memory deallocation optimization (step 4)
 
@@ -245,7 +231,7 @@ This will cause `small_resize_2` to use under 3,000 bytes instead of over 20,000
 but it will cause several previous tests to lose their previous gains (for example, `chaos_reuse` and `chaos_reuse_2` will use 10× more memory) and it may stop passing some of the earlier steps it used to pass.
 Without the next step, a mixed win at best.
 
-## 8. Block splitting [Extra Credit]
+## Block splitting [Extra Credit]
 
 When allocating into a large unused block, split that block in two, one used for the new allocation and the other one left unused.
 Do the same when shrinking a block during reallocation.
@@ -263,17 +249,30 @@ and return `chaos_reuse` and `chaos_reuse_2` to under 1,000 and under 10,000 bye
 It will also cause `backstep` to use under 200,000 bytes instead of over 1,000,000
 and `backstep_2` to use under 1,500,000 bytes instead of over that.
 
-
-# Scoring
-
+# Submission and Grading
 `make test` will be used to grade your code.
-It will show how many steps you have completed, based on performance.
-Steps 7 and 8 are merged in the tests, as 7 without 8 is worse than not doing 7.
+It will show how many tasks you have completed, based on performance.
+Tasks 7 and 8 are merged in the tests, as 7 without 8 is worse than not doing 7.
 
-Implementing up through step 6 (Free List) is worth 100%.
+Implementing up through task 6 (Free List) is worth 100%.
 Partial credit is awarded for doing fewer steps.
 
 **No points** are earned if the allocator you submit is **nonfunctional** (i.e. fails to return non-overlapping large-enough memory with each `mymalloc` call).
 We strongly recommend keeping a copy of your last points-earning implementation so that you can revert to it if you get your code into a broken state.
 
-Step 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a seperate autograder for getting extra credit. You must submit to both autograders to get full credit and the extra credit. 
+Tasks 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a seperate autograder for getting extra credit. You must submit to both autograders to get full credit and the extra credit. 
+
+If you submit tasks 1-6 within 24 hours after the deadline you will recieve only up to 90% credit for the MP. If you submit steps 1-8 within 24 hours after the deadline you will recieve only up to 90% of the extra credit. 
+
+## AI Policy
+To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
+
+1. Do not feed AI/Search Engines any of the given code or specific functions. For example, do not look up: "How would I write the C code to insert a new chunk into a PNG."
+
+2. Do not rely on AI/Search Engines for information on the PNG format. A learning goal of this MP is to get practice reading documentation. Often, it is not wise to rely on AI for important information as it can get things wrong. Therefore, it is important you have the skills to read sources yourself.
+
+3. You may use AI/Search Engines to figure out errors by looking up the error produced, not feeding it all your code and asking what is wrong.
+
+4. Office hours are always open to any questions!
+
+** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

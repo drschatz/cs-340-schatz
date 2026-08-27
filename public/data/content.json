@@ -19,8 +19,8 @@
     {"date": "8/27",
       "topic": "Terminal + Debugging + Docker/VM",
       "slides_google": "https://docs.google.com/presentation/d/18C8i_t2McstbEObhOrLfRqa6GD77yJ8uf1Q3G6V8_9o/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-vm.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_6y4vygam",
       "texts": ["terminal"]
     }
   ]

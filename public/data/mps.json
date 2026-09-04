@@ -3,7 +3,7 @@
     {
       "slug": "envr",
       "label": "Environment Setup Check-Off",
-      "title": "Environment Setup Check-Off",
+      "title": "Environment Setup Check-Off ",
       "eventMatch": "check-off",
       "ready": true
     },

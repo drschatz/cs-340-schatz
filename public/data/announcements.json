@@ -1,6 +1,6 @@
 [
-   {
-    "date": "Thursday, August 6th",
-    "content": "Welcome to CS 340! The calendar and syllabus are up to date for Fall 2026. "
+      {
+    "date": "Friday, September 4th",
+    "content": "MP1.2 is updated to use the address sanitizer instead of valgrind for efficiency issues."
    }
 ]

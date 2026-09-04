@@ -33,8 +33,8 @@
       {"date": "9/03",
       "topic": "C without the ++ 0b10",
       "slides_google": "https://docs.google.com/presentation/d/1NMofmuCzwhi0mxttWxWQQf49Hgv_POS1Ulyo-votea8/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-cpart2.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_d8j5ba98",
       "texts": [""]
     }
   ]

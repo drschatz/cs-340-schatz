@@ -3,6 +3,7 @@ title: MP1.2
 subtitle: Mystery C Code
 author: Jule Schatz
 ---
+**EDIT** I updated the spec Sep 4th to switch from valgrind to the address sanitizer to speed up performance. 
 
 This is not the full Machine Project (MP). It is part 2 of 3 that will count as MP1. 
 
@@ -50,9 +51,11 @@ Here are some ideas to help you get started:
 
 2. Find a friend in the class (office hours are great for finding people), and make examples together to try. Then make sure your code does the same thing as your friend's code. 
 
-3. Run your code with valgrind to make sure there are no memory errors. 
+**EDIT**
+3. run your code with the address sanitizer to make sure there are no memory errors
 ```sh
-valgrind --leak-check=full --show-leak-kinds=all ./a.out
+gcc -O1 -g -fsanitize=address mystery.c -o a.out
+./a.out
 ```
 
 # Logistics
@@ -78,7 +81,7 @@ You'll be required to meet all the rules of C. This will be enforced by compilin
 
 -std=c17 : Uses the official 2017 standard version of C, the last version to be widely supported by compilers.
 
-You must not have any memory errors or leaks. This will be enforced in part using valgrind.
+You must not have any memory errors or leaks. This will be enforced in part using address sanitizer.
 
 To recieve full credit your solution must work with the given input file (words_alpha.txt). This includes the white spaces found in that file. 
 

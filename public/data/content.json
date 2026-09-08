@@ -40,8 +40,8 @@
      {"date": "9/08",
       "topic": "Building Blocks 0b10",
       "slides_google": "https://docs.google.com/presentation/d/10-J1GamlMltPgqmJ4bWjxwOM0rH92b7SUDK2Q_jNv40/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-building.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_sfbctay6",
       "texts": ["bits"]
     }
   ]

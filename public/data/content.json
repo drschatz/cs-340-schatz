@@ -47,8 +47,8 @@
     {"date": "9/10",
       "topic": "Building Blocks 0b10",
       "slides_google": "https://docs.google.com/presentation/d/1DETpa5yQ8T80WG_dshiPDM5YPkelGGiLNXG3U770eFQ/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-building2.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_3xssgsf8",
       "texts": ["building-hardware"]
     }
   ]

@@ -54,8 +54,8 @@
      {"date": "9/15",
       "topic": "Storing Data",
       "slides_google": "https://docs.google.com/presentation/d/1rafo6VE07c2wN5AtQpJItdwRp-l9Jeh6810roHTzpu8/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-data.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_o0iujwso",
       "texts": ["bytes"]
     }
   ]

@@ -3,7 +3,7 @@
     "date": "Tuesday, September 15th",
     "content": "We will have an MP 2 Party this Thursday (09/17) in Siebel 4124. More info at https://campuswire.com/c/G4ABE149E/feed/49"
    },
-      {
+  {
     "date": "Friday, September 4th",
     "content": "MP1.2 is updated to use the address sanitizer instead of valgrind for efficiency issues."
    }

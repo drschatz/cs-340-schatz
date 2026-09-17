@@ -57,6 +57,13 @@
       "slides_pdf": "../lectures/fa26-data.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_o0iujwso",
       "texts": ["bytes"]
+    },
+    {"date": "9/17",
+      "topic": "Processors/Assembly",
+      "slides_google": "https://docs.google.com/presentation/d/15BQtjIvQTRRgcxKy_p4Bhd9KsGF4MFfYA5BmotrNsqU/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["isa"]
     }
   ]
 }

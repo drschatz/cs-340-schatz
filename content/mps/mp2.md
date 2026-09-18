@@ -102,6 +102,10 @@ This is an opportunity to share a bit about yourself and your interests; please 
 Automated tests are provided in the `make test` target.
 These use specific images in the provided `img/` directory to run.
 
+## Debugging with a PNG Visualizer 
+For help visualizing PNGs we recommend this [site](https://www.nayuki.io/page/png-file-chunk-inspector)
+
+
 ## Debugging failed tests
 If you fail a test case, you should look inside `tests.py` and search for the message associated with the string, then look for the command that was run to create that error message (which are strings that begin `./` and the name of one of your three programs) and try running that yourself.
 Note that some tests depend on the outcome of previous instructions; for example, one of the commands (line 185) is
@@ -124,8 +128,6 @@ echo "this is a test" >> tmp
 
 Thus, to debug that case you'd need to run the `echo` and `./insertuiucchunk` tests first,
 then run the extract test that failed in the debugger.
-
-For help visualizing PNGs we recommend this [site](https://www.nayuki.io/page/png-file-chunk-inspector)
 
 # Submission and Grading
 

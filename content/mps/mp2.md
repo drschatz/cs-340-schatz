@@ -95,7 +95,7 @@ You will edit the following files:
 The first three of these will be seperate command-line applications; we provide the basic command-line argument count checking for you and you write the rest. The pnglib files will not be directly tested, but can be used to keep your code organized.
 
 ## Share Your Image
-Put a secret inside a PNG of your choice and share it [on the CampusWire post]() and [its accompanying Drive folder](https://drive.google.com/drive/folders/1xNXWrKwDgZfXNd5M0dOrqrt1f04AwkQJ?usp=sharing).
+Put a secret inside a PNG of your choice and share it [on the CampusWire post](https://campuswire.com/c/G4ABE149E/feed/57) and [its accompanying Drive folder](https://drive.google.com/drive/folders/1xNXWrKwDgZfXNd5M0dOrqrt1f04AwkQJ?usp=sharing).
 This is an opportunity to share a bit about yourself and your interests; please keep it (both the image and its hidden contents) inoffensive.
 
 ## Running the code 
@@ -124,6 +124,8 @@ echo "this is a test" >> tmp
 
 Thus, to debug that case you'd need to run the `echo` and `./insertuiucchunk` tests first,
 then run the extract test that failed in the debugger.
+
+For help visualizing PNGs we recommend this [site](https://www.nayuki.io/page/png-file-chunk-inspector)
 
 # Submission and Grading
 

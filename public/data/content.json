@@ -64,6 +64,13 @@
       "slides_pdf": "../lectures/fa26-cpu.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_cz3zpbpj",
       "texts": ["isa"]
+    },
+    {"date": "9/22",
+      "topic": "Exam 1 Review",
+      "slides_google": "https://docs.google.com/presentation/d/1tuyZCDXADkbnDO8qo0jbzFMH8XhR75Lw6mZ7nXtVMeA/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": [""]
     }
   ]
 }

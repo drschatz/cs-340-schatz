@@ -30,7 +30,7 @@ If you get stuck try the following:
 # Background
 A computer is built with logic gates which compose higher level simple operations like addition, bit shifting, and bit logic. These are often put together into more complex operations which a high level programming language can use. When you compile a C program, it turns the complex operations back into a series of simple operations that achieves the same logic. 
 
-If your C code uses simple operations to start your program will run faster. This is because much of the code needs to be run sequentially and each operation needs time to run, simplier operations == fewer computer instructions == faster execution. 
+If your C code uses simple operations to start your program will run faster. This is because much of the code needs to be run sequentially and each operation needs time to run, simpler operations == fewer computer instructions == faster execution. 
 
 The idea behind speeding up this code is that instead of using a high level algorithm to do set manipulation (finding if there is an intersection between the letters of three words) we can use low level operations on the bit level to do the same logic but with fewer machine instructions. 
 
@@ -39,7 +39,7 @@ The idea behind speeding up this code is that instead of using a high level algo
 You will need a functioning MP 1.2 to get credit for this MP part. See the MP1.2 specifications for details and the starter code. 
 
 # Task 1 - Refactor the code to use bit sets
-1. Note that logical operations like OR, XOR, and AND between two numbers is very fast on a computer.
+1. Note that logical operations like OR, XOR, and AND between two numbers are fast on a computer.
 2. Note that bit shifting a number is also very fast on a computer. 
 
 Use these two notes and what we have learned about bit sets to refactor the code to improve the speed without changing the big O (you will still need three nested loops). 
@@ -56,7 +56,7 @@ Just like MP 1.2 we aren't including a makefile or other starter files. You may 
 ## Submitting and Grading
 You can submit `mystery.c` as many times as you would like on Prairie Learn up to the deadline. I will grade the most recent submission. If you submit past the deadline, but within 24 hours, you will only receive up to 90% of the points. See the syllabus for more details. 
 
-There are no public tests given or on Prairie Learn. In a week after the deadline you will recieve your grade for the work turned in on Prairie Learn. It will be graded based on having ALL of the following,
+There are no public tests given or on Prairie Learn. In a week after the deadline you will receive your grade for the work turned in on Prairie Learn. It will be graded based on having ALL of the following,
 1. It produces the correct results (please don't print anything extra)
 2. It runs quicker than my working solution of MP1.2
 3. It uses bit sets but still has the time complexity of O(n^3)
@@ -66,7 +66,7 @@ Note - In theory you can improve this code further than just adding bit sets, pl
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP. 
 
-1. Do not feed AI/Search Engines any of the code in `mystery.c`. For example, do not look up: "How is this code using sets? **paste in code" or "How do I speed up code with using a bit set?". Instead, come to office hour or post on campuswire.
+1. Do not feed AI/Search Engines any of the code in `mystery.c`. For example, do not look up: "How is this code using sets? **paste in code" or "How do I speed up code by using a bit set?". Instead, come to office hours or post on campuswire.
 
 2. You may use AI/Search Engines to look up syntax. For example, you can look up: "How does the & operation work in C? Can you show me an example?" 
 

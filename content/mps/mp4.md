@@ -181,7 +181,7 @@ you can use that to walk the entire set of blocks looking for a large-enough unu
 This will improve your code's **space** but harm it's **runtime**.
 
 This will cause the `chaos_reuse` test to use under 1,000 bytes instead of over 20,000
-and `chaos_reuse_2` use under 10,000 bytes instead of over 100,000.
+and `chaos_reuse_2` to use under 10,000 bytes instead of over 100,000.
 However, it will slow down most tests, especially `linked_list`;
 on my computers it slows that test down to take several seconds, but I've had reports that on some machines it slows them to several *minutes* instead.
 
@@ -260,9 +260,9 @@ Partial credit is awarded for doing fewer steps.
 **No points** are earned if the allocator you submit is **nonfunctional** (i.e. fails to return non-overlapping large-enough memory with each `mymalloc` call).
 We strongly recommend keeping a copy of your last points-earning implementation so that you can revert to it if you get your code into a broken state.
 
-Tasks 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a seperate autograder for getting extra credit. You must submit to both autograders to get full credit and the extra credit. 
+Tasks 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a separate autograder for getting extra credit. You must submit to both autograders to get full credit and the extra credit. 
 
-If you submit tasks 1-6 within 24 hours after the deadline you will recieve only up to 90% credit for the MP. If you submit steps 1-8 within 24 hours after the deadline you will recieve only up to 90% of the extra credit. 
+If you submit tasks 1-6 within 24 hours after the deadline you will receive only up to 90% credit for the MP. If you submit steps 1-8 within 24 hours after the deadline you will receive only up to 90% of the extra credit. 
 
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.

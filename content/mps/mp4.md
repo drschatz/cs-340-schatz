@@ -216,7 +216,9 @@ This will improve your code's **runtime**, but may worsen its **space** slightly
 
 This should result in runtimes similar to step 4 and space utilization comparable to step 5.
 
-## Block merging [Extra Credit]
+## Block merging and block splitting [Extra Credit]
+
+### Block merging
 
 When marking a block as unused, see if the block before and/or after it in memory are also unused; if so, merge them into one large unused block instead of several smaller ones. Do this *before* the end-of-memory deallocation optimization (step 4)
 
@@ -231,8 +233,7 @@ This will cause `small_resize_2` to use under 3,000 bytes instead of over 20,000
 but it will cause several previous tests to lose their previous gains (for example, `chaos_reuse` and `chaos_reuse_2` will use 10× more memory) and it may stop passing some of the earlier steps it used to pass.
 Without the next step, a mixed win at best.
 
-## Block splitting [Extra Credit]
-
+### Block splitting
 When allocating into a large unused block, split that block in two, one used for the new allocation and the other one left unused.
 Do the same when shrinking a block during reallocation.
 
@@ -252,8 +253,7 @@ and `backstep_2` to use under 1,500,000 bytes instead of over that.
 # Submission and Grading
 `make test` will be used to grade your code.
 It will show how many tasks you have completed, based on performance.
-Tasks 7 and 8 are merged in the tests, as 7 without 8 is worse than not doing 7.
-
+Block merging and splitting are combined as steps 7 and 8 and are for extra credit.
 Implementing up through task 6 (Free List) is worth 100%.
 Partial credit is awarded for doing fewer steps.
 

@@ -56,9 +56,9 @@ Just like MP 1.2 we aren't including a makefile or other starter files. You may 
 ## Submitting and Grading
 You can submit `mystery.c` as many times as you would like on Prairie Learn up to the deadline. I will grade the most recent submission. If you submit past the deadline, but within 24 hours, you will only receive up to 90% of the points. See the syllabus for more details. 
 
-There are no public tests given or on Prairie Learn. In a week after the deadline you will recieve your grade for the work turned in on Prairie Learn. It will be graded all or nothing based on having ALL of the following,
-1. It produces the correct results
-2. It runs quicker than the working solution of MP1.2
+There are no public tests given or on Prairie Learn. In a week after the deadline you will recieve your grade for the work turned in on Prairie Learn. It will be graded based on having ALL of the following,
+1. It produces the correct results (please don't print anything extra)
+2. It runs quicker than my working solution of MP1.2
 3. It uses bit sets but still has the time complexity of O(n^3)
 
 Note - In theory you can improve this code further than just adding bit sets, please do not do so for this MP. 

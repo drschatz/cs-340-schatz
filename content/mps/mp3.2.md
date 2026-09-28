@@ -42,7 +42,7 @@ You will need a functioning MP 1.2 to get credit for this MP part. See the MP1.2
 1. Note that logical operations like OR, XOR, and AND between two numbers are fast on a computer.
 2. Note that bit shifting a number is also very fast on a computer. 
 
-Use these two notes and what we have learned about bit sets to refactor the code to improve the speed without changing the big O (you will still need three nested loops). 
+Use these two notes and what we have learned about bit sets to refactor the code to improve the speed without changing the big O (you will still need three nested loops). You will need to edit the whole file most likely, not just the bottom half. 
 
 # Logistics 
 

@@ -26,6 +26,7 @@
     {
       "number": 3,
       "title": "MP 3",
+      "ready": true,
       "parts": [
         { "id": "3.1", "title": "Part 3.1", "slug": "mp3.1" },
         { "id": "3.2", "title": "Part 3.2", "slug": "mp3.2" }

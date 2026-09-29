@@ -39,6 +39,8 @@ The idea behind speeding up this code is that instead of using a high level algo
 You will need a functioning MP 1.2 to get credit for this MP part. See the MP1.2 specifications for details and the starter code. 
 
 # Task 1 - Refactor the code to use bit sets
+Ask yourself, how can I change this code to use bit sets instead of just an array of c-strings? How can I then take advantage of the bit sets to do the logic using logical operations?
+
 1. Note that logical operations like OR, XOR, and AND between two numbers are fast on a computer.
 2. Note that bit shifting a number is also very fast on a computer. 
 
@@ -52,6 +54,11 @@ Use these two notes and what we have learned about bit sets to refactor the code
 
 ## Running the code 
 Just like MP 1.2 we aren't including a makefile or other starter files. You may use AI/Search Engines for help in how to compile, run, and start the debugger in VS Code. Feel free to look at other released MPs, make your own Makefile, etc...
+
+We recommend running the executable with `time` with both the MP1.2 solution and the MP3.2 solution to see the time change. For example if your executable is name a.out running, 
+```sh
+time ./a.out
+```
 
 ## Submitting and Grading
 You can submit `mystery.c` as many times as you would like on Prairie Learn up to the deadline. I will grade the most recent submission. If you submit past the deadline, but within 24 hours, you will only receive up to 90% of the points. See the syllabus for more details. 

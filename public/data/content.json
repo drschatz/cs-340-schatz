@@ -71,6 +71,13 @@
       "slides_pdf": "../lectures/fa26-exam1.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_zdfjuh2o",
       "texts": [""]
+    },
+        {"date": "9/29",
+      "topic": "Bit Operations 0b01",
+      "slides_google": "https://docs.google.com/presentation/d/1kxbtXtZ6NEV9Mppiy9bteO19zN_jsTIwc_ipilJdJtQ/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["bitwise", "utf8"]
     }
   ]
 }

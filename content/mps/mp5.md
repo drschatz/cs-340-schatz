@@ -1,16 +1,19 @@
 ---
 author: Luther Tychonievich
 subtitle: Wallet
-title: MP6
+title: MP5
 ---
 This Malicious Pthread (MP)'s goal is to have you experience working with synchronization primitives.
 In particular, we expect you to use the mutex, reader-writer lock, and condition variable primitives provided by the pthreads library.
 
 You are provided with a simple map implementation. You will extend it by adding a reader-writer lock to make the map thread-safe. Then, you'll implement a wallet extension that uses a condition variable for each entry in the map to ensure that account balances never become negative. If a withdrawal would cause a balance to go below zero, the operation should instead wait until sufficient funds become available.
 
+# Learning Goals
+1. Develop an understanding of multi-threaded programs and how to manage related errors.
+
 # Initial Files
 
-[`mp6.zip`](../mp6.zip) contains our implementation of a map,
+[`mp5.zip`](../mp5.zip) contains our implementation of a map,
 along with test files.
 
 You will modify and submit `wallet.c`, and possibly `wallet.h`.
@@ -37,15 +40,14 @@ We provide:
 
 - `setdefault`, despite being more like `get` than it is like `set`, is "retrieve or insert", unconditionally succeeding and sometimes modifying the map's size. We provide this method.
 
-- `assign` is "change or fail", changing the value of key only if the key is present and returning whether it succeeded. We provide this method.
+- `assign` is "change or fail", changing the value of of a corresponding key only if the key is present and returning whether it succeeded. We provide this method.
 
 You may add to this interface if you wish, but we think that the methods we provide are best suited for this MP.
 
 You will add a reader-writer lock to the entire map
 and a condition variable, mutex pair to each entry in the map.
 
-
-# Machine Problem
+# Your Tasks
 
 You need to do the following:
 
@@ -56,7 +58,7 @@ You need to do the following:
     if the requested change would make the value become negative
     then the calling thread is suspended until that is no longer the case.
 
-## Make the map thread safe
+## Task 1 - Making the map thread safe
 
 A data structure is thread safe if multiple threads can access it concurrently without risk of corrupting the data structure and rendering it inoperable.
 
@@ -131,7 +133,7 @@ The provided tests use `times` to check if parallelism was achieved,
 but you might find that using `time` is more informative.
 
 
-## Implement `wallet_use`
+## Task 2 - Implement `wallet_use`
 
 The function call
 
@@ -145,7 +147,7 @@ should act like what other languages might represent as
 map[key] += delta
 ```
 
-*except* it should never result any value in the map becoming negative.
+*except* it should never result in any value in the map becoming negative.
 Conceptually, we want the code to do
 
 ```
@@ -186,9 +188,9 @@ That means you need many condition variables,
 most simply one per entry in the map.
 
 `test_5_crowds` requires that if 500 pairs of threads are waiting on one another,
-more than one pair them can make progress in parallel.
+more than one pair of them can make progress in parallel.
 The simplest way to do this is one mutex per condition variable,
-though there nuanced ways of using shared mutexes that can do this too.
+though there are nuanced ways of using shared mutexes that can do this too.
 
 
 ### Note
@@ -201,11 +203,36 @@ phtread_mutex_t *whateverNameYouPick = malloc(sizeof(pthread_mutex_t));
 pthread_mutex_init(whateverNameYouPick, NULL);
 ```
 
-
-
 # Submission and Grading
-Submit both `wallet.c` and `wallet.h` on Prairie Learn before the deadline. There is no autograder for this MP due to constraints of Prairie Learn. Your MP score should be what your MP scores locally on your computer (if this is not the case, please come talk to me).
+This MP requires specific timing in order to grade. There is also the chance your code has race conditions or deadlocks which may or may not show up when you run your tests. This leads to a few implications. 
 
-The score created by `make test` is the score you get on this MP.
+You will submit your code, `wallet.c` and `wallet.h`, on Prairie Learn but there is no autograder. You can run and test your code locally with `make test` which runs the same tests I will use to grade your work. 
 
-The "scores" shown by the various individual test files inside the `tests/` directory are intended to be informative and are not directly included as part of your grade for this MP.
+However, different hardware can make race conditions or deadlocks more or less likely to be visible. To give you the best chance of producing error free code, run your final work on your virtual machine(VM). I will then grade your work, after the deadline, on a similar virtual machine. I recommend running your code at least 10 times on your virtual machine to make sure it can run error free. 
+
+If you submit 24 hours after the deadline you will receive only up to 90% credit for the MP.
+
+## Using your VM
+See the environment check-off for details on how to do the following steps.
+
+1. Go on campus wifi or use a VPN.
+2. Turn on your Virtual Machine (VM). Your VM turns off every night.
+3. Use SCP to move your files from your computer to the VM.
+4. Use SSH and VS Code to access your VM through VS Code.
+    - Navigate to the correct folder using the terminal or VS Code interface.
+    - Run `make test` to test your code 10 times.
+
+**If you change your files locally the changes do not automatically transfer to your VM. If you change your files on the VM your changes do not automatically transfer to your local files. Use copy-paste or SCP to sync the files. Be careful to submit the correct version**
+
+## AI Policy
+To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
+
+1. Do not feed AI/Search Engines any of the given code or specific functions. For example, do not look up: "How to make this code thread safe --inserts code --"
+
+2. Do not use AI/Search Engines to find race conditions or deadlock. Instead, come to office hours or post on campus wire. We are happy to help you figure out what next steps to take.
+
+3. You may use AI/Search Engines to look up general concepts. For example you can look up "Show me an example of C code that uses a reader-writer lock".
+
+4. Office hours are always open to any questions!
+
+** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

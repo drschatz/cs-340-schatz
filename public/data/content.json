@@ -82,8 +82,8 @@
     {"date": "10/01",
       "topic": "Bit Operations 0b10",
       "slides_google": "https://docs.google.com/presentation/d/1nqwnPEY21xdQGHGlFcYnnHY5h0BheGDmwRtiPC5CW8w/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-bitwise2.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_2i2nnkek",
       "texts": [""]
     }
   ]

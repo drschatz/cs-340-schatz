@@ -44,7 +44,7 @@ You will modify
 - `mytest.c` -- optionally, write your own test case here
 
 # Naive Implementation
-We provide a simple, functionally-correct implementation.
+We provide a simple, functionally correct implementation.
 It treats the heap like a stack that never pops:
 on allocation it pushes a new block on top of the stack
 and ignores all deallocations.
@@ -98,7 +98,7 @@ void *myrealloc(void *ptr, size_t size) {
 # What You Should Do
 Keep the functional correctness of the provided allocator but make it use less memory without adding too much time. That will involve at least the first 6 tasks outlined below.
 
-The steps in the following subsections are ordered such that earlier items are easier to implement than later ones and also are either have more impact on memory use than later ones or are required components of later ones. Going in order is strongly recommended.
+The steps in the following subsections are ordered such that earlier items are easier to implement than later ones and also either have more impact on memory use than later ones or are required components of later ones. Going in order is strongly recommended.
 
 ### Small testable steps, a professional practice
 As you walk through these steps, you will find yourself doing something in step n
@@ -115,7 +115,7 @@ even if that means some of those steps involve a bit of extra work (which you mi
 
 
 ### Making your own tests
-The provided test cases in the `workloads` folder are intended to test both the functionality and performance of your code. Being useful cases for debugging your code was not a design goal of these workloads.
+The provided test cases in the `workloads` folder are intended to test both the functionality and performance of your code. Being useful for debugging your code was not a design goal of these workloads.
 
 If your code *crashes*, you might want to write your own test file with its own `main` function and so on that calls your allocation functions. This can help you not get distracted by the memory tracking system in `testharness.c`.
 
@@ -140,8 +140,7 @@ but initially just store the size of the block in it. This will make your code t
 
 With size metadata it becomes possible to display your entire memory:
 you know where the first block is, and from its size can find the next, and so on.
-You might find this useful in some debugging situations, and for doing task 5 below.
-
+You might find this useful in some debugging situations.
 
 ## Task 2 - Shrink efficiently
 
@@ -161,8 +160,7 @@ This will cause the `small_resize` test to use under 1,000 bytes instead of over
 
 ## Task 4 - Shrink at end of heap
 
-When deallocating (with `myfree`) or decreasing (with `myrealloc`) the size of the block at the end of the allocated memory,
-also return its memory to the unused memory set.
+When deallocating (with `myfree`) or decreasing (with `myrealloc`) the size of the block at the end of the allocated memory, also return its memory to the unused memory set.
 
 This will improve your code's **space**.
 
@@ -257,10 +255,7 @@ Block merging and splitting are combined as steps 7 and 8 and are for extra cred
 Implementing up through task 6 (Free List) is worth 100%.
 Partial credit is awarded for doing fewer steps.
 
-**No points** are earned if the allocator you submit is **nonfunctional** (i.e. fails to return non-overlapping large-enough memory with each `mymalloc` call).
-We strongly recommend keeping a copy of your last points-earning implementation so that you can revert to it if you get your code into a broken state.
-
-Tasks 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a separate autograder for getting extra credit. You must submit to both autograders to get full credit and the extra credit. 
+Tasks 7 and 8 (block splitting and merging) gives 0.5% extra credit to your overall course grade. There is a separate autograder for getting extra credit. You must submit to **both** autograders to get full credit and the extra credit. 
 
 If you submit tasks 1-6 within 24 hours after the deadline you will receive only up to 90% credit for the MP. If you submit steps 1-8 within 24 hours after the deadline you will receive only up to 90% of the extra credit. 
 

@@ -89,8 +89,8 @@
     {"date": "10/06",
       "topic": "Program Memory | Virtual Memory",
       "slides_google": "https://docs.google.com/presentation/d/1IgU17Zbqu7yspnV4QxNy2GiVUJQLb0N95-vvCyB9uzk/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-memory.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_5dukpzwb",
       "texts": ["vm"]
     }
   ]

@@ -35,7 +35,9 @@
     {
       "number": 4,
       "title": "MP 4",
-      "slug": "mp4"
+      "slug": "mp4",
+      "ready": true
+
     }
     ,
     {

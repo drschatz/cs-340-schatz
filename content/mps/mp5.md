@@ -208,19 +208,24 @@ This MP requires specific timing in order to grade. There is also the chance you
 
 You will submit your code, `wallet.c` and `wallet.h`, on Prairie Learn but there is no autograder. You can run and test your code locally with `make test` which runs the same tests I will use to grade your work. 
 
-However, different hardware can make race conditions or deadlocks more or less likely to be visible. To give you the best chance of producing error free code, run your final work on your virtual machine(VM). I will then grade your work, after the deadline, on a similar virtual machine. I recommend running your code at least 10 times on your virtual machine to make sure it can run error free. 
+However, different hardware can make race conditions or deadlocks more or less likely to be visible. To give you the best chance of producing error free code, run your final work on your virtual machine(VM). I will then grade your work, after the deadline, on a similar virtual machine. I recommend running your code at least 5 times on your virtual machine to make sure it can run error free. 
 
 If you submit 24 hours after the deadline you will receive only up to 90% credit for the MP.
 
 ## Using your VM
+Once you have your code working and passing all the tests locally, move all your code to the VM and test again. 
+
 See the environment check-off for details on how to do the following steps.
 
 1. Go on campus wifi or use a VPN.
 2. Turn on your Virtual Machine (VM). Your VM turns off every night.
-3. Use SCP to move your files from your computer to the VM.
-4. Use SSH and VS Code to access your VM through VS Code.
-    - Navigate to the correct folder using the terminal or VS Code interface.
-    - Run `make test` to test your code 10 times.
+3. Use SSH to access your VM through VS Code.
+    - make an `MP5` directory and a `tests` directory inside of the `MP5` directory
+4. Use SCP to move your files from your computer to the VM. Including all the test files which should go into a `tests` directory.
+5. Back in your virtual machine through VS Code,
+    - Navigate to the correct directory using the terminal or VS Code interface.
+    - Run `make clean` and then `make all` to compile your C code.
+    - Run `make test` to test your code 5 times.
 
 **If you change your files locally the changes do not automatically transfer to your VM. If you change your files on the VM your changes do not automatically transfer to your local files. Use copy-paste or SCP to sync the files. Be careful to submit the correct version**
 

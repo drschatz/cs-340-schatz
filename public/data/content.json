@@ -96,8 +96,8 @@
       {"date": "10/08",
       "topic": "OS | Kernel",
       "slides_google": "https://docs.google.com/presentation/d/1FoZ30HGNkYXD2eHtkcvJBcbw3Im9qz_g9gQJ9HvAgCY/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-os.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_4xld2ga3",
       "texts": ["kernel"]
     }
   ]

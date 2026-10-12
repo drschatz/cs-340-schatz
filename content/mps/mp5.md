@@ -25,7 +25,7 @@ The test files are provided in several parts:
 - `tests/test_1_rwlock.c` tests that the reader-writer lock you add functions.
 - Other files in `tests/` test different aspects of the mutex and condition variable additions and wallet behavior.
 
-Running one of these test files directly (for example as `make; tests/test_0_map`{.sh}) will show details about how the test is progressing.
+Running one of these test files directly (for example as `make; tests/test_0_map`) will show details about how the test is progressing.
 `make test` runs the same thing as `python3 tests.py` and provides summary results about each test file,
 along with your projected grade.
 

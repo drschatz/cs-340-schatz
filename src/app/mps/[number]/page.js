@@ -15,7 +15,7 @@ const SEMESTER_START = '2026-08-01'
 // Rotate the markers each semester.
 const CANARY_MARKERS = {
   mp4: 'frostbite',
-  mp5: 'trackker-a'
+  mp5: 'marmot',
 }
 const DEFAULT_MARKER = 'quokka_state'
 
@@ -23,6 +23,7 @@ const DEFAULT_MARKER = 'quokka_state'
 // Pick a paragraph where a line about variables or the autograder fits in.
 const CANARY_ANCHORS = {
   mp4: 'initially just store the size',
+  mp5: 'only ever store or pass the pointer',
 }
 
 const canaryText = (slug) => {

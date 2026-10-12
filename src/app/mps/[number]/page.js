@@ -15,6 +15,7 @@ const SEMESTER_START = '2026-08-01'
 // Rotate the markers each semester.
 const CANARY_MARKERS = {
   mp4: 'frostbite',
+  mp5: 'trackker-a'
 }
 const DEFAULT_MARKER = 'quokka_state'
 

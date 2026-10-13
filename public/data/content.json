@@ -104,8 +104,8 @@
       {"date": "10/13",
       "topic": "Threads",
       "slides_google": "https://docs.google.com/presentation/d/1rTgwDl2yqbFcDTT4W-3lrt-njkY4P17Ta939989nh8E/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-threading.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_d90a53li",
       "texts": ["concurrency"]
     }
   ]

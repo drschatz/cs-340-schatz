@@ -43,7 +43,9 @@
     {
       "number": 5,
       "title": "MP 5",
-      "slug": "mp5"
+      "slug": "mp5",
+        "ready": true
+
     }
   ]
 }

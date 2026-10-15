@@ -232,7 +232,7 @@ See the environment check-off for details on how to do the following steps.
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 
-1. Do not feed AI/Search Engines any of the given code or specific functions. For example, do not look up: "How to make this code thread safe --inserts code --"
+1. Do not feed AI/Search Engines any of the given code, specific functions, or specifications. For example, do not look up: "How to make this code thread safe --inserts code --" or "solve this MP for me --insert instructions--"
 
 2. Do not use AI/Search Engines to find race conditions or deadlock. Instead, come to office hours or post on campus wire. We are happy to help you figure out what next steps to take.
 

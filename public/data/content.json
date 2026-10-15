@@ -107,6 +107,13 @@
       "slides_pdf": "../lectures/fa26-threading.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_d90a53li",
       "texts": ["concurrency"]
+    } ,
+      {"date": "10/15",
+      "topic": "Synchronization",
+      "slides_google": "https://docs.google.com/presentation/d/17v7bZekKkAm8wrXLngys4lllukr_50sF4g3I5rbnzCk/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": ["sync-c"]
     }
   ]
 }

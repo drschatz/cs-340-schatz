@@ -262,12 +262,10 @@ If you submit tasks 1-6 within 24 hours after the deadline you will receive only
 ## AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 
-1. Do not feed AI/Search Engines any of the given code or specific functions. For example, do not look up: "How would I write the C code to insert a new chunk into a PNG."
+1. Do not feed AI/Search Engines any of the given code or specific functions. 
 
-2. Do not rely on AI/Search Engines for information on the PNG format. A learning goal of this MP is to get practice reading documentation. Often, it is not wise to rely on AI for important information as it can get things wrong. Therefore, it is important you have the skills to read sources yourself.
+2. You may use AI/Search Engines to figure out errors by looking up the error produced, not feeding it all your code and asking what is wrong.
 
-3. You may use AI/Search Engines to figure out errors by looking up the error produced, not feeding it all your code and asking what is wrong.
-
-4. Office hours are always open to any questions!
+3. Office hours are always open to any questions!
 
 ** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

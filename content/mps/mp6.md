@@ -23,9 +23,7 @@ In this assignment you will NOT be writing scheduler code but instead verifying 
 
 [`mp6.zip`](../mp6.zip) contains the necessary code files for completing the MP.
 
-This includes a working (non-buggy) solution of a scheduler (`scheduler_fcfs_correct.c`). You do not need to read or look at this file. Everything you need to complete the MP will be in the specifications. Your task is to write Python tests in `tests.py` to verify and check the behavior of scheduler implementations. You will only turn in `tests.py`.
-
-To compile the solution scheduler for testing, run `make` from the terminal. This will compile the scheduler using the ISA that works on your specific computer. This executable is all you need from the scheduler code.
+This includes a working (non-buggy) solution of a scheduler. You do not need to read or look at this file. Everything you need to complete the MP will be in the specifications. Your task is to write Python tests in `tests.py` to verify and check the behavior of scheduler implementations. You will only turn in `tests.py`.
 
 The autograder will have multiple buggy versions of the scheduler which will be used to verify your tests could catch bugs. This autograder will be available during the whole process to help you know when you are done with the MP.
 

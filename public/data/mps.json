@@ -46,6 +46,11 @@
       "slug": "mp5",
         "ready": true
 
+    },
+    {
+      "number": 6,
+      "title": "MP 6",
+      "slug": "mp6"
     }
   ]
 }

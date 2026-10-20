@@ -118,8 +118,8 @@
       {"date": "10/20",
       "topic": "Exam 2 Review",
       "slides_google": "https://docs.google.com/presentation/d/16-LxnuU77pfy_WjfLPSjVZhz8sUbrtG1pmsnDvS9EmI/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-exam2.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_kbcuqot6",
       "texts": [""]
     }
   ]

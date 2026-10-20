@@ -51,17 +51,18 @@ The scheduler maintains a queue of incoming unscheduled jobs sorted by each jobâ
 
 ### Example 1 - Same priorities different arrival times
 
-!image_example1.png
+![example 1 image](../image_1.webp)
+
 
 ### Example 2 - Different priorities no preemption
 
-!image_example2.png
+![example 2 image](../image_2.webp)
 
 The scheduler woke up, and saw both of these jobs in the queue at the same time. It schedules the highest priority J1, and doesnâ€™t have enough space to schedule J0, so J0 is scheduled after.
 
 ### Example 3 - Different priorities and preemption
 
-image_example3.png
+![example 3 image](../image_3.webp)
 
 # Testing Guide
 

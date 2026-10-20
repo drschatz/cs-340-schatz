@@ -422,6 +422,80 @@ export default function MPPage({ params }) {
           margin-top: 12px;
         }
 
+        /* Tables, styled to match the Content page */
+        .mp-content table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 12px;
+          overflow: hidden;
+          margin: 24px 0;
+        }
+
+        .mp-content thead {
+          background-color: ${colors.navBlue};
+          text-align: left;
+        }
+
+        .mp-content th {
+          padding: 16px;
+          font-weight: 700;
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          text-align: left;
+          color: ${colors.black};
+          border-bottom: 2px solid #e5e7eb;
+        }
+
+        .mp-content td {
+          padding: 20px 16px;
+          vertical-align: top;
+          font-size: 16px;
+          color: ${colors.darkGray};
+        }
+
+        .mp-content tbody tr {
+          background-color: #fff;
+          border-bottom: 2px solid rgba(0,0,0,0.18);
+        }
+
+        .mp-content tbody tr:nth-child(even) {
+          background-color: #f9fafb;
+        }
+
+        .mp-content tbody tr:last-child {
+          border-bottom: none;
+        }
+
+        /* Hover tint is applied to the cells so it is not overridden by the row backgrounds above */
+        .mp-content tbody tr:hover td {
+          background-image: linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.02));
+        }
+
+        /* Keep paragraphs and lists inside cells from adding extra spacing */
+        .mp-content td p,
+        .mp-content th p {
+          margin: 0 0 8px;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+
+        .mp-content td p:last-child,
+        .mp-content th p:last-child {
+          margin-bottom: 0;
+        }
+
+        .mp-content td ul,
+        .mp-content td ol {
+          margin: 0;
+          padding-left: 20px;
+        }
+
+        .mp-content td li {
+          font-size: 16px;
+          margin-bottom: 4px;
+        }
+
         /* Hidden text for AI tools: invisible on screen, present when copied. */
         .mp-content .canary {
           display: block;

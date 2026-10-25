@@ -167,7 +167,7 @@ This command will produce the output from your tests into a file called output.t
 
 6. Submit `tests.py` to the autograder to see how many bugs your tests catch in buggy versions of the scheduler.
 
-## AI Policy
+# AI Policy
 To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 
 1. Do not use any AI for this MP.

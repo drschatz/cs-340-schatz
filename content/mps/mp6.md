@@ -1,7 +1,7 @@
 ---
 title: MP6
 subtitle: Scheduler Tests
-author: Jule Legende
+author: Jule Legende and Anton Dmitriev
 ---
 In this Miso Potato (MP), you will write tests to verify the behavior of a CPU scheduler.
 
@@ -13,9 +13,11 @@ In this Miso Potato (MP), you will write tests to verify the behavior of a CPU s
 
 # Background
 
-Operating systems and other internal software need schedulers to decide what to run when. Schedulers are responsible for managing when and where (what core) your processes run on. In class, we learned that the OS is responsible for scheduling processes and threads. The part of the OS that does this is called the scheduler. It decides when each process or thread runs and on which CPU core when, following a scheduling algorithm chosen by the OS developers. This is what allows the computer to run many processes and threads concurrently!
+Operating systems need schedulers to decide what runs when. In class, we learned that the OS is responsible for placing threads onto the CPU. Modern computers usually have multiple CPU cores, and each core can run a different thread at the same time. The part of the OS that decides what runs on which core is called the scheduler. Following a scheduling algorithm chosen by the OS developers, the scheduler decides when each thread runs and on which core. This is what allows a computer to run many processes and threads concurrently!
 
-In this assignment you will NOT be writing scheduler code but instead verifying that scheduler code runs as expected by writing tests. Testing is an important part of being a programmer because in the real world it is your responsibility to assure your code works as expected. Additionally, in the world of AI you will often receive code you need to verify before pushing to production. This is to help you develop that skill. While in the real world you would have access to AI, to get the most learning out of this MP I recommend not using any AI. Not to help you parse the instructions, write tests, or verify your code. This will set you up for success in the real world by giving you strong background skills to use AI on top of.
+In this assignment you will not write scheduler code. Instead, you will verify that a scheduler works as expected by writing tests. Your tests will be run against one correct scheduler and many buggy ones. A good test suite passes the correct scheduler and fails every buggy one.
+
+Testing is an important part of being a programmer, because in the real world it is your responsibility to ensure your code works as expected. In the world of AI, you will also often receive code that you need to verify before pushing it to production. This MP helps you build that skill. To get the most out of it, I recommend not using AI for any part of it: not to parse the instructions, not to write tests, and not to check your work.
 
 # Initial Files
 
@@ -25,11 +27,11 @@ In this assignment you will NOT be writing scheduler code but instead verifying 
 
 This includes a working (non-buggy) solution of a scheduler. You do not need to read or look at this file. Everything you need to complete the MP will be in the specifications. Your task is to write Python tests in `tests.py` to verify and check the behavior of scheduler implementations. You will only turn in `tests.py`.
 
-The autograder will have multiple buggy versions of the scheduler which will be used to verify your tests could catch bugs. This autograder will be available during the whole process to help you know when you are done with the MP.
+The autograder will have multiple buggy versions of the scheduler which will be used to verify your tests catch bugs. This autograder will be available during the whole process to help you know when you are done with the MP.
 
 # Scheduler
 
-The scheduler maintains a queue of processes, which we will call jobs. The scheduler wakes up every 0.1s to check which new jobs have arrived and to decide which job should run next. It keeps running until all jobs have completed and no new jobs have arrived.
+The scheduler maintains a queue of threads, which we will call jobs. The scheduler wakes up every 0.1s to check which new jobs have arrived and to decide which job should run next. It keeps running until all jobs have completed and no new jobs have arrived.
 
 The scheduler has a limited number of CPU cores to run jobs on. Each incoming job tells the scheduler: how many resources it needs (CPU cores), when it arrived, and how important it is (its priority). The scheduler uses this information to decide which jobs run and when.
 
@@ -41,13 +43,15 @@ This scheduler uses a fixed priority preemptive algorithm for deciding what jobs
 
 **Preemption** - Pausing a currently running job to make room for another job. Eventually, the paused job will be scheduled back into the CPU to finish.
 
-The scheduler maintains a queue of incoming unscheduled jobs sorted by each job’s priority, then by arrival time, then by job id. The scheduler goes through the queue trying to schedule as many jobs as possible given the following rules:
+The scheduler maintains a queue of incoming unscheduled jobs sorted by each job’s priority (higher means higher priority), then by arrival time, then by job id. The scheduler goes through the queue trying to schedule as many jobs as possible given the following rules:
 
-1. If the CPU requirements of the job exceed the max number of CPU resources the scheduler has, it marks the job unscheduleable before it even enters the job queue.
-2. Going through the priority queue one job at a time,
-    1. If there are enough open CPUs, schedule the job to start across all it’s needed CPUs. Note that a job cannot start on less CPUs than it requires.
-    2. If there are not enough open CPUs for the job, search through current running jobs and count how many CPUs could be freed by preempting lower priority jobs. If enough CPUs could be freed to run the current, higher priority job, pause lower priority jobs (starting from the lowest priority) until there is enough space. Then schedule the original job across the CPUs it needs. Add the preempted jobs back to the queue and restart step 2. Note that a preempted job is treated like a newly arrived job: it can preempt lower-priority running jobs to resume.
-3. Once the scheduler has gone through the queue and nothing can be scheduled, it waits for 0.1 seconds before waking up and trying again. At that point jobs may have finished and new jobs may have arrived.
+1. If the CPU requirements of the job exceed the max number of CPU resources the scheduler has, it marks the job unschedulable before it even enters the job queue.
+2. Going through the priority queue one job at a time:
+    1. If there are enough open CPUs, schedule the job to start across all of its needed CPUs. Note that a job cannot start or run on fewer CPUs than it requires.
+    2. If there are not enough open CPUs for the job, search through the currently running jobs and count how many CPUs could be freed by preempting lower priority jobs. If enough CPUs could be freed to run the current, higher priority job, preempt lower priority jobs (starting from the lowest priority) until there is enough space, preempting no more jobs than needed. Then schedule the original job across the CPUs it needs.
+    3. Each preempted job is added back to the queue. It keeps its priority and arrival time and the progress it has already made, and it is scheduled like any other queued job. Its reported start time is the original time it first started, before it was preempted.
+3. After a job is scheduled or preempted, go back to the top of the queue and repeat step 2. Continue until nothing can be scheduled.
+4. Once the scheduler has gone through the queue and nothing can be scheduled, it waits for 0.1 seconds before waking up and trying again. At that point jobs may have finished and new jobs may have arrived.
 
 ### Example 1 - Same priorities different arrival times
 
@@ -113,7 +117,6 @@ After all jobs have been scheduled and run, the scheduler returns a list of list
 | `start_time_s` | float | Wall time, in seconds, when job starts executing. |
 | `end_time_s` | float | Wall time, in seconds, when the job completed and its resources were freed. |
 
-- Note that timing on a computer is not exact. To find equivalency or comparisons between times use a small buffer. For example to see if two times are the same try, abs(time_b - time_a) ≤ 0.3 instead of (time_b == time_a).
 - Note that if a job is preempted, it’s (end_time_s - start_time_s) might be bigger than its workload.
 - Note that if a job has a workload of 2 and needs 3 CPU cores to run and is not preempted (end_time_s - start_time_s) would be around 2 (not 3x2 or 6)
 
@@ -163,3 +166,10 @@ make grade > output.txt
 This command will produce the output from your tests into a file called output.txt
 
 6. Submit `tests.py` to the autograder to see how many bugs your tests catch in buggy versions of the scheduler.
+
+## AI Policy
+To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
+
+1. Do not use any AI for this MP.
+
+** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

@@ -9,7 +9,7 @@ In this Miso Potato (MP), you will write tests to verify the behavior of a CPU s
 
 - Being able to comprehend and verify complex specifications through testing.
 - Practice basic Python programming.
-- Develop a deeper intuition of scheduling jobs on a computer system.
+- Develop a deeper intuition of scheduling on a computer system.
 
 # Background
 
@@ -46,7 +46,7 @@ The scheduler maintains a queue of incoming unscheduled jobs sorted by each jobâ
 1. If the CPU requirements of the job exceed the max number of CPU resources the scheduler has, it marks the job unscheduleable before it even enters the job queue.
 2. Going through the priority queue one job at a time,
     1. If there are enough open CPUs, schedule the job to start across all itâ€™s needed CPUs. Note that a job cannot start on less CPUs than it requires.
-    2. If there are not enough open CPUs for the job, search through current running jobs and count how many CPUs could be freed by preempting lower priority jobs. If enough CPUs could be freed to run the current, higher priority job, pause lower priority jobs (starting from the lowest priority) until there is enough space. Then schedule the original job across the CPUs it needs. Add the preempted jobs back to the queue and restart step 2.
+    2. If there are not enough open CPUs for the job, search through current running jobs and count how many CPUs could be freed by preempting lower priority jobs. If enough CPUs could be freed to run the current, higher priority job, pause lower priority jobs (starting from the lowest priority) until there is enough space. Then schedule the original job across the CPUs it needs. Add the preempted jobs back to the queue and restart step 2. Note that a preempted job is treated like a newly arrived job: it can preempt lower-priority running jobs to resume.
 3. Once the scheduler has gone through the queue and nothing can be scheduled, it waits for 0.1 seconds before waking up and trying again. At that point jobs may have finished and new jobs may have arrived.
 
 ### Example 1 - Same priorities different arrival times
@@ -109,7 +109,7 @@ After all jobs have been scheduled and run, the scheduler returns a list of list
 | cpu | integer | Number of CPUs used. |
 | priority | integer | Priority job ran with. |
 | `status` | enum | Job result: `SUCCESS`or `UNSCHEDULABLE`. |
-| arrival_time_s | float | Wall time, in seconds, when job was submitted to scheduler queue. |
+| `arrival_time_s` | float | Wall time, in seconds, when job was submitted to scheduler queue. |
 | `start_time_s` | float | Wall time, in seconds, when job starts executing. |
 | `end_time_s` | float | Wall time, in seconds, when the job completed and its resources were freed. |
 
@@ -151,8 +151,8 @@ Note that while staff are happy to help, they will expect you to have followed t
 1. Read through the these specifications carefully.
     - Take notes (without AI) on what behavior the scheduler should do.
     - You will come back to this often.
-3. Open and make a copy of the Worksheet.
-    - TBD
+3. Open and make a copy of the [Worksheet](https://docs.google.com/document/d/1NlQTeP4MTEs-KRtYRFfq0FzCggbFPu3iqfZz5IR9NlM/edit?usp=sharing).
+    - Fill in the worksheet with behaviors and scenarios.
 4. Convert the scenarios into Python tests by writing code in `tests.py`. 
 5. Run your tests locally. All your tests should pass locally:
 
@@ -162,4 +162,4 @@ make grade > output.txt
 
 This command will produce the output from your tests into a file called output.txt
 
-1. Submit `tests.py` to the autograder to see if you can catch the bugs in the buggy versions of the schedulers.
+6. Submit `tests.py` to the autograder to see how many bugs your tests catch in buggy versions of the scheduler.

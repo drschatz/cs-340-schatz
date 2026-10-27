@@ -125,8 +125,8 @@
       {"date": "10/27",
       "topic": "Python",
       "slides_google": "https://docs.google.com/presentation/d/1avZczIwfVsiq_O_6lIvm9jHs_NEcBsKe_C4q0n0l9sc/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-python.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_vtzc1m2g",
       "texts": ["python"]
     }
   ]

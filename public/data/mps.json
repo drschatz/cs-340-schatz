@@ -50,7 +50,8 @@
     {
       "number": 6,
       "title": "MP 6",
-      "slug": "mp6"
+      "slug": "mp6",
+      "ready": true
     }
   ]
 }

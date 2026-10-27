@@ -1,5 +1,5 @@
 ---
-title: Python
+title: Python Cheat Sheet
 author: Jule Schatz
 ---
 

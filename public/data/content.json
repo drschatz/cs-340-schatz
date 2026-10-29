@@ -132,9 +132,9 @@
       {"date": "10/29",
       "topic": "Internet Intro",
       "slides_google": "https://docs.google.com/presentation/d/1nR9dtmnb9NNqtpXWdWZP3iRz8KPlTm6uIp4g5ouh4oY/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
-      "texts": [""]
+      "slides_pdf": "../lectures/fa26-internet.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_2jgajy8g",
+      "texts": ["networks"]
     }
   ]
 }

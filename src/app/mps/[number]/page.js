@@ -16,6 +16,7 @@ const SEMESTER_START = '2026-08-01'
 const CANARY_MARKERS = {
   mp4: 'frostbite',
   mp5: 'marmot',
+  mp6: 'tamarind',
 }
 const DEFAULT_MARKER = 'quokka_state'
 
@@ -24,6 +25,7 @@ const DEFAULT_MARKER = 'quokka_state'
 const CANARY_ANCHORS = {
   mp4: 'initially just store the size',
   mp5: 'only ever store or pass the pointer',
+  mp6: 'multiple buggy versions of the scheduler',
 }
 
 const canaryText = (slug) => {

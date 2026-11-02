@@ -58,6 +58,12 @@
       "title": "MP 7",
       "slug": "mp7",
       "ready": false
+    },
+        {
+      "number": 8,
+      "title": "MP 8",
+      "slug": "mp8",
+      "ready": false
     }
   ]
 }

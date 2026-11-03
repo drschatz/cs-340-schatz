@@ -8,10 +8,9 @@ Some of the design decisions might seem a little odd at first, but make sense in
 
 A major part of this MP is parsing and creating HTTP messages.
 HTTP messages are defined in the following standards:
-
-- [RFC 2616](https://www.rfc-editor.org/rfc/rfc2616) defining HTTP 1.1, which you'll need to both parse and generate.
-    - [mdn web docs](https://developer.mozilla.org/en-US/docs/Web/HTTP) has an easier-to-read summary.
+    - [mdn web docs](https://developer.mozilla.org/en-US/docs/Web/HTTP)
     - [Wikipedia](https://en.wikipedia.org/wiki/HTTP) has another summary.
+    - You can also use AI to understand the format of HTTP messages. Do NOT use AI to write or give you instructions for the MP. 
 
 # Learning Goals
 

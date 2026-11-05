@@ -147,8 +147,8 @@
       {"date": "11/05",
       "topic": "AIOHTTP",
       "slides_google": "https://docs.google.com/presentation/d/1yHEjcCcFXDF2FIh0B5O9nEvDIJFh7H6XyjjyEfnQyiE/edit?usp=sharing",
-      "slides_pdf": "",
-      "recording": "",
+      "slides_pdf": "../lectures/fa26-aiohttp.pdf",
+      "recording": "https://mediaspace.illinois.edu/media/t/1_9orfdksq",
       "texts": [""]
     }
   ]

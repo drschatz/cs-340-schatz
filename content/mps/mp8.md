@@ -19,15 +19,15 @@ modify the image based on the weather;
 and send the modified image back.
 It will do all of this over the Internet.
 
+# Learning Goals
+- Be able to create a webserver using AIOHTTP
+- Be able to work with an API
+
 # Initial Files
 
 [`mp8.zip`](../mp8.zip) contains the C program, data file, `Makefile`, and tests.
 
-You will modify and submit `filterService.py` on your VM.
-
-The zip file also contains a script you might find helpful when working with your VM:
-
-- `vmpoweron.sh` helps turn on your virtual machine.
+You will modify and submit `filterService.py`.
 
 # Specification
 
@@ -288,13 +288,17 @@ We suggest the following sequence of testing steps:
     
     This command contacts a VM on campus, which means you must either **be on campus or use the VPN** for it to work. See <https://answers.uillinois.edu/illinois/98773> for more on the VPN.
 
-3. Move your files to your VM (see MP 1 for instructions)
 
-4. Run `python3 filterService.py` on your virtual machine and then visit `http://fa25-cs340-`###`.cs.illinois.edu:4595/` (replacing ### with your VM number) and put in images and locations to see what comes back.
+# Submission and Grading
+Submit your code on Prairie Learn before the deadline for full credit. If you submit 24 hours after the deadline you will receive only up to 90% credit for the MP.
 
-5. Run `python3 -m pytest -vv` on your virtual machine.
+There is no autograder because of Prairie Learn limitations but your grade will be the same as what you score locally. 
 
+# AI Policy
+To get the most out of this MP and to avoid an academic integrity violation follow these rules for this MP.
 
-## Grading
+1. Do not paste code into AI or ask for direct solutions. 
 
-To submit this MP you need to upload your code to your VM before the deadline in a folder called MP9. My script will look for MP9/filterService.py on your VM.
+2. Use AI to help clarify concepts, like what is an API, not give me code of how to call the weather API. 
+
+** If you aren't sure what is allowed, feel free to ask on campus wire or office hours. **

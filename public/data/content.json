@@ -151,5 +151,13 @@
       "recording": "https://mediaspace.illinois.edu/media/t/1_9orfdksq",
       "texts": [""]
     }
+        ,
+      {"date": "11/10",
+      "topic": "APIs",
+      "slides_google": "https://docs.google.com/presentation/d/1ECDVnfxVr9F9OekcLDi3D8V13M5BUOwlVoEAsdkI4As/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": [""]
+    }
   ]
 }

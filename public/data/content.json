@@ -158,6 +158,13 @@
       "slides_pdf": "../lectures/fa26-api.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_2ewelhkg",
       "texts": [""]
+    },
+    {"date": "11/12",
+      "topic": "REST APIs, X as a Service, Passwords",
+      "slides_google": "https://docs.google.com/presentation/d/1R-m8K-aEqWhuorTqdXDMKMqnqFcfKQITnQRSgCwTK_k/edit?usp=sharing",
+      "slides_pdf": "",
+      "recording": "",
+      "texts": [""]
     }
   ]
 }

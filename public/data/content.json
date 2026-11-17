@@ -165,6 +165,13 @@
       "slides_pdf":  "../lectures/fa26-rest.pdf",
       "recording": "https://mediaspace.illinois.edu/media/t/1_i4pnca8m",
       "texts": [""]
+    },
+    {"date": "11/17",
+      "topic": "Authentication",
+      "slides_google": "https://docs.google.com/presentation/d/1eM47A8NITC4H4D2i8u56Q0I_HiWkbk3c5ZYiGBz5BDM/edit?usp=sharing",
+      "slides_pdf":  "",
+      "recording": "",
+      "texts": [""]
     }
   ]
 }

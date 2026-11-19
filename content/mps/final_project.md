@@ -15,6 +15,8 @@ Note - The check-off requires you to interact with the code other students wrote
 
 Scoring - To recieve ANY points for the final project you need to attend the full check-off period (you may be able to leave early but plan on staying the whole time). If you are sick or face other extenuating circumstances please email me. 
 
+[Video Introduction](https://mediaspace.illinois.edu/media/t/1_oqa63jfp)
+
 # Distributed Text-Based Adventure
 
 Our final project is a distributed text-based adventure game

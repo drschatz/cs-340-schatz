@@ -38,9 +38,9 @@ Big Picture:
 2. Experience the joys and frustrations of writing distributed code. That is code that interacts and depends on other people's code.
 
 ### Demo
-Before starting the project we recommend trying out a sample solution. DEMO DOMAIN WILL BE ADDED BY 2:00pm Nov 19th.
+Before starting the project we recommend trying out a sample solution. [Demo](http://fa26-cs340-adm.cs.illinois.edu:10340/)
 
-Try running commands like `help` or `go west`. 
+Try running commands like `help` or `go north`. 
 
 Note you need to be on campus wifi or a VPN for it to work. Your own domain must be significantly different from this solution domain.
 

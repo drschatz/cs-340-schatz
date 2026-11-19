@@ -209,6 +209,14 @@ export default function MPsPage() {
 
       return {
         number: mp.slug,          // used only as a React key
+        // Optional short label shown in the MP-number column (e.g. "Final"),
+        // so the row lines up like an MP. Without it, the row shows only label.
+        numberLabel: mp.numberLabel || null,
+        // hideDue: don't show the calendar-generated due date (e.g. the deadline
+        // is a custom date/time written in the spec). Status still uses it.
+        hideDue: mp.hideDue === true,
+        // hideStatus: never show the Active / Grace Period tag.
+        hideStatus: mp.hideStatus === true,
         label: mp.label || mp.title,
         title: mp.title || '',
         slug: mp.slug,
@@ -457,7 +465,7 @@ export default function MPsPage() {
     }
   };
 
-  const renderStatusAndDue = (status, dueLabel) => (
+  const renderStatusAndDue = (status, dueLabel, hideDue = false) => (
     <>
       <div style={styles.statusSlot} data-cell="status">
         {(status === 'active' || status === 'grace') && (
@@ -466,7 +474,8 @@ export default function MPsPage() {
           </div>
         )}
       </div>
-      <div style={styles.mpDue} data-cell="due">Due: {dueLabel || 'N/A'}</div>
+      {/* Empty cell when hidden keeps the status tag aligned with other rows. */}
+      <div style={styles.mpDue} data-cell="due">{hideDue ? '' : `Due: ${dueLabel || 'N/A'}`}</div>
     </>
   );
 
@@ -663,9 +672,16 @@ export default function MPsPage() {
               const inner = (
                 <>
                   <div style={styles.chevronSpacer} className="mp-spacer"></div>
-                  <div style={styles.mpTitle} className="mp-title-cell">{mp.label}</div>
+                  {mp.numberLabel ? (
+                    <>
+                      <div style={styles.mpNumber} className="mp-number-cell">{mp.numberLabel}</div>
+                      <div style={styles.mpTitle} className="mp-title-cell">{mp.title || mp.label}</div>
+                    </>
+                  ) : (
+                    <div style={styles.mpTitle} className="mp-title-cell">{mp.label}</div>
+                  )}
                   <div className="mp-row-meta">
-                    {renderStatusAndDue(mp.status, mp.dueDate)}
+                    {renderStatusAndDue(mp.hideStatus ? 'inactive' : mp.status, mp.dueDate, mp.hideDue)}
                   </div>
                 </>
               );

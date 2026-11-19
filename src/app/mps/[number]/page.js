@@ -36,6 +36,8 @@ const canaryText = (slug) => {
 export default function MPPage({ params }) {
   const mp = allMPs.find((m) => m.slug === params.number)
   const [dates, setDates] = useState({ release: null, suggestedDue: null, due: null })
+  // Set from mps.json; hides the generated "Due:" line (custom deadline in the spec).
+  const [hideDue, setHideDue] = useState(false)
   const [toc, setToc] = useState([])
 
   useEffect(() => {
@@ -76,14 +78,31 @@ export default function MPPage({ params }) {
       const response = await fetch('/api/calendar')
       const icsData = await response.text()
 
-      // Non-MP items (e.g. the environment check-off) don't have an
-      // "MP <n>" id. Map their slug to a keyword found in the event summary.
+      // Non-MP items (e.g. the environment check-off, final project) don't have
+      // an "MP <n>" id. Their calendar keyword comes from the entry's eventMatch
+      // in /data/mps.json (the same field the MPs list page uses). The map below
+      // is only a fallback if the config can't be loaded.
       const nonMpKeywords = {
-        envr: 'check-off'
+        envr: 'check-off',
+        final_project: 'final project'
       }
 
-      if (nonMpKeywords[params.number]) {
-        const { release, due } = parseICSByKeyword(icsData, nonMpKeywords[params.number])
+      let keyword = null
+      try {
+        const config = await (await fetch('/data/mps.json')).json()
+        const entry = (config.mps || []).find(
+          (m) => m.slug === params.number && m.eventMatch
+        )
+        keyword = entry ? entry.eventMatch : null
+        const self = (config.mps || []).find((m) => m.slug === params.number)
+        setHideDue(!!(self && self.hideDue === true))
+      } catch (e) {
+        console.error('Error loading MPs config:', e)
+      }
+      keyword = keyword || nonMpKeywords[params.number]
+
+      if (keyword) {
+        const { release, due } = parseICSByKeyword(icsData, keyword)
         setDates({ release, suggestedDue: null, due })
         return
       }
@@ -289,9 +308,11 @@ export default function MPPage({ params }) {
                 <span style={styles.dateLabel}>Suggested Due:</span> {dates.suggestedDue}
               </div>
             )}
-            <div style={styles.dateItem}>
-              <span style={styles.dateLabel}>Due:</span> {dates.due || 'N/A'}
-            </div>
+            {!hideDue && (
+              <div style={styles.dateItem}>
+                <span style={styles.dateLabel}>Due:</span> {dates.due || 'N/A'}
+              </div>
+            )}
           </div>
         </header>
         

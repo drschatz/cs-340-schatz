@@ -64,6 +64,15 @@
       "title": "MP 8",
       "slug": "mp8",
       "ready": true
-    }
+    },
+  {
+  "slug": "final_project",
+  "numberLabel": "Final",
+  "title": "Final Project",
+  "eventMatch": "final project",
+  "hideDue": true,
+  "hideStatus": true,
+  "ready": true
+}
   ]
 }
